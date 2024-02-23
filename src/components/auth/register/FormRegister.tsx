@@ -1,10 +1,7 @@
 import React from 'react';
-// import { PiLockKeyDuotone } from 'react-icons/pi';
 import { Link } from 'react-router-dom';
-// import AlertMessage from '../../../../components/alert/AlertMessage';
 import { SubmitHandler, UseFormRegister, FieldErrors, UseFormHandleSubmit } from 'react-hook-form';
 import AlertMessage from '../../alert/AlertMessage';
-// import useLocale from '../../../../hooks/useLocale';
 
 type Inputs = {
   name: string;
@@ -31,7 +28,6 @@ const FormRegister: React.FC<FormRegisterProps> = ({
   errorResponse,
 }) => {
   const [showPassword, setShowPassword] = React.useState<boolean>(false);
-  // const { isLocale } = useLocale();
 
   const handleCheckboxChange = () => {
     setShowPassword(!showPassword);
@@ -42,7 +38,6 @@ const FormRegister: React.FC<FormRegisterProps> = ({
       <div className='flex flex-col justify-center items-center container'>
         <div className='bg-secondary rounded-full p-1 text-secondary-content mb-2'>
           <img src='/forum.png' alt='forum-icon' className='w-16'/>
-          {/* <PiLockKeyDuotone size={30} /> */}
         </div>
         <p className='text-2xl font-semibold'>Register</p>
         <form onSubmit={handleSubmit(onSubmit)} className='w-11/12 md:max-w-md' noValidate>
