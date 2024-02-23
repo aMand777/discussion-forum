@@ -25,7 +25,7 @@ const Layout = () => {
         <div className='col-span-3 hidden sm:block'>
           <h1 className='text-center'>Leaderboards</h1>
         </div>
-        <div className='fixed bottom-0 flex justify-center w-full sm:hidden border-t'>
+        <div className='fixed bottom-0 flex justify-center w-full border-base-content sm:hidden border-t'>
           <MobileMenu />
         </div>
       </main>
