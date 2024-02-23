@@ -1,14 +1,13 @@
 import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-// import NavAuth from '../../../../components/navigation/NavAuth';
-// import FormRegister from '../components/FormRegister';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useMutation } from '@tanstack/react-query';
 import { POST_REGISTER_USER } from '../services/register.services';
-// import { openAlert } from '../../../../utils/handleModal';
 import { useNavigate } from 'react-router-dom';
 import FormRegister from '../components/auth/register/FormRegister';
+import { useDispatch } from 'react-redux';
+import { setToast } from '../states/slice/toast-slice'
 
 const FormSchema = z
   .object({
@@ -36,9 +35,9 @@ type Inputs = {
 };
 
 const Register = () => {
+  const dispatch = useDispatch()
   const navigate = useNavigate();
-  const [loading, setLoading] = React.useState<boolean>(false);
-  const [errorResponse, setErrorResponse] = React.useState<string>('');
+  const [errorResponseMessage, setErrorResponseMessage] = React.useState<string>('');
 
   const {
     register,
@@ -54,21 +53,18 @@ const Register = () => {
     },
   });
 
-  const { mutateAsync: registerUser } = useMutation({
+  const { mutateAsync: registerUser, isPending } = useMutation({
     mutationFn: POST_REGISTER_USER,
     onSuccess: () => {
-      setLoading(false);
-      // openAlert('alert-confirm');
+      dispatch(setToast({isOpen: true}))
       navigate('/auth/login');
     },
     onError: (error: string) => {
-      setLoading(false);
-      setErrorResponse(error);
+      setErrorResponseMessage(error);
     },
   });
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    setLoading(true);
     const user = {
       name: data.name,
       email: data.email,
@@ -78,14 +74,13 @@ const Register = () => {
   };
   return (
     <>
-      {/* <NavAuth /> */}
       <FormRegister
-        loading={loading}
+        loading={isPending}
         register={register}
         errors={errors}
         onSubmit={onSubmit}
         handleSubmit={handleSubmit}
-        errorResponse={errorResponse}
+        errorResponse={errorResponseMessage}
       />
     </>
   );
