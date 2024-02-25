@@ -62,7 +62,7 @@ const Login = () => {
   };
 
   if (isLoading) {
-    return <LoadingPage />;
+    return <LoadingPage loading='loading-ring loading-lg' />;
   } else if (isAuthenticated) {
     return <Navigate to='/' replace />;
   }

@@ -1,0 +1,11 @@
+.__navlink_sidenav {
+  @apply flex hover:bg-base-200 gap-5 py-3 pl-5 mx-1 rounded-lg;
+}
+
+.scroll-none {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.scroll-none::-webkit-scrollbar {
+  display: none;
+}

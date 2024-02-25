@@ -1,11 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit'
 import authUserReducer from './slice/authUser-slice'
 import toastReducer from './slice/toast-slice'
+import threadsReducer from './slice/threads-slice'
+import usersReducer from './slice/users-slice'
 
 const store = configureStore({
   reducer: {
     authUser: authUserReducer,
     toast: toastReducer,
+    threads: threadsReducer,
+    users: usersReducer,
   },
 });
 

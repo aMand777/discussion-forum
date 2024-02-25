@@ -1,9 +1,10 @@
-import React from 'react'
+import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import Layout from './layouts/Layout';
 import RequireAuth from './components/routes/RequireAuth';
 import Login from './pages/Login';
+import Threads from './pages/Threads';
 import Register from './pages/Register';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from './states/store';
@@ -14,18 +15,18 @@ function App() {
 
   React.useEffect(() => {
     dispatch(getUserLoginAsync());
-  }, []);
+  }, [dispatch]);
 
   return (
     <>
       <Routes>
-        <Route element={<Layout />}>
-          {/* public route */}
-          <Route path='/auth/login' element={<Login />} />
-          <Route path='/auth/register' element={<Register />} />
-          {/* private route */}
-          <Route element={<RequireAuth />}>
-            <Route path='/' element={<h1>Halaman Home</h1>} />
+        {/* public route */}
+        <Route path='/auth/login' element={<Login />} />
+        <Route path='/auth/register' element={<Register />} />
+        {/* private route */}
+        <Route element={<RequireAuth />}>
+          <Route element={<Layout />}>
+            <Route path='/' element={<Threads />} />
             {/* <Route path='/' element={<Notes />} />
             <Route path='/notes' element={<Notes />} />
             <Route path='/notes/create' element={<Create />} />
