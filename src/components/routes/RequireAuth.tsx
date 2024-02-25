@@ -8,7 +8,7 @@ function RequireAuth() {
   const { isAuthenticated, isLoading } = useSelector((state: RootState) => state.authUser);
 
   if (isLoading) {
-    return <LoadingPage />;
+    return <LoadingPage loading='loading-infinity loading-lg' />;
   } else if (!isAuthenticated) {
     return <Navigate to='/auth/login' replace />;
   } else {

@@ -9,3 +9,13 @@ export const GET_USER_LOGGED_IN = async () => {
     throw error.response?.data.message
   }
 }
+
+export const GET_ALL_USERS = async () => {
+  try {
+    const { data } = await instanceApi.get('/users')
+    return data
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
+    throw error.response?.data.message
+  }
+}
