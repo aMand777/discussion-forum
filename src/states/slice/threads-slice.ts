@@ -1,5 +1,10 @@
 import { PayloadAction, createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { GET_ALL_THREADS } from '../../services/threads.services';
+import {
+  DOWN_VOTE_THREADS,
+  GET_ALL_THREADS,
+  NEUTRALIZE_VOTE_THREADS,
+  UP_VOTE_THREADS,
+} from '../../services/threads.services';
 
 interface Thread {
   id: string;
@@ -14,11 +19,13 @@ interface Thread {
 }
 
 interface ThreadsState {
-  threads: Thread[];
+  value: Thread[];
+  statusVote: string
 }
 
 const initialState: ThreadsState = {
-  threads: [],
+  value: [],
+  statusVote: ''
 };
 
 const threadsSlice = createSlice({
@@ -26,30 +33,82 @@ const threadsSlice = createSlice({
   initialState,
   reducers: {
     setThreads(state, action: PayloadAction<Thread[]>) {
-      state.threads = action.payload;
+      state.value = action.payload;
     },
   },
 
   extraReducers: (builder) => {
     builder
-      .addCase(getAllThreadsStateAsync.pending, (state) => {
+      .addCase(getAllThreadsStateAsync.pending, () => {
         console.log('Loading..');
-        state.threads = [];
       })
       .addCase(getAllThreadsStateAsync.fulfilled, (state, action: PayloadAction<Thread[]>) => {
-        state.threads = action.payload;
+        state.value = action.payload;
       })
       .addCase(getAllThreadsStateAsync.rejected, () => {
         console.log('Failed..');
+      })
+      // =========== UpVote Async Thunk ====================
+      .addCase(upVoteThreadAsync.pending, (state) => {
+        state.statusVote = 'pending';
+      })
+      .addCase(upVoteThreadAsync.fulfilled, (state, action: PayloadAction<string>) => {
+        state.statusVote = action.payload;
+      })
+      .addCase(upVoteThreadAsync.rejected, (state) => {
+        state.statusVote = 'rejected';
+      })
+      // =========== DownVote Async Thunk ====================
+      .addCase(downVoteThreadAsync.pending, (state) => {
+        state.statusVote = 'pending';
+      })
+      .addCase(downVoteThreadAsync.fulfilled, (state, action: PayloadAction<string>) => {
+        state.statusVote = action.payload;
+      })
+      .addCase(downVoteThreadAsync.rejected, (state) => {
+        state.statusVote = 'rejected';
+      })
+      // =========== Neutralize Vote Async Thunk ====================
+      .addCase(neutralizeVoteThreadAsync.pending, (state) => {
+        state.statusVote = 'pending';
+      })
+      .addCase(neutralizeVoteThreadAsync.fulfilled, (state, action: PayloadAction<string>) => {
+        state.statusVote = action.payload;
+      })
+      .addCase(neutralizeVoteThreadAsync.rejected, (state) => {
+        state.statusVote = 'rejected';
       });
   },
 });
 
 export const getAllThreadsStateAsync = createAsyncThunk('threads/getAllThreads', async () => {
   const response = await GET_ALL_THREADS();
-  // console.log('response===>', response.data.threads);
   return response.data.threads;
 });
+
+export const upVoteThreadAsync = createAsyncThunk(
+  'threads/upVoteThreadAsync',
+  async (threadId: string) => {
+    const response = await UP_VOTE_THREADS(threadId);
+    return response.status;
+  },
+);
+
+export const downVoteThreadAsync = createAsyncThunk(
+  'threads/downVoteThreadAsync',
+  async (threadId: string) => {
+    const response = await DOWN_VOTE_THREADS(threadId);
+    return response.data.status;
+  },
+);
+
+export const neutralizeVoteThreadAsync = createAsyncThunk(
+  'threads/neutralizeVoteThreadAsync',
+  async (threadId: string) => {
+    const response = await NEUTRALIZE_VOTE_THREADS(threadId);
+    return response.data.status;
+  },
+);
 
 export const { setThreads } = threadsSlice.actions;
 

@@ -1,35 +1,28 @@
 import { Outlet } from 'react-router-dom';
-// import Navbar from '../components/nav/Navbar';
-// import { useLocation } from 'react-router-dom';
-// import MobileMenu from '../components/menu/MobileMenu';
-// import SideMenu from '../components/menu/SideMenu';
 import BottomNav from '../components/nav/BottomNav';
 import SideNav from '../components/nav/SideNav';
+import TableLeaderBoards from '../components/leaderboards/TableLeaderBoards';
+import LoadingBar from 'react-redux-loading-bar';
 
 const Layout = () => {
-  // const { pathname } = useLocation();
-  // const pathAuth = pathname.includes('/auth');
 
   return (
     <>
-      {/* {pathAuth ? null : (
-        <header>
-          <Navbar />
-        </header>
-      )} */}
+      <header className='sticky top-0'>
+        <LoadingBar />
+      </header>
       <main className='grid grid-cols-12'>
         <div className='col-span-2 hidden sm:block'>
-          {/* <SideMenu /> */}
           <SideNav />
         </div>
         <div className='sm:col-span-7 col-span-full sm:border-x border-base-content'>
           <Outlet />
         </div>
         <div className='col-span-3 hidden sm:block'>
-          <h1 className='text-center'>Leaderboards</h1>
+          <h1 className='text-center font-bold text-xl my-3'>Leaderboards</h1>
+          <TableLeaderBoards />
         </div>
         <div className='fixed bottom-0 border-base-content sm:hidden border-t'>
-          {/* <MobileMenu /> */}
           <BottomNav />
         </div>
       </main>

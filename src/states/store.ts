@@ -3,6 +3,8 @@ import authUserReducer from './slice/authUser-slice'
 import toastReducer from './slice/toast-slice'
 import threadsReducer from './slice/threads-slice'
 import usersReducer from './slice/users-slice'
+import leaderBoardReducer from './slice/leaderboards-slice'
+import { loadingBarReducer } from 'react-redux-loading-bar'
 
 const store = configureStore({
   reducer: {
@@ -10,6 +12,8 @@ const store = configureStore({
     toast: toastReducer,
     threads: threadsReducer,
     users: usersReducer,
+    leaderBoards: leaderBoardReducer,
+    loadingBar: loadingBarReducer,
   },
 });
 

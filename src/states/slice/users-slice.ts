@@ -9,11 +9,11 @@ interface User {
 }
 
 interface UsersState {
-  users: User[];
+  value: User[];
 }
 
 const initialState: UsersState = {
-  users: [],
+  value: [],
 };
 
 const usersSlice = createSlice({
@@ -21,7 +21,7 @@ const usersSlice = createSlice({
   initialState,
   reducers: {
     setUsers(state, action: PayloadAction<User[]>) {
-      state.users = action.payload;
+      state.value = action.payload;
     },
   },
 
@@ -29,10 +29,10 @@ const usersSlice = createSlice({
     builder
       .addCase(getAllUsersAsync.pending, (state) => {
         console.log('Loading..');
-        state.users = [];
+        state.value = [];
       })
       .addCase(getAllUsersAsync.fulfilled, (state, action: PayloadAction<User[]>) => {
-        state.users = action.payload;
+        state.value = action.payload;
       })
       .addCase(getAllUsersAsync.rejected, () => {
         console.log('Failed..');
@@ -42,7 +42,7 @@ const usersSlice = createSlice({
 
 export const getAllUsersAsync = createAsyncThunk('users/getAllUsers', async () => {
   const response = await GET_ALL_USERS();
-  console.log('response==>', response.data.users);
+  // console.log('response==>', response.data.users);
   return response.data.users
 });
 
