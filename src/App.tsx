@@ -35,7 +35,7 @@ function App() {
         <Route element={<RequireAuth />}>
           <Route element={<Layout />}>
             <Route path='/' element={<Threads />} />
-            <Route path='/threads/:user/:id' element={<DetailThread />} />
+            <Route path='/threads/:user/:threadId' element={<DetailThread />} />
           </Route>
           {/* not found route page */}
           <Route path='*' element={<NotFoundPage />} />

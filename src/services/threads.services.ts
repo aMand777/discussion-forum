@@ -10,6 +10,15 @@ export const GET_ALL_THREADS = async () => {
   }
 }
 
+export const GET_DETAIL_THREAD = async (threadId: string | undefined) => {
+  try {
+    const { data } = await instanceApi.get(`/threads/${threadId}`)
+    return data
+  } catch (error: any) {
+    throw error.response?.data.message
+  }
+}
+
 export const UP_VOTE_THREADS = async (threadId: string) => {
   try {
     const { data } = await instanceApi.post(`/threads/${threadId}/up-vote`);

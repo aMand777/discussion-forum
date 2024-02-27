@@ -1,56 +1,96 @@
-// import React from 'react';
+import React from 'react';
 import { AiOutlineComment } from 'react-icons/ai';
-import { IoHeart, IoHeartDislikeOutline } from 'react-icons/io5';
+import { postedAt } from '../../utils';
+import parse from 'html-react-parser';
+import UpVotes from '../votes/UpVotes';
+import DownVotes from '../votes/DownVotes';
+import useVotes from '../../hook/useVotes';
 
-const CardDetailThread = () => {
+interface Owner {
+  id: string;
+  name: string;
+  avatar: string;
+}
+
+interface CommentThread {
+  id: string;
+  content: string;
+  createdAt: string;
+  owner: Owner;
+  upVotesBy: string[];
+  downVotesBy: string[];
+}
+
+type CardDetailThreadProps = {
+  threadId: string | undefined;
+  authUser: string | undefined;
+  owner: string | undefined;
+  avatar: string | undefined;
+  title: string | undefined;
+  body: string | undefined;
+  createdAt: string | undefined;
+  comments: CommentThread[] | undefined;
+  upVotesBy: string[] | undefined;
+  downVotesBy: string[] | undefined;
+};
+
+const CardDetailThread: React.FC<CardDetailThreadProps> = ({
+  threadId,
+  authUser,
+  owner,
+  avatar,
+  title,
+  body,
+  createdAt,
+  comments,
+  upVotesBy,
+  downVotesBy,
+}) => {
+  const { upVoteThread, downVoteThread } = useVotes();
+  
+  const isThreadUpVoteByAuthUser = upVotesBy
+    ? upVotesBy.filter((vote) => vote === authUser).length > 0
+    : false;
+  const isThreadDownVoteByAuthUser = downVotesBy
+    ? downVotesBy.filter((vote) => vote === authUser).length > 0
+    : false;
+
+  const handleButtonUpVote = (event: React.MouseEvent) => {
+    event.stopPropagation();
+    upVoteThread(isThreadUpVoteByAuthUser, threadId || '');
+  };
+
+  const handleButtonDownVote = (event: React.MouseEvent) => {
+    event.stopPropagation();
+    downVoteThread(isThreadDownVoteByAuthUser, threadId || '');
+  };
+
   return (
     <>
-      <div>
+      <div className='p-10'>
         <div className='items-center gap-5 avatar'>
-          <div className='rounded-full w-7 ring ring-primary ring-offset-base-100 ring-offset-2'>
-            <img src='https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg' />
+          <div className='w-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2'>
+            <img src={avatar || ''} />
           </div>
-          <span>Seventaurus_</span>
+          <span>{owner}</span>
           <span className=''>•</span>
-          <span className='text-xs'>5 mintes ago</span>
+          <span className='text-xs'>{postedAt(createdAt || '')}</span>
         </div>
-        <div className='mb-2 font-semibold'>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-        </div>
-        <div className='font-thin line-clamp-5'>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam corporis iure dolor
-          dolorum similique ab aspernatur maiores, repellat quaerat, inventore labore est! Eos
-          architecto possimus laboriosam molestias porro ipsa ea?
-        </div>
+        <div className='my-2 font-semibold'>{parse(title || '')}</div>
+        <div className='font-thin'>{parse(body || '')}</div>
         <div className='flex items-center gap-3'>
-          <div className='flex items-center gap-2'>
-            <button
-              onClick={undefined}
-              className='p-0 rounded-full btn btn-ghost hover:bg-base-100'>
-              {/* {isThreadUpVoteByAuthUser ? ( */}
-              <IoHeart className='p-0 text-red-500 w-7 h-7' />
-              {/* ) : ( */}
-              {/* <IoHeartOutline className='w-7 h-7' /> */}
-              {/* )} */}
-            </button>
-            <span>10</span>
-          </div>
-          <div className='flex items-center gap-2'>
-            <button
-              onClick={undefined}
-              className='p-0 rounded-full btn btn-ghost hover:bg-base-100'>
-              {/* {isThreadDownVoteByAuthUser ? ( */}
-              {/* <IoHeartDislikeSharp className='text-red-500 w-7 h-7' /> */}
-              {/* ) : ( */}
-              <IoHeartDislikeOutline className='w-7 h-7' />
-              {/* )} */}
-            </button>
-            <span>15</span>
-          </div>
-          {/* <Link to='/threaads/detail' className='flex items-center gap-2'> */}
+          <UpVotes
+            isAuthUserVotes={isThreadUpVoteByAuthUser}
+            totalVotes={upVotesBy?.length}
+            onVotes={handleButtonUpVote}
+          />
+          <DownVotes
+            isAuthUserVotes={isThreadDownVoteByAuthUser}
+            totalVotes={downVotesBy?.length}
+            onVotes={handleButtonDownVote}
+          />
           <AiOutlineComment className='w-7 h-7' />
-          <span>21</span>
-          {/* </Link> */}
+          <span>{comments?.length}</span>
         </div>
         <div className='divider'></div>
       </div>
