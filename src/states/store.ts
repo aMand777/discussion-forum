@@ -5,6 +5,7 @@ import threadsReducer from './slice/threads-slice'
 import usersReducer from './slice/users-slice'
 import leaderBoardReducer from './slice/leaderboards-slice'
 import { loadingBarReducer } from 'react-redux-loading-bar'
+import detailThreadsReducer from './slice/detail-thread-slice'
 
 const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ const store = configureStore({
     users: usersReducer,
     leaderBoards: leaderBoardReducer,
     loadingBar: loadingBarReducer,
+    detailThread: detailThreadsReducer,
   },
 });
 

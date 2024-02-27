@@ -32,9 +32,9 @@ const threadsSlice = createSlice({
   name: 'threads',
   initialState,
   reducers: {
-    setThreads(state, action: PayloadAction<Thread[]>) {
-      state.value = action.payload;
-    },
+    // setThreads(state, action: PayloadAction<Thread[]>) {
+    //   state.value = action.payload;
+    // },
   },
 
   extraReducers: (builder) => {
@@ -86,6 +86,11 @@ export const getAllThreadsStateAsync = createAsyncThunk('threads/getAllThreads',
   return response.data.threads;
 });
 
+// export const getDetailThreadStateAsync = createAsyncThunk('threads/getDetailThread', async () => {
+//   const response = await GET_DETAIL_THREAD();
+//   return response.data;
+// });
+
 export const upVoteThreadAsync = createAsyncThunk(
   'threads/upVoteThreadAsync',
   async (threadId: string) => {
@@ -110,6 +115,6 @@ export const neutralizeVoteThreadAsync = createAsyncThunk(
   },
 );
 
-export const { setThreads } = threadsSlice.actions;
+// export const { setThreads } = threadsSlice.actions;
 
 export default threadsSlice.reducer;
