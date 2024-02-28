@@ -20,22 +20,18 @@ interface Thread {
 
 interface ThreadsState {
   value: Thread[];
-  statusVote: string
+  statusVoteThread: string
 }
 
 const initialState: ThreadsState = {
   value: [],
-  statusVote: ''
+  statusVoteThread: ''
 };
 
 const threadsSlice = createSlice({
   name: 'threads',
   initialState,
-  reducers: {
-    // setThreads(state, action: PayloadAction<Thread[]>) {
-    //   state.value = action.payload;
-    // },
-  },
+  reducers: {},
 
   extraReducers: (builder) => {
     builder
@@ -50,33 +46,33 @@ const threadsSlice = createSlice({
       })
       // =========== UpVote Async Thunk ====================
       .addCase(upVoteThreadAsync.pending, (state) => {
-        state.statusVote = 'pending';
+        state.statusVoteThread = 'pending';
       })
       .addCase(upVoteThreadAsync.fulfilled, (state, action: PayloadAction<string>) => {
-        state.statusVote = action.payload;
+        state.statusVoteThread = action.payload;
       })
       .addCase(upVoteThreadAsync.rejected, (state) => {
-        state.statusVote = 'rejected';
+        state.statusVoteThread = 'rejected';
       })
       // =========== DownVote Async Thunk ====================
       .addCase(downVoteThreadAsync.pending, (state) => {
-        state.statusVote = 'pending';
+        state.statusVoteThread = 'pending';
       })
       .addCase(downVoteThreadAsync.fulfilled, (state, action: PayloadAction<string>) => {
-        state.statusVote = action.payload;
+        state.statusVoteThread = action.payload;
       })
       .addCase(downVoteThreadAsync.rejected, (state) => {
-        state.statusVote = 'rejected';
+        state.statusVoteThread = 'rejected';
       })
       // =========== Neutralize Vote Async Thunk ====================
       .addCase(neutralizeVoteThreadAsync.pending, (state) => {
-        state.statusVote = 'pending';
+        state.statusVoteThread = 'pending';
       })
       .addCase(neutralizeVoteThreadAsync.fulfilled, (state, action: PayloadAction<string>) => {
-        state.statusVote = action.payload;
+        state.statusVoteThread = action.payload;
       })
       .addCase(neutralizeVoteThreadAsync.rejected, (state) => {
-        state.statusVote = 'rejected';
+        state.statusVoteThread = 'rejected';
       });
   },
 });
@@ -85,11 +81,6 @@ export const getAllThreadsStateAsync = createAsyncThunk('threads/getAllThreads',
   const response = await GET_ALL_THREADS();
   return response.data.threads;
 });
-
-// export const getDetailThreadStateAsync = createAsyncThunk('threads/getDetailThread', async () => {
-//   const response = await GET_DETAIL_THREAD();
-//   return response.data;
-// });
 
 export const upVoteThreadAsync = createAsyncThunk(
   'threads/upVoteThreadAsync',
@@ -114,7 +105,5 @@ export const neutralizeVoteThreadAsync = createAsyncThunk(
     return response.data.status;
   },
 );
-
-// export const { setThreads } = threadsSlice.actions;
 
 export default threadsSlice.reducer;

@@ -15,7 +15,7 @@ const Layout = () => {
         <div className='col-span-2 hidden sm:block'>
           <SideNav />
         </div>
-        <div className='sm:col-span-7 col-span-full sm:border-x border-base-content'>
+        <div className='sm:col-span-7 col-span-full sm:border-x border-base-content h-screen overflow-y-scroll scroll-none'>
           <Outlet />
         </div>
         <div className='col-span-3 hidden sm:block'>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../states/store';
 import {
@@ -7,11 +7,17 @@ import {
   neutralizeVoteThreadAsync,
   getAllThreadsStateAsync,
 } from '../states/slice/threads-slice';
-import { getDetailThreadAsync } from '../states/slice/detail-thread-slice'
+import {
+  getDetailThreadAsync,
+  neutralizeVoteCommentAsync,
+  upVoteCommentAsync,
+  downVoteCommentAsync,
+} from '../states/slice/detail-thread-slice';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
 
 const useVotes = () => {
-  const { statusVote } = useSelector((state: RootState) => state.threads);
+  const { statusVoteThread } = useSelector((state: RootState) => state.threads);
+  const { statusVoteComment } = useSelector((state: RootState) => state.detailThread);
   const dispatch = useDispatch<AppDispatch>();
 
   const handleButtonUpVoteThread = (isThreadUpVoteByAuthUser: boolean, threadId: string) => {
@@ -34,15 +40,48 @@ const useVotes = () => {
     dispatch(getDetailThreadAsync(threadId));
   };
 
-    React.useEffect(() => {
-      if (statusVote === 'pending') {
-        dispatch(showLoading());
-      } else {
-        dispatch(hideLoading());
-      }
-    }, [dispatch, statusVote]);
+  const handleButtonUpVoteComment = (
+    isCommentUpVoteByAuthUser: boolean,
+    threadId: string,
+    commentId: string,
+  ) => {
+    if (isCommentUpVoteByAuthUser) {
+      dispatch(neutralizeVoteCommentAsync({ threadId, commentId }));
+    } else {
+      dispatch(upVoteCommentAsync({ threadId, commentId }));
+    }
+    dispatch(getAllThreadsStateAsync());
+    dispatch(getDetailThreadAsync(threadId));
+  };
 
-  return { upVoteThread: handleButtonUpVoteThread, downVoteThread: handleButtonDownVoteThread };
+  const handleButtonDownVoteComment = (
+    isCommentDownVoteByAuthUser: boolean,
+    threadId: string,
+    commentId: string,
+  ) => {
+    if (isCommentDownVoteByAuthUser) {
+      dispatch(neutralizeVoteCommentAsync({ threadId, commentId }));
+    } else {
+      dispatch(downVoteCommentAsync({ threadId, commentId }));
+    }
+    dispatch(getAllThreadsStateAsync());
+    dispatch(getDetailThreadAsync(threadId));
+  };
+
+  React.useEffect(() => {
+    if (statusVoteThread === 'pending' || statusVoteComment === 'pending') {
+      dispatch(showLoading());
+    } else {
+      dispatch(hideLoading());
+    }
+  }, [dispatch, statusVoteThread, statusVoteComment]);
+
+  return {
+    upVoteThread: handleButtonUpVoteThread,
+    downVoteThread: handleButtonDownVoteThread,
+    upVoteComment: handleButtonUpVoteComment,
+    downVoteComment: handleButtonDownVoteComment,
+  };
 };
 
 export default useVotes;
