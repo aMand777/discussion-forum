@@ -7,7 +7,7 @@ type UpVotesProps = {
   onVotes: (event: React.MouseEvent) => void
 }
 
-const UpVotes: React.FC<UpVotesProps> = ({isAuthUserVotes, totalVotes, onVotes}) => {
+const UpVotes: React.FC<UpVotesProps> = ({ isAuthUserVotes, totalVotes, onVotes }) => {
   return (
     <>
       <div className='flex items-center gap-2'>

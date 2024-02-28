@@ -8,11 +8,7 @@ import CardThread from '../components/threads/CardThread';
 
 const Threads = () => {
   const dispatch = useDispatch<AppDispatch>()
-  // const { threads } = useSelector((state: RootState) => state.threads)
-  // const { users } = useSelector((state: RootState) => state.users)
   const { users, threads, authUser } = useSelector((state: RootState) => state)
-  // console.log('threads==>', threads)
-  // console.log('users==>', users)
 
   React.useEffect(() => {
     dispatch(getAllThreadsStateAsync())
@@ -24,13 +20,11 @@ const Threads = () => {
     user: users.value.find((user) => user.id === thread.ownerId),
     authUser: authUser.data.id,
   }))
-
-  console.log('threadsList===>', threadsList)
   
   return (
     <>
       {/* <Category /> */}
-      <div className='w-full h-screen p-5 mx-auto overflow-y-scroll md:w-10/12 scroll-none'>
+      <div className='w-full p-5 mx-auto md:w-10/12'>
         {threadsList.map((thread) => (
           <CardThread
             key={thread.id}
@@ -46,12 +40,6 @@ const Threads = () => {
             authUser={thread.authUser}
           />
         ))}
-        {/* <CardThread />
-        <CardThread />
-        <CardThread />
-        <CardThread />
-        <CardThread />
-        <CardThread /> */}
       </div>
     </>
   );

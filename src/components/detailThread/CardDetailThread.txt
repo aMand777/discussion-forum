@@ -5,6 +5,10 @@ import parse from 'html-react-parser';
 import UpVotes from '../votes/UpVotes';
 import DownVotes from '../votes/DownVotes';
 import useVotes from '../../hook/useVotes';
+import Comments from '../Comment/Comment';
+import { getDetailThreadAsync } from '../../states/slice/detail-thread-slice'
+import { AppDispatch } from '../../states/store';
+import { useDispatch } from 'react-redux';
 
 interface Owner {
   id: string;
@@ -12,7 +16,7 @@ interface Owner {
   avatar: string;
 }
 
-interface CommentThread {
+interface Comment {
   id: string;
   content: string;
   createdAt: string;
@@ -29,7 +33,7 @@ type CardDetailThreadProps = {
   title: string | undefined;
   body: string | undefined;
   createdAt: string | undefined;
-  comments: CommentThread[] | undefined;
+  comments: Comment[] | undefined;
   upVotesBy: string[] | undefined;
   downVotesBy: string[] | undefined;
 };
@@ -46,6 +50,7 @@ const CardDetailThread: React.FC<CardDetailThreadProps> = ({
   upVotesBy,
   downVotesBy,
 }) => {
+  const dispatch = useDispatch<AppDispatch>()
   const { upVoteThread, downVoteThread } = useVotes();
   
   const isThreadUpVoteByAuthUser = upVotesBy
@@ -64,6 +69,10 @@ const CardDetailThread: React.FC<CardDetailThreadProps> = ({
     event.stopPropagation();
     downVoteThread(isThreadDownVoteByAuthUser, threadId || '');
   };
+
+  React.useEffect(() => {
+    dispatch(getDetailThreadAsync(threadId));
+  },[dispatch, threadId])
 
   return (
     <>
@@ -93,6 +102,7 @@ const CardDetailThread: React.FC<CardDetailThreadProps> = ({
           <span>{comments?.length}</span>
         </div>
         <div className='divider'></div>
+        <Comments />
       </div>
     </>
   );
