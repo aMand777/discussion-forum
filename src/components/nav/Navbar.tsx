@@ -1,4 +1,4 @@
-import { unsetAuthUser, getUserLoginAsync } from '../../states/slice/authUser-slice'
+import { getUserLoginAsync } from '../../states/slice/authUser-slice'
 import { useDispatch } from 'react-redux'
 import { removeAccessToken } from '../../utils/storage'
 import { AppDispatch} from '../../states/store'
@@ -8,7 +8,6 @@ const Navbar = () => {
 
   const handleButtonLogout = () => {
     removeAccessToken('accessToken')
-    dispatch(unsetAuthUser())
     dispatch(getUserLoginAsync())
   }
 
@@ -16,14 +15,14 @@ const Navbar = () => {
     <>
       <div className='navbar bg-primary'>
         <div className='flex-1'>
-          <a className='btn btn-ghost text-xl'>daisyUI</a>
+          <a className='text-xl btn btn-ghost'>daisyUI</a>
         </div>
         <div className='flex-none gap-2'>
           <div className='form-control'>
             <input
               type='text'
               placeholder='Search'
-              className='input input-bordered w-24 md:w-auto'
+              className='w-24 input input-bordered md:w-auto'
             />
           </div>
           <div className='dropdown dropdown-end'>

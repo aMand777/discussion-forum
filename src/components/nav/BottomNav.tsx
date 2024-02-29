@@ -3,11 +3,16 @@ import { IoMdChatbubbles } from 'react-icons/io';
 import { IoCreateOutline } from 'react-icons/io5';
 import { MdLeaderboard } from 'react-icons/md';
 import { NavLink } from 'react-router-dom';
+import useUser from '../../hook/useUser';
+import useLogout from '../../hook/useLogout'
 
 const BottomNav = () => {
+  const { authUser } = useUser();
+  const { onLogout } = useLogout()
+
   return (
     <>
-      <div className='btm-nav border-base-content border-t'>
+      <div className='border-t btm-nav border-base-content'>
         <NavLink
           to='/'
           className={({ isActive }) => (isActive ? 'active text-accent' : 'text-base-content')}>
@@ -32,13 +37,10 @@ const BottomNav = () => {
           <MdLeaderboard size={35} />
           <span className='btm-nav-label'>Lead</span>
         </NavLink>
-        <div className='dropdown dropdown-end mt-1'>
+        <div className='mt-1 dropdown dropdown-end'>
           <div tabIndex={0} role='button' className='btn btn-ghost btn-circle avatar'>
             <div className='w-8 rounded-full ring ring-offset-base-100 ring-offset-2'>
-              <img
-                alt='Tailwind CSS Navbar component'
-                src='https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg'
-              />
+              <img alt={`avatar/${authUser.name}`} src={authUser.avatar} />
             </div>
             <span className='btm-nav-label'>Profile</span>
           </div>
@@ -55,7 +57,7 @@ const BottomNav = () => {
               <a>Settings</a>
             </li>
             <li>
-              <a>Logout</a>
+              <button onClick={() => onLogout()}>Logout</button>
             </li>
           </ul>
         </div>

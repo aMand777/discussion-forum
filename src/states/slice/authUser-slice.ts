@@ -1,4 +1,4 @@
-import { PayloadAction, createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { GET_USER_LOGGED_IN } from '../../services/users.services';
 
 interface UserData {
@@ -25,48 +25,38 @@ const initialState: AuthUser = {
   },
 };
 
+export const getUserLoginAsync = createAsyncThunk('authUser/getUserLogin', async () => {
+  try {
+    return await GET_USER_LOGGED_IN();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
+    return error;
+  }
+});
+
 const authUserSlice = createSlice({
   name: 'authUser',
   initialState,
-  reducers: {
-    setAuthUser(state, action: PayloadAction<AuthUser>) {
-      state.isAuthenticated = action.payload.isAuthenticated;
-      state.isLoading = action.payload.isLoading;
-      state.data = action.payload.data;
-    },
-    unsetAuthUser(state) {
-      state.isAuthenticated = false;
-      state.isLoading = false;
-      state.data = {
-        id: '',
-        name: '',
-        email: '',
-        avatar: '',
-      };
-    },
-  },
+  reducers: {},
 
   extraReducers: (builder) => {
     builder
       .addCase(getUserLoginAsync.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(getUserLoginAsync.fulfilled, (state, action: PayloadAction<UserData>) => {
-        state.data = action.payload;
-        state.isAuthenticated = true;
+      .addCase(getUserLoginAsync.fulfilled, (state, action) => {
+        if (action.payload.status === 'success') {
+          state.isAuthenticated = true;
+          state.data = action.payload.data.user;
+        } else {
+          state.isAuthenticated = false;
+        }
         state.isLoading = false;
       })
       .addCase(getUserLoginAsync.rejected, (state) => {
         state.isLoading = false;
-      })
+      });
   },
 });
-
-export const getUserLoginAsync = createAsyncThunk<UserData>('authUser/getUserLogin', async () => {
-  const response = await GET_USER_LOGGED_IN();
-  return response.data.user;
-});
-
-export const { setAuthUser, unsetAuthUser } = authUserSlice.actions;
 
 export default authUserSlice.reducer;
