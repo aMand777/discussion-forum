@@ -6,7 +6,7 @@ export const GET_USER_LOGGED_IN = async () => {
     return data
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
-    throw error.response?.data.message
+    throw error.response
   }
 }
 
