@@ -26,7 +26,7 @@ const BottomNav = () => {
           <span className='btm-nav-label'>Search</span>
         </NavLink>
         <NavLink
-          to='/create'
+          to='/threads/create'
           className={({ isActive }) => (isActive ? 'active text-accent' : 'text-base-content')}>
           <IoCreateOutline size={35} />
           <span className='btm-nav-label'>Create</span>

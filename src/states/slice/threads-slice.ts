@@ -20,13 +20,46 @@ interface Thread {
 
 interface ThreadsState {
   value: Thread[];
-  statusVoteThread: string
+  statusVoteThread: string;
+  toastCreate: boolean;
+  toastMessage: string,
 }
 
 const initialState: ThreadsState = {
   value: [],
-  statusVoteThread: ''
+  statusVoteThread: '',
+  toastCreate: false,
+  toastMessage: '',
 };
+
+export const getAllThreadsStateAsync = createAsyncThunk('threads/getAllThreads', async () => {
+  const response = await GET_ALL_THREADS();
+  return response.data.threads;
+});
+
+export const upVoteThreadAsync = createAsyncThunk(
+  'threads/upVoteThreadAsync',
+  async (threadId: string) => {
+    const response = await UP_VOTE_THREADS(threadId);
+    return response.status;
+  },
+);
+
+export const downVoteThreadAsync = createAsyncThunk(
+  'threads/downVoteThreadAsync',
+  async (threadId: string) => {
+    const response = await DOWN_VOTE_THREADS(threadId);
+    return response.data.status;
+  },
+);
+
+export const neutralizeVoteThreadAsync = createAsyncThunk(
+  'threads/neutralizeVoteThreadAsync',
+  async (threadId: string) => {
+    const response = await NEUTRALIZE_VOTE_THREADS(threadId);
+    return response.data.status;
+  },
+);
 
 const threadsSlice = createSlice({
   name: 'threads',
@@ -73,37 +106,8 @@ const threadsSlice = createSlice({
       })
       .addCase(neutralizeVoteThreadAsync.rejected, (state) => {
         state.statusVoteThread = 'rejected';
-      });
+      })
   },
 });
-
-export const getAllThreadsStateAsync = createAsyncThunk('threads/getAllThreads', async () => {
-  const response = await GET_ALL_THREADS();
-  return response.data.threads;
-});
-
-export const upVoteThreadAsync = createAsyncThunk(
-  'threads/upVoteThreadAsync',
-  async (threadId: string) => {
-    const response = await UP_VOTE_THREADS(threadId);
-    return response.status;
-  },
-);
-
-export const downVoteThreadAsync = createAsyncThunk(
-  'threads/downVoteThreadAsync',
-  async (threadId: string) => {
-    const response = await DOWN_VOTE_THREADS(threadId);
-    return response.data.status;
-  },
-);
-
-export const neutralizeVoteThreadAsync = createAsyncThunk(
-  'threads/neutralizeVoteThreadAsync',
-  async (threadId: string) => {
-    const response = await NEUTRALIZE_VOTE_THREADS(threadId);
-    return response.data.status;
-  },
-);
 
 export default threadsSlice.reducer;

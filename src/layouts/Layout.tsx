@@ -3,6 +3,7 @@ import BottomNav from '../components/nav/BottomNav';
 import SideNav from '../components/nav/SideNav';
 import TableLeaderBoards from '../components/leaderboards/TableLeaderBoards';
 import LoadingBar from 'react-redux-loading-bar';
+import Toast from '../components/toast/Toast';
 
 const Layout = () => {
 
@@ -15,7 +16,7 @@ const Layout = () => {
         <div className='col-span-2 hidden sm:block'>
           <SideNav />
         </div>
-        <div className='sm:col-span-7 col-span-full sm:border-x border-base-content h-screen overflow-y-scroll scroll-none'>
+        <div className='sm:col-span-7 col-span-full sm:border-x border-base-300 h-screen overflow-y-scroll scroll-none'>
           <Outlet />
         </div>
         <div className='col-span-3 hidden sm:block'>
@@ -27,6 +28,7 @@ const Layout = () => {
         </div>
       </main>
       <footer></footer>
+      <Toast />
     </>
   );
 };

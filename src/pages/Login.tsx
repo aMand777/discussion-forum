@@ -11,7 +11,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../states/store';
 import { getUserLoginAsync } from '../states/slice/authUser-slice';
 import LoadingPage from '../components/loading/LoadingPage.tsx';
-import ToastRegister from '../components/toast/ToastRegister.tsx';
 
 const FormSchema = z.object({
   email: z.string().min(1, { message: 'Email is required' }).email({ message: 'Invalid email' }),
@@ -77,7 +76,6 @@ const Login = () => {
         handleSubmit={handleSubmit}
         errorResponse={errorResponseMessage}
       />
-      <ToastRegister />
     </>
   );
 };
