@@ -13,6 +13,7 @@ import { getAllThreadsStateAsync } from './states/slice/threads-slice'
 import { getLeaderBoardsAsync } from './states/slice/leaderboards-slice'
 import NotFoundPage from './components/notFound/NotFoundPage';
 import DetailThread from './pages/DetailThread';
+import Create from './pages/Create';
 
 function App() {
   const dispatch = useDispatch<AppDispatch>();
@@ -35,6 +36,7 @@ function App() {
         <Route element={<RequireAuth />}>
           <Route element={<Layout />}>
             <Route path='/' element={<Threads />} />
+            <Route path='/threads/create' element={<Create />} />
             <Route path='/threads/:user/:threadId' element={<DetailThread />} />
           </Route>
           {/* not found route page */}

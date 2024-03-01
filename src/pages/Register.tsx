@@ -6,8 +6,8 @@ import { useMutation } from '@tanstack/react-query';
 import { POST_REGISTER_USER } from '../services/register.services';
 import { useNavigate } from 'react-router-dom';
 import FormRegister from '../components/auth/register/FormRegister';
-import { useDispatch } from 'react-redux';
-import { setToast } from '../states/slice/toast-slice'
+// import { useDispatch } from 'react-redux';
+// import { setToast } from '../states/slice/toast-slice'
 
 const FormSchema = z
   .object({
@@ -35,7 +35,7 @@ type Inputs = {
 };
 
 const Register = () => {
-  const dispatch = useDispatch()
+  // const dispatch = useDispatch()
   const navigate = useNavigate();
   const [errorResponseMessage, setErrorResponseMessage] = React.useState<string>('');
 
@@ -56,7 +56,7 @@ const Register = () => {
   const { mutateAsync: registerUser, isPending } = useMutation({
     mutationFn: POST_REGISTER_USER,
     onSuccess: () => {
-      dispatch(setToast({isOpen: true}))
+      // dispatch(setToast({isOpen: true}))
       navigate('/auth/login');
     },
     onError: (error: string) => {

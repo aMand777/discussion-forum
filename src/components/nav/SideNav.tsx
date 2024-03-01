@@ -35,7 +35,7 @@ const SideNav = () => {
           <span className='hidden text-lg font-semibold lg:block'>Search</span>
         </NavLink>
         <NavLink
-          to='/create'
+          to='/threads/create'
           className={({ isActive }) =>
             isActive
               ? 'active text-accent __navlink_sidenav'
