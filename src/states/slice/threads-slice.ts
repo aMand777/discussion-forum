@@ -1,10 +1,7 @@
 import { PayloadAction, createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import {
-  DOWN_VOTE_THREADS,
-  GET_ALL_THREADS,
-  NEUTRALIZE_VOTE_THREADS,
-  UP_VOTE_THREADS,
-} from '../../services/threads.services';
+import { GET_ALL_THREADS } from '../../services/threads.services';
+import { hideLoading, showLoading } from 'react-redux-loading-bar';
+import { setToast, unSetToast } from '../../states/slice/toast-slice'
 
 interface Thread {
   id: string;
@@ -20,94 +17,42 @@ interface Thread {
 
 interface ThreadsState {
   value: Thread[];
-  statusVoteThread: string;
-  toastCreate: boolean;
-  toastMessage: string,
 }
 
 const initialState: ThreadsState = {
-  value: [],
-  statusVoteThread: '',
-  toastCreate: false,
-  toastMessage: '',
+  value: []
 };
 
-export const getAllThreadsStateAsync = createAsyncThunk('threads/getAllThreads', async () => {
-  const response = await GET_ALL_THREADS();
-  return response.data.threads;
-});
-
-export const upVoteThreadAsync = createAsyncThunk(
-  'threads/upVoteThreadAsync',
-  async (threadId: string) => {
-    const response = await UP_VOTE_THREADS(threadId);
-    return response.status;
-  },
-);
-
-export const downVoteThreadAsync = createAsyncThunk(
-  'threads/downVoteThreadAsync',
-  async (threadId: string) => {
-    const response = await DOWN_VOTE_THREADS(threadId);
-    return response.data.status;
-  },
-);
-
-export const neutralizeVoteThreadAsync = createAsyncThunk(
-  'threads/neutralizeVoteThreadAsync',
-  async (threadId: string) => {
-    const response = await NEUTRALIZE_VOTE_THREADS(threadId);
-    return response.data.status;
+export const getAllThreadsStateAsync = createAsyncThunk(
+  'threads/getAllThreads',
+  async (_, { dispatch }) => {
+    dispatch(showLoading())
+    dispatch(unSetToast())
+    try {
+      const response = await GET_ALL_THREADS();
+      if (response.status === 'success') {
+        dispatch(setThreads(response.data.threads));
+        dispatch(hideLoading());
+      }
+      return response.status;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      dispatch(setToast({ status: 'error', message: error.data.message }));
+      dispatch(hideLoading());
+    }
   },
 );
 
 const threadsSlice = createSlice({
   name: 'threads',
   initialState,
-  reducers: {},
-
-  extraReducers: (builder) => {
-    builder
-      .addCase(getAllThreadsStateAsync.pending, () => {
-        console.log('Loading..');
-      })
-      .addCase(getAllThreadsStateAsync.fulfilled, (state, action: PayloadAction<Thread[]>) => {
-        state.value = action.payload;
-      })
-      .addCase(getAllThreadsStateAsync.rejected, () => {
-        console.log('Failed..');
-      })
-      // =========== UpVote Async Thunk ====================
-      .addCase(upVoteThreadAsync.pending, (state) => {
-        state.statusVoteThread = 'pending';
-      })
-      .addCase(upVoteThreadAsync.fulfilled, (state, action: PayloadAction<string>) => {
-        state.statusVoteThread = action.payload;
-      })
-      .addCase(upVoteThreadAsync.rejected, (state) => {
-        state.statusVoteThread = 'rejected';
-      })
-      // =========== DownVote Async Thunk ====================
-      .addCase(downVoteThreadAsync.pending, (state) => {
-        state.statusVoteThread = 'pending';
-      })
-      .addCase(downVoteThreadAsync.fulfilled, (state, action: PayloadAction<string>) => {
-        state.statusVoteThread = action.payload;
-      })
-      .addCase(downVoteThreadAsync.rejected, (state) => {
-        state.statusVoteThread = 'rejected';
-      })
-      // =========== Neutralize Vote Async Thunk ====================
-      .addCase(neutralizeVoteThreadAsync.pending, (state) => {
-        state.statusVoteThread = 'pending';
-      })
-      .addCase(neutralizeVoteThreadAsync.fulfilled, (state, action: PayloadAction<string>) => {
-        state.statusVoteThread = action.payload;
-      })
-      .addCase(neutralizeVoteThreadAsync.rejected, (state) => {
-        state.statusVoteThread = 'rejected';
-      })
+  reducers: {
+    setThreads(state, action: PayloadAction<Thread[]>) {
+      state.value = action.payload;
+    },
   },
 });
+
+export const { setThreads } = threadsSlice.actions;
 
 export default threadsSlice.reducer;

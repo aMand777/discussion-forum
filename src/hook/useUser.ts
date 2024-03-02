@@ -1,10 +1,10 @@
-import { useSelector } from 'react-redux'
-import { RootState } from '../states/store'
+import { useAppSelector } from '../states/store'
 
 const useUser = () => {
-  const { data } = useSelector((state: RootState) => state.authUser)
+  const { data } = useAppSelector((state) => state.authUser)
+  const { value } = useAppSelector((state) => state.users)
 
-  return { authUser: data }
+  return { authUser: data, users: value }
 }
 
 export default useUser

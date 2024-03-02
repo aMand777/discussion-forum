@@ -8,12 +8,13 @@ import Threads from './pages/Threads';
 import Register from './pages/Register';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from './states/store';
-import { getUserLoginAsync } from './states/slice/authUser-slice';
-import { getAllThreadsStateAsync } from './states/slice/threads-slice'
-import { getLeaderBoardsAsync } from './states/slice/leaderboards-slice'
+import { getUserLoginAsync } from './states/slice/auth-user-slice';
+import { getAllThreadsStateAsync } from './states/slice/threads-slice';
+import { getLeaderBoardsAsync } from './states/slice/leaderboards-slice';
 import NotFoundPage from './components/notFound/NotFoundPage';
 import DetailThread from './pages/DetailThread';
 import Create from './pages/Create';
+import Toast from './components/toast/Toast';
 
 function App() {
   const dispatch = useDispatch<AppDispatch>();
@@ -22,7 +23,7 @@ function App() {
     dispatch(getUserLoginAsync());
     dispatch(getAllThreadsStateAsync());
     dispatch(getLeaderBoardsAsync());
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -43,6 +44,7 @@ function App() {
           <Route path='*' element={<NotFoundPage />} />
         </Route>
       </Routes>
+      <Toast />
     </>
   );
 }

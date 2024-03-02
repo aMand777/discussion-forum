@@ -60,8 +60,8 @@ const SideNav = () => {
               <img alt={`avatar/${authUser.name}`} src={authUser.avatar} />
             </div>
           </div>
-          <span className='font-semibold text-lg absolute left-[60px] top-2 hidden lg:block'>
-            Profile
+          <span className='font-semibold text-lg absolute left-[60px] top-2 hidden lg:block line-clamp-1'>
+            {authUser.name}
           </span>
           <ul
             tabIndex={0}

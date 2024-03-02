@@ -1,24 +1,19 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '../states/store';
+import { useAppDispatch } from '../states/store';
+import { getAllThreadsStateAsync } from '../states/slice/threads-slice';
+import { getDetailThreadAsync } from '../states/slice/detail-thread-slice';
 import {
   downVoteThreadAsync,
   upVoteThreadAsync,
   neutralizeVoteThreadAsync,
-  getAllThreadsStateAsync,
-} from '../states/slice/threads-slice';
+} from '../states/slice/vote-thread-slice';
 import {
-  getDetailThreadAsync,
   neutralizeVoteCommentAsync,
   upVoteCommentAsync,
   downVoteCommentAsync,
-} from '../states/slice/detail-thread-slice';
-import { hideLoading, showLoading } from 'react-redux-loading-bar';
+} from '../states/slice/vote-comment-slice';
 
 const useVotes = () => {
-  const { statusVoteThread } = useSelector((state: RootState) => state.threads);
-  const { statusVoteComment } = useSelector((state: RootState) => state.detailThread);
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
 
   const handleButtonUpVoteThread = (isThreadUpVoteByAuthUser: boolean, threadId: string) => {
     if (isThreadUpVoteByAuthUser) {
@@ -68,19 +63,21 @@ const useVotes = () => {
     dispatch(getDetailThreadAsync(threadId));
   };
 
-  React.useEffect(() => {
-    if (statusVoteThread === 'pending' || statusVoteComment === 'pending') {
-      dispatch(showLoading());
-    } else {
-      dispatch(hideLoading());
-    }
-  }, [dispatch, statusVoteThread, statusVoteComment]);
+  const isUpVoteByAuthUser = (upVotesBy: string[], authUserId: string) => {
+    return upVotesBy.filter((vote: string) => vote === authUserId).length > 0
+  }
+
+  const isDownVoteByAuthUser = (upVotesBy: string[], authUserId: string) => {
+    return upVotesBy.filter((vote: string) => vote === authUserId).length > 0
+  }
 
   return {
     upVoteThread: handleButtonUpVoteThread,
     downVoteThread: handleButtonDownVoteThread,
     upVoteComment: handleButtonUpVoteComment,
     downVoteComment: handleButtonDownVoteComment,
+    isUpVoteByAuthUser,
+    isDownVoteByAuthUser,
   };
 };
 

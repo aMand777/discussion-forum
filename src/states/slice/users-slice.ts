@@ -1,5 +1,7 @@
 import { PayloadAction, createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { GET_ALL_USERS } from '../../services/users.services';
+import { hideLoading, showLoading } from 'react-redux-loading-bar';
+import { setToast, unSetToast } from '../../states/slice/toast-slice';
 
 interface User {
   id: string;
@@ -16,6 +18,23 @@ const initialState: UsersState = {
   value: [],
 };
 
+export const getAllUsersAsync = createAsyncThunk('users/getAllUsers', async (_, { dispatch }) => {
+  dispatch(unSetToast());
+  dispatch(showLoading());
+  try {
+    const response = await GET_ALL_USERS();
+    if (response.status === 'success') {
+      dispatch(setUsers(response.data.users));
+      dispatch(hideLoading());
+    }
+    return response.status;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
+    dispatch(setToast({ status: 'error', message: error.data.message }));
+    dispatch(hideLoading());
+  }
+});
+
 const usersSlice = createSlice({
   name: 'users',
   initialState,
@@ -24,26 +43,6 @@ const usersSlice = createSlice({
       state.value = action.payload;
     },
   },
-
-  extraReducers: (builder) => {
-    builder
-      .addCase(getAllUsersAsync.pending, (state) => {
-        console.log('Loading..');
-        state.value = [];
-      })
-      .addCase(getAllUsersAsync.fulfilled, (state, action: PayloadAction<User[]>) => {
-        state.value = action.payload;
-      })
-      .addCase(getAllUsersAsync.rejected, () => {
-        console.log('Failed..');
-      });
-  },
-});
-
-export const getAllUsersAsync = createAsyncThunk('users/getAllUsers', async () => {
-  const response = await GET_ALL_USERS();
-  // console.log('response==>', response.data.users);
-  return response.data.users
 });
 
 export const { setUsers } = usersSlice.actions;

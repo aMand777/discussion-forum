@@ -1,5 +1,7 @@
 import { PayloadAction, createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { GET_LEADERBOARDS } from '../../services/leaderboards.services';
+import { hideLoading, showLoading } from 'react-redux-loading-bar';
+import { setToast, unSetToast } from '../../states/slice/toast-slice';
 
 interface LeaderBoardUser {
   id: string;
@@ -21,34 +23,36 @@ const initialState: LeaderBoardState = {
   value: [],
 };
 
-const leaderboardsSlice = createSlice({
-  name: 'leaderboards',
-  initialState,
-  reducers: {},
-  extraReducers: (builder) => {
-    builder
-      .addCase(getLeaderBoardsAsync.pending, (state) => {
-        console.log('Loading..');
-        state.value = [];
-      })
-      .addCase(
-        getLeaderBoardsAsync.fulfilled,
-        (state, action: PayloadAction<LeaderBoardEntry[]>) => {
-          state.value = action.payload;
-        },
-      )
-      .addCase(getLeaderBoardsAsync.rejected, () => {
-        console.log('Failed..');
-      });
-  },
-});
-
 export const getLeaderBoardsAsync = createAsyncThunk(
   'leaderboards/getLeaderBoardsThreads',
-  async () => {
+  async (_, {dispatch}) => {
+    dispatch(unSetToast());
+  dispatch(showLoading());
+  try {
     const response = await GET_LEADERBOARDS();
-    return response.data.leaderboards;
+    if (response.status === 'success') {
+      dispatch(setLeaderBoards(response.data.leaderboards));
+      dispatch(hideLoading());
+    }
+    return response.status;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
+    dispatch(setToast({ status: 'error', message: error.data.message }));
+    dispatch(hideLoading());
+  }
   },
 );
 
-export default leaderboardsSlice.reducer;
+const leaderBoardsSlice = createSlice({
+  name: 'leaderboards',
+  initialState,
+  reducers: {
+    setLeaderBoards(state, action: PayloadAction<LeaderBoardEntry[]>) {
+      state.value = action.payload;
+    }
+  },
+});
+
+export const { setLeaderBoards  } = leaderBoardsSlice.actions;
+
+export default leaderBoardsSlice.reducer;

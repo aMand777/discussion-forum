@@ -6,38 +6,36 @@ import UpVotes from '../votes/UpVotes';
 import DownVotes from '../votes/DownVotes';
 import useVotes from '../../hook/useVotes';
 import Comments from '../Comment/Comment';
-import { RootState } from '../../states/store';
-import { useSelector } from 'react-redux';
 import Editor from '../Comment/Editor';
+import useDetailThread from '../../hook/useDetailThread';
+import useUser from '../../hook/useUser';
 
-const CardDetailThread = () => {
-  const { upVoteThread, downVoteThread } = useVotes();
-  const { id: authUser } = useSelector((state: RootState) => state.authUser.data);
+const CardDetailThread = () => {  
+  const { authUser } = useUser()
   const {
     id: threadId,
     title,
     body,
     createdAt,
+    category,
     comments,
     upVotesBy,
     downVotesBy,
     owner,
-  } = useSelector((state: RootState) => state.detailThread.value);
-  const isThreadUpVoteByAuthUser = upVotesBy
-    ? upVotesBy.filter((vote: string) => vote === authUser).length > 0
-    : false;
-  const isThreadDownVoteByAuthUser = downVotesBy
-    ? downVotesBy.filter((vote: string) => vote === authUser).length > 0
-    : false;
+  } = useDetailThread()
+  
+  const { upVoteThread, downVoteThread, isUpVoteByAuthUser, isDownVoteByAuthUser } = useVotes();
+    const isCommentUpVote = isUpVoteByAuthUser(upVotesBy, authUser.id);
+  const isCommentDownVote = isDownVoteByAuthUser(downVotesBy, authUser.id);
 
   const handleButtonUpVote = (event: React.MouseEvent) => {
     event.stopPropagation();
-    upVoteThread(isThreadUpVoteByAuthUser, threadId || '');
+    upVoteThread(isCommentUpVote, threadId);
   };
 
   const handleButtonDownVote = (event: React.MouseEvent) => {
     event.stopPropagation();
-    downVoteThread(isThreadDownVoteByAuthUser, threadId || '');
+    downVoteThread(isCommentDownVote, threadId);
   };
 
   return (
@@ -52,14 +50,15 @@ const CardDetailThread = () => {
       </div>
       <div className='my-2 font-semibold'>{parse(title)}</div>
       <div className='font-thin'>{parse(body)}</div>
+      <div className='px-2 my-3 rounded-md cursor-pointer bg-base-300 w-fit hover:bg-base-200'>#{category}</div>
       <div className='flex items-center gap-3'>
         <UpVotes
-          isAuthUserVotes={isThreadUpVoteByAuthUser}
+          isAuthUserVotes={isCommentUpVote}
           totalVotes={upVotesBy.length}
           onVotes={handleButtonUpVote}
         />
         <DownVotes
-          isAuthUserVotes={isThreadDownVoteByAuthUser}
+          isAuthUserVotes={isCommentDownVote}
           totalVotes={downVotesBy.length}
           onVotes={handleButtonDownVote}
         />
@@ -78,7 +77,7 @@ const CardDetailThread = () => {
           owner={comment.owner}
           upVotesBy={comment.upVotesBy}
           downVotesBy={comment.downVotesBy}
-          authUser={authUser}
+          authUser={authUser.id}
           threadId={threadId}
         />
       ))}
