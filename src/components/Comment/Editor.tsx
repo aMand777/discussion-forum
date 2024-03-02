@@ -41,21 +41,21 @@ const Editor: React.FC<EditorProps> = ({threadId}) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className='items-center gap-5 avatar mb-5'>
+      <div className='items-center gap-5 mb-5 avatar'>
         <div className='w-8 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2'>
           <img src={authUser.avatar} alt={`avatar/${authUser.avatar}`} />
         </div>
         <span>{authUser.name}</span>
       </div>
       <ReactQuill
-        className='bg-slate-200 text-black'
+        className='text-black bg-slate-200'
         modules={module}
         theme='snow'
         placeholder='Type here ..'
         value={content}
         onChange={setContent}
       />
-      <div className='w-full flex justify-end mt-3'>
+      <div className='flex justify-end w-full mt-3'>
         <button type='submit' className='btn btn-sm btn-outline btn-accent'>
           Comment
         </button>

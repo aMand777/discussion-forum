@@ -12,7 +12,7 @@ type CardThreadProps = {
   avatar?: string;
   name?: string;
   createdAt: string;
-  // category: string
+  category: string;
   title: string;
   body: string;
   totalComments: number;
@@ -26,6 +26,7 @@ const CardThread: React.FC<CardThreadProps> = ({
   avatar,
   name,
   createdAt,
+  category,
   title,
   body,
   totalComments,
@@ -33,18 +34,18 @@ const CardThread: React.FC<CardThreadProps> = ({
   upVotesBy,
   downVotesBy,
 }) => {
-  const { upVoteThread, downVoteThread } = useVotes();
-  const isThreadUpVoteByAuthUser = upVotesBy.filter((vote) => vote === authUser).length > 0
-  const isThreadDownVoteByAuthUser = downVotesBy.filter((vote) => vote === authUser).length > 0
-  
+  const { upVoteThread, downVoteThread, isUpVoteByAuthUser, isDownVoteByAuthUser } = useVotes();
+  const isThreadUpVote = isUpVoteByAuthUser(upVotesBy, authUser);
+  const isThreadDownVote = isDownVoteByAuthUser(downVotesBy, authUser);
+
   const handleButtonUpVote = (event: React.MouseEvent) => {
     event.stopPropagation();
-    upVoteThread(isThreadUpVoteByAuthUser, threadId);
+    upVoteThread(isThreadUpVote, threadId);
   };
 
   const handleButtonDownVote = (event: React.MouseEvent) => {
     event.stopPropagation();
-    downVoteThread(isThreadDownVoteByAuthUser, threadId);
+    downVoteThread(isThreadDownVote, threadId);
   };
 
   return (
@@ -62,14 +63,17 @@ const CardThread: React.FC<CardThreadProps> = ({
           <div className='mb-2 font-semibold hover:underline'>{parser(title)}</div>
         </Link>
         <div className='font-thin line-clamp-5'>{parser(body)}</div>
+        <div className='px-2 my-3 rounded-md cursor-pointer bg-base-300 w-fit hover:bg-base-200'>
+          #{category}
+        </div>
         <div className='flex items-center gap-3'>
-            <UpVotes
-              isAuthUserVotes={isThreadUpVoteByAuthUser}
-              totalVotes={upVotesBy.length}
-              onVotes={handleButtonUpVote}
-            />
+          <UpVotes
+            isAuthUserVotes={isThreadUpVote}
+            totalVotes={upVotesBy.length}
+            onVotes={handleButtonUpVote}
+          />
           <DownVotes
-            isAuthUserVotes={isThreadDownVoteByAuthUser}
+            isAuthUserVotes={isThreadDownVote}
             totalVotes={downVotesBy.length}
             onVotes={handleButtonDownVote}
           />

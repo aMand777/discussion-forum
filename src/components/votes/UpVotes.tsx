@@ -1,11 +1,11 @@
-import React from 'react'
+import React from 'react';
 import { IoHeart, IoHeartOutline } from 'react-icons/io5';
 
 type UpVotesProps = {
-  isAuthUserVotes: boolean
-  totalVotes: number | undefined
-  onVotes: (event: React.MouseEvent) => void
-}
+  isAuthUserVotes: boolean;
+  totalVotes: number | undefined;
+  onVotes: (event: React.MouseEvent) => void;
+};
 
 const UpVotes: React.FC<UpVotesProps> = ({ isAuthUserVotes, totalVotes, onVotes }) => {
   return (
@@ -22,6 +22,6 @@ const UpVotes: React.FC<UpVotesProps> = ({ isAuthUserVotes, totalVotes, onVotes 
       </div>
     </>
   );
-}
+};
 
-export default UpVotes
+export default UpVotes;

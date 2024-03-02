@@ -7,9 +7,9 @@ import { setAccessToken } from '../utils/storage.ts';
 import { useMutation } from '@tanstack/react-query';
 import { z } from 'zod';
 import FormLogin from '../components/auth/login/FormLogin.tsx';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '../states/store';
-import { getUserLoginAsync } from '../states/slice/authUser-slice';
+// import { useDispatch, useSelector } from 'react-redux';
+import { useAppSelector, useAppDispatch } from '../states/store';
+import { getUserLoginAsync } from '../states/slice/auth-user-slice.ts';
 import LoadingPage from '../components/loading/LoadingPage.tsx';
 
 const FormSchema = z.object({
@@ -26,8 +26,10 @@ type Inputs = {
 };
 
 const Login = () => {
-  const dispatch = useDispatch<AppDispatch>();
-  const { isAuthenticated, isLoading } = useSelector((state: RootState) => state.authUser);
+  const dispatch = useAppDispatch();
+  const { isAuthenticated, isLoading } = useAppSelector((state) => state.authUser);
+  const {isOpen} = useAppSelector((state) => state.toast);
+  console.log('isOpen==>', isOpen)
   const [errorResponseMessage, setErrorResponseMessage] = React.useState<string | undefined>('');
 
   const {

@@ -10,7 +10,7 @@ export const GET_ALL_THREADS = async () => {
   }
 };
 
-export const GET_DETAIL_THREAD = async (threadId: string | undefined) => {
+export const GET_DETAIL_THREAD = async (threadId: string) => {
   try {
     const { data } = await instanceApi.get(`/threads/${threadId}`);
     return data;

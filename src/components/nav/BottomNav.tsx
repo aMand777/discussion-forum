@@ -42,7 +42,7 @@ const BottomNav = () => {
             <div className='w-8 rounded-full ring ring-offset-base-100 ring-offset-2'>
               <img alt={`avatar/${authUser.name}`} src={authUser.avatar} />
             </div>
-            <span className='btm-nav-label'>Profile</span>
+            <span className='btm-nav-label'>{authUser.name}</span>
           </div>
           <ul
             tabIndex={0}

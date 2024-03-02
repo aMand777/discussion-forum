@@ -1,15 +1,15 @@
-import { getUserLoginAsync } from '../../states/slice/authUser-slice'
-import { useDispatch } from 'react-redux'
-import { removeAccessToken } from '../../utils/storage'
-import { AppDispatch} from '../../states/store'
+import { getUserLoginAsync } from '../../states/slice/auth-user-slice';
+import { useDispatch } from 'react-redux';
+import { removeAccessToken } from '../../utils/storage';
+import { AppDispatch } from '../../states/store';
 
 const Navbar = () => {
-  const dispatch = useDispatch<AppDispatch>()
+  const dispatch = useDispatch<AppDispatch>();
 
   const handleButtonLogout = () => {
-    removeAccessToken('accessToken')
-    dispatch(getUserLoginAsync())
-  }
+    removeAccessToken('accessToken');
+    dispatch(getUserLoginAsync());
+  };
 
   return (
     <>
