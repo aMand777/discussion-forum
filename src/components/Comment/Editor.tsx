@@ -11,7 +11,7 @@ type EditorProps = {
 const Editor: React.FC<EditorProps> = ({threadId}) => {
   const dispatch = useAppDispatch()
   const { authUser } = useUser();
-  const [content, setContent] = React.useState('');
+  const [content, setContent] = React.useState<string>('');
 
   const toolbarOptions = [
     [
@@ -34,7 +34,7 @@ const Editor: React.FC<EditorProps> = ({threadId}) => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     dispatch(postNewCommentAsync({content, threadId}))
-    if (content) {
+    if (content.length > 0) {
       setContent('')
     }
   }

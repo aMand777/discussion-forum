@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { POST_THREAD, POST_COMMENT } from '../../services/threads.services';
 import { setToast } from './toast-slice';
 import { getAllThreadsStateAsync } from './threads-slice';
@@ -17,27 +17,28 @@ interface RequestComment {
 
 interface Create {
   status: string;
-  message: string;
 }
 
 const initialState: Create = {
   status: '',
-  message: '',
 };
 
 export const postNewThreadAsync = createAsyncThunk(
-  'threads/postNewThread',
+  'create/postNewThread',
   async (createThread: RequestThread, { dispatch }) => {
+    dispatch(unSetResponse());
     dispatch(setToast({ isOpen: false, status: '', message: '' }));
     try {
       const response = await POST_THREAD(createThread);
       if (response.status === 'success') {
-        dispatch(setToast({ isOpen: true, status: 'info', message: response.message }));
         dispatch(getAllThreadsStateAsync());
+        dispatch(setResponse());
+        dispatch(setToast({ isOpen: true, status: 'info', message: response.message }));
       }
       return response;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
+      dispatch(unSetResponse());
       dispatch(setToast({ isOpen: true, status: 'error', message: error.data.message }));
       return error.data;
     }
@@ -45,15 +46,15 @@ export const postNewThreadAsync = createAsyncThunk(
 );
 
 export const postNewCommentAsync = createAsyncThunk(
-  'threads/postNewComment',
+  'create/postNewComment',
   async (createComment: RequestComment, { dispatch }) => {
     dispatch(setToast({ isOpen: false, status: '', message: '' }));
     const { threadId } = createComment
     try {
       const response = await POST_COMMENT(createComment);
       if (response.status === 'success') {
-        dispatch(setToast({ isOpen: true, status: 'info', message: response.message }));
         dispatch(getDetailThreadAsync(threadId));
+        dispatch(setToast({ isOpen: true, status: 'info', message: response.message }));
       }
       return response;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -68,28 +69,32 @@ const createCommentSlice = createSlice({
   name: 'create',
   initialState,
   reducers: {
-    setResponse(state, action: PayloadAction<Create>) {
-      state.status = action.payload.status;
-      state.message = action.payload.message;
+    setResponse(state) {
+      state.status = 'success'
+      // state.message = action.payload.message;
     },
     unSetResponse(state) {
       state.status = '';
-      state.message = '';
+      // state.message = '';
     },
   },
-  extraReducers: (builder) => {
-    builder
-      .addCase(postNewThreadAsync.fulfilled, (state, action: PayloadAction<Create>) => {
-        state.status = action.payload.status;
-        state.message = action.payload.message;
-      })
-      .addCase(postNewCommentAsync.fulfilled, (state, action: PayloadAction<Create>) => {
-        state.status = action.payload.status;
-        state.message = action.payload.message;
-      });
-  },
+  // extraReducers: (builder) => {
+  //   builder
+  //     .addCase(postNewThreadAsync.pending, (state) => {
+  //       state.status = '';
+  //     })
+  //     .addCase(postNewThreadAsync.fulfilled, (state) => {
+  //       state.status = 'success';
+  //     })
+  //     .addCase(postNewCommentAsync.pending, (state) => {
+  //       state.status = '';
+  //     })
+  //     .addCase(postNewCommentAsync.fulfilled, (state) => {
+  //       state.status = 'success'
+  //     });
+  // },
 });
 
-export const { unSetResponse } = createCommentSlice.actions
+export const { setResponse, unSetResponse } = createCommentSlice.actions
 
 export default createCommentSlice.reducer;

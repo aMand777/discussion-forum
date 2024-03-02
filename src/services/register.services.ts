@@ -12,6 +12,6 @@ export const POST_REGISTER_USER = async (user: User) => {
     const { data } = await instanceApi.post('/register', user);
     return data;
   } catch (error: any) {
-    throw error.response?.data.message;
+    throw error.response
   }
 };

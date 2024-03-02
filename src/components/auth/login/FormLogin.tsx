@@ -1,10 +1,8 @@
 import React from 'react';
-// import { PiLockKeyDuotone } from 'react-icons/pi';
 import { Link } from 'react-router-dom';
-// import AlertMessage from '../../../../components/alert/AlertMessage';
 import { SubmitHandler, UseFormRegister, FieldErrors, UseFormHandleSubmit } from 'react-hook-form';
 import AlertMessage from '../../alert/AlertMessage';
-// import useLocale from '../../../../hooks/useLocale';
+import { useAppSelector } from '../../../states/store';
 
 type Inputs = {
   email: string;
@@ -12,24 +10,15 @@ type Inputs = {
 };
 
 type FormLoginProps = {
-  loading: boolean | undefined;
   register: UseFormRegister<Inputs>;
   errors: FieldErrors<Inputs>;
   onSubmit: SubmitHandler<Inputs>;
   handleSubmit: UseFormHandleSubmit<Inputs>;
-  errorResponse: string | undefined;
 };
 
-const FormLogin: React.FC<FormLoginProps> = ({
-  loading,
-  register,
-  errors,
-  onSubmit,
-  handleSubmit,
-  errorResponse,
-}) => {
+const FormLogin: React.FC<FormLoginProps> = ({ register, errors, onSubmit, handleSubmit }) => {
   const [showPassword, setShowPassword] = React.useState<boolean>(false);
-  // const { isLocale } = useLocale();
+  const { isLoading, message } = useAppSelector((state) => state.auth);
 
   const handleCheckboxChange = () => {
     setShowPassword(!showPassword);
@@ -40,7 +29,6 @@ const FormLogin: React.FC<FormLoginProps> = ({
       <div className='container flex flex-col items-center justify-center'>
         <div className='p-1 mb-2 rounded-full bg-secondary text-secondary-content'>
           <img src='/forum.png' alt='forum-icon' className='w-16' />
-          {/* <PiLockKeyDuotone size={30} /> */}
         </div>
         <p className='text-2xl font-semibold'>Login</p>
         <form onSubmit={handleSubmit(onSubmit)} className='w-11/12 md:max-w-md' noValidate>
@@ -57,9 +45,7 @@ const FormLogin: React.FC<FormLoginProps> = ({
             {errors.email ? (
               <AlertMessage message={errors.email?.message} />
             ) : (
-              errorResponse?.toLowerCase().includes('email') && (
-                <AlertMessage message={errorResponse} />
-              )
+              message?.toLowerCase().includes('email') && <AlertMessage message={message} />
             )}
           </label>
           <label className='w-full form-control'>
@@ -75,9 +61,7 @@ const FormLogin: React.FC<FormLoginProps> = ({
             {errors.password ? (
               <AlertMessage message={errors.password?.message} />
             ) : (
-              errorResponse?.toLowerCase().includes('password') && (
-                <AlertMessage message={errorResponse} />
-              )
+              message?.toLowerCase().includes('password') && <AlertMessage message={message} />
             )}
           </label>
           <label className='cursor-pointer label'>
@@ -88,9 +72,9 @@ const FormLogin: React.FC<FormLoginProps> = ({
               className='checkbox checkbox-accent'
             />
           </label>
-          <button disabled={loading} type='submit' className='w-full mt-5 btn btn-primary'>
-            {loading && <span className='loading loading-spinner'></span>}
-            {loading ? 'loading...' : 'Login'}
+          <button disabled={isLoading} type='submit' className='w-full mt-5 btn btn-primary'>
+            {isLoading && <span className='loading loading-spinner'></span>}
+            {isLoading ? 'loading...' : 'Login'}
           </button>
         </form>
         <div className='flex gap-1 mt-5'>

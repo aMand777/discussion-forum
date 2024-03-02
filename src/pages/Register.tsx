@@ -1,13 +1,10 @@
-import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { useMutation } from '@tanstack/react-query';
-import { POST_REGISTER_USER } from '../services/register.services';
-import { useNavigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import FormRegister from '../components/auth/register/FormRegister';
-// import { useDispatch } from 'react-redux';
-// import { setToast } from '../states/slice/toast-slice'
+import { useAppDispatch, useAppSelector } from '../states/store';
+import { registerUserAsync } from '../states/slice/register-slice'
 
 const FormSchema = z
   .object({
@@ -35,9 +32,7 @@ type Inputs = {
 };
 
 const Register = () => {
-  // const dispatch = useDispatch()
-  const navigate = useNavigate();
-  const [errorResponseMessage, setErrorResponseMessage] = React.useState<string>('');
+  const dispatch = useAppDispatch()
 
   const {
     register,
@@ -53,34 +48,30 @@ const Register = () => {
     },
   });
 
-  const { mutateAsync: registerUser, isPending } = useMutation({
-    mutationFn: POST_REGISTER_USER,
-    onSuccess: () => {
-      // dispatch(setToast({isOpen: true}))
-      navigate('/auth/login');
-    },
-    onError: (error: string) => {
-      setErrorResponseMessage(error);
-    },
-  });
-
-  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+  const onSubmit: SubmitHandler<Inputs> = (data) => {
     const user = {
       name: data.name,
       email: data.email,
       password: data.password,
     };
-    await registerUser(user);
+    dispatch(registerUserAsync(user))
   };
+
+    const { isLoading, message, status } = useAppSelector((state) => state.register)
+
+  if (status === 'success') {
+    return <Navigate to='/auth/login' />
+  }
+
   return (
     <>
       <FormRegister
-        loading={isPending}
+        isLoading={isLoading}
         register={register}
         errors={errors}
         onSubmit={onSubmit}
         handleSubmit={handleSubmit}
-        errorResponse={errorResponseMessage}
+        message={message}
       />
     </>
   );

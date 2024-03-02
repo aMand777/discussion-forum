@@ -1,4 +1,4 @@
-import { getUserLoginAsync } from '../../states/slice/auth-user-slice';
+import { getUserLoginAsync } from '../../states/slice/auth-slice';
 import { useDispatch } from 'react-redux';
 import { removeAccessToken } from '../../utils/storage';
 import { AppDispatch } from '../../states/store';
