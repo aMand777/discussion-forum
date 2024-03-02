@@ -1,4 +1,4 @@
-import { getUserLoginAsync } from '../states/slice/auth-user-slice';
+import { getUserLoginAsync } from '../states/slice/preload-slice';
 import { useAppDispatch } from '../states/store';
 import { removeAccessToken } from '../utils/storage';
 

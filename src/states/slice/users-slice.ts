@@ -11,11 +11,11 @@ interface User {
 }
 
 interface UsersState {
-  value: User[];
+  users: User[];
 }
 
 const initialState: UsersState = {
-  value: [],
+  users: [],
 };
 
 export const getAllUsersAsync = createAsyncThunk('users/getAllUsers', async (_, { dispatch }) => {
@@ -40,7 +40,7 @@ const usersSlice = createSlice({
   initialState,
   reducers: {
     setUsers(state, action: PayloadAction<User[]>) {
-      state.value = action.payload;
+      state.users = action.payload;
     },
   },
 });

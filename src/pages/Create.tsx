@@ -3,11 +3,11 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { postNewThreadAsync } from '../states/slice/create-slice';
 import { useAppDispatch, useAppSelector } from '../states/store';
-import { useNavigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { unSetResponse } from '../states/slice/create-slice';
 
 const Create = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [body, setBody] = React.useState('');
   const [title, setTitle] = React.useState('');
@@ -43,11 +43,12 @@ const Create = () => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     dispatch(postNewThreadAsync({ title, category, body }));
-    if (status === 'success') {
-      navigate('/');
-    }
-    dispatch(unSetResponse());
   };
+  
+  if (status === 'success') {
+    dispatch(unSetResponse());
+    return <Navigate to='/' />;
+  }
 
   return (
     <>

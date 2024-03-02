@@ -1,10 +1,10 @@
 import { useAppSelector } from '../states/store'
 
 const useUser = () => {
-  const { data } = useAppSelector((state) => state.authUser)
-  const { value } = useAppSelector((state) => state.users)
+  const { authUser } = useAppSelector((state) => state.user)
+  const { users } = useAppSelector((state) => state.users)
 
-  return { authUser: data, users: value }
+  return { authUser, users }
 }
 
 export default useUser

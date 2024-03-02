@@ -6,9 +6,8 @@ import RequireAuth from './components/routes/RequireAuth';
 import Login from './pages/Login';
 import Threads from './pages/Threads';
 import Register from './pages/Register';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from './states/store';
-import { getUserLoginAsync } from './states/slice/auth-user-slice';
+import { useAppDispatch } from './states/store';
+import { getUserLoginAsync } from './states/slice/preload-slice';
 import { getAllThreadsStateAsync } from './states/slice/threads-slice';
 import { getLeaderBoardsAsync } from './states/slice/leaderboards-slice';
 import NotFoundPage from './components/notFound/NotFoundPage';
@@ -17,7 +16,7 @@ import Create from './pages/Create';
 import Toast from './components/toast/Toast';
 
 function App() {
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
 
   React.useEffect(() => {
     dispatch(getUserLoginAsync());
@@ -28,7 +27,6 @@ function App() {
 
   return (
     <>
-      {/* <LoadingBar /> */}
       <Routes>
         {/* public route */}
         <Route path='/auth/login' element={<Login />} />

@@ -1,13 +1,11 @@
 import { Navigate, Outlet } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../states/store';
+import { useAppSelector } from '../../states/store';
 import LoadingPage from '../loading/LoadingPage';
 
 function RequireAuth() {
+  const { isAuthenticated, isPreload } = useAppSelector((state) => state.preload);
 
-  const { isAuthenticated, isLoading } = useSelector((state: RootState) => state.authUser);
-
-  if (isLoading) {
+  if (isPreload) {
     return <LoadingPage loading='loading-infinity loading-lg' />;
   } else if (!isAuthenticated) {
     return <Navigate to='/auth/login' replace />;

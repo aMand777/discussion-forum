@@ -11,21 +11,21 @@ type Inputs = {
 };
 
 type FormRegisterProps = {
-  loading: boolean;
+  isLoading: boolean;
   register: UseFormRegister<Inputs>;
   errors: FieldErrors<Inputs>;
   onSubmit: SubmitHandler<Inputs>;
   handleSubmit: UseFormHandleSubmit<Inputs>;
-  errorResponse: string;
+  message: string;
 };
 
 const FormRegister: React.FC<FormRegisterProps> = ({
-  loading,
+  isLoading,
   register,
   errors,
   onSubmit,
   handleSubmit,
-  errorResponse,
+  message,
 }) => {
   const [showPassword, setShowPassword] = React.useState<boolean>(false);
 
@@ -66,8 +66,8 @@ const FormRegister: React.FC<FormRegisterProps> = ({
             {errors.email ? (
               <AlertMessage message={errors.email?.message} />
             ) : (
-              errorResponse?.toLowerCase().includes('email') && (
-                <AlertMessage message={errorResponse} />
+              message?.toLowerCase().includes('email') && (
+                <AlertMessage message={message} />
               )
             )}
           </label>
@@ -105,9 +105,9 @@ const FormRegister: React.FC<FormRegisterProps> = ({
               className='checkbox checkbox-accent'
             />
           </label>
-          <button disabled={loading} type='submit' className='btn btn-primary w-full mt-5'>
-            {loading && <span className='loading loading-spinner'></span>}
-            {loading ? 'loading...' : 'Register'}
+          <button disabled={isLoading} type='submit' className='btn btn-primary w-full mt-5'>
+            {isLoading && <span className='loading loading-spinner'></span>}
+            {isLoading ? 'loading...' : 'Register'}
           </button>
         </form>
         <div className='flex gap-1 mt-5 mb-5'>
