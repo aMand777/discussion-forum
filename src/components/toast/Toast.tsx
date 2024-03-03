@@ -12,8 +12,8 @@ const Toast = () => {
   return (
     <>
       <div
-        className={`toast duration-500 transition-all z-50 w-full sm:w-fit ${
-          isOpen ? 'translate-x-0' : 'translate-y-full'
+        className={`toast toast-top sm:toast-bottom duration-500 transition-all z-50 w-full sm:w-fit ${
+          isOpen ? 'translate-y-0 sm:translate-y-0' : 'translate-x-full sm:translate-y-full'
         }`}>
         {status === 'info' && (
           <AlertToast
@@ -24,7 +24,7 @@ const Toast = () => {
               xmlns='http://www.w3.org/2000/svg'
               fill='none'
               viewBox='0 0 24 24'
-              className='stroke-current shrink-0 w-6 h-6'>
+              className='w-6 h-6 stroke-current shrink-0'>
               <path
                 strokeLinecap='round'
                 strokeLinejoin='round'
@@ -40,7 +40,7 @@ const Toast = () => {
             onClickButtonClose={handleClickIconClose}>
             <svg
               xmlns='http://www.w3.org/2000/svg'
-              className='stroke-current shrink-0 h-6 w-6'
+              className='w-6 h-6 stroke-current shrink-0'
               fill='none'
               viewBox='0 0 24 24'>
               <path
@@ -59,7 +59,7 @@ const Toast = () => {
             onClickButtonClose={handleClickIconClose}>
             <svg
               xmlns='http://www.w3.org/2000/svg'
-              className='stroke-current shrink-0 h-6 w-6'
+              className='w-6 h-6 stroke-current shrink-0'
               fill='none'
               viewBox='0 0 24 24'>
               <path
@@ -78,7 +78,7 @@ const Toast = () => {
             onClickButtonClose={handleClickIconClose}>
             <svg
               xmlns='http://www.w3.org/2000/svg'
-              className='stroke-current shrink-0 h-6 w-6'
+              className='w-6 h-6 stroke-current shrink-0'
               fill='none'
               viewBox='0 0 24 24'>
               <path

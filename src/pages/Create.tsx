@@ -39,7 +39,6 @@ const Create = () => {
   };
 
   const { status } = useAppSelector((state) => state.create);
-  console.log('status===>', status)
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();

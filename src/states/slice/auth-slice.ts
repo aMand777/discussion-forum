@@ -34,7 +34,7 @@ export const postUserLoginAsync = createAsyncThunk(
         dispatch(getUserLoginAsync());
         dispatch(hideLoading());
         dispatch(setAuthSuccess())
-        dispatch(setToast({ status: 'success', message: response.message }));
+        // dispatch(setToast({ status: 'success', message: response.message }));
       }
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {

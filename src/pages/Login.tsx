@@ -6,6 +6,7 @@ import FormLogin from '../components/auth/login/FormLogin.tsx';
 import { useAppSelector, useAppDispatch } from '../states/store';
 import { postUserLoginAsync } from '../states/slice/auth-slice.ts';
 import LoadingPage from '../components/loading/LoadingPage.tsx';
+import { setToast } from '../states/slice/toast-slice.ts';
 
 const FormSchema = z.object({
   email: z.string().min(1, { message: 'Email is required' }).email({ message: 'Invalid email' }),
@@ -23,6 +24,7 @@ type Inputs = {
 const Login = () => {
   const dispatch = useAppDispatch();
   const { isAuthenticated, isPreload } = useAppSelector((state) => state.preload);
+  const { authUser } = useAppSelector((state) => state.user);
 
   const {
     register,
@@ -43,6 +45,7 @@ const Login = () => {
   if (isPreload) {
     return <LoadingPage loading='loading-ring loading-lg' />;
   } else if (isAuthenticated) {
+    dispatch(setToast({ status: 'success', message: `Welcome back, ${authUser.name}`}));
     return <Navigate to='/' replace />;
   }
 
