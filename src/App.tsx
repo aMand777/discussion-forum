@@ -14,6 +14,7 @@ import NotFoundPage from './components/notFound/NotFoundPage';
 import DetailThread from './pages/DetailThread';
 import Create from './pages/Create';
 import Toast from './components/toast/Toast';
+import LeaderBoards from './pages/LeaderBoards';
 
 function App() {
   const dispatch = useAppDispatch();
@@ -36,6 +37,7 @@ function App() {
           <Route element={<Layout />}>
             <Route path='/' element={<Threads />} />
             <Route path='/threads/create' element={<Create />} />
+            <Route path='/leaderboards' element={<LeaderBoards />} />
             <Route path='/threads/:user/:threadId' element={<DetailThread />} />
           </Route>
           {/* not found route page */}
