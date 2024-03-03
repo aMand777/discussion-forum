@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { GET_ALL_USERS } from '../../services/users.services';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
-import { setToast, unSetToast } from '../../states/slice/toast-slice';
+import { setToast } from '../../states/slice/toast-slice';
 
 interface User {
   id: string;
@@ -19,7 +19,6 @@ const initialState: UsersState = {
 };
 
 export const getAllUsersAsync = createAsyncThunk('users/getAllUsers', async (_, { dispatch }) => {
-  dispatch(unSetToast());
   dispatch(showLoading());
   try {
     const response = await GET_ALL_USERS();

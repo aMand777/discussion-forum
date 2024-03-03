@@ -3,11 +3,11 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { postNewThreadAsync } from '../states/slice/create-slice';
 import { useAppDispatch, useAppSelector } from '../states/store';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { unSetResponse } from '../states/slice/create-slice';
 
 const Create = () => {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [body, setBody] = React.useState('');
   const [title, setTitle] = React.useState('');
@@ -39,23 +39,26 @@ const Create = () => {
   };
 
   const { status } = useAppSelector((state) => state.create);
+  console.log('status===>', status)
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     dispatch(postNewThreadAsync({ title, category, body }));
   };
-  
-  if (status === 'success') {
-    dispatch(unSetResponse());
-    return <Navigate to='/' />;
-  }
+
+  React.useEffect(() => {
+    if (status === 'success') {
+      dispatch(unSetResponse());
+      navigate('/');
+    }
+  }, [dispatch, status, navigate]);
 
   return (
     <>
       <form
         onSubmit={handleSubmit}
-        className='w-full h-screen flex flex-col justify-center items-center'>
-        <div className='w-11/12 lg:w-10/12 mx-auto -mt-24'>
+        className='flex flex-col items-center justify-center w-full h-screen'>
+        <div className='w-11/12 mx-auto -mt-24 lg:w-10/12'>
           <h1 className='text-xl font-semibold text-center'>Create New Thread</h1>
           <label className='w-full form-control'>
             <div className='label'>
@@ -95,8 +98,14 @@ const Create = () => {
               onChange={setBody}
             />
             <div className='label'></div>
-            <button type='submit' className='btn btn-outline btn-accent mt-10 ml-auto mr-0 px-10'>
+            {/* <button type='submit' className='px-10 mt-10 ml-auto mr-0 btn btn-outline btn-accent'>
               Post
+            </button> */}
+            <button
+              disabled={status === 'loading'}
+              className='mt-10 ml-auto mr-0 btn btn-outline btn-accent'>
+              {status === 'loading' && <span className='loading loading-spinner'></span>}
+              {status === 'loading' ? 'loading' : 'Post Thread'}
             </button>
           </div>
         </div>

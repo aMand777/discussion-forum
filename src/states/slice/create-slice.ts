@@ -26,16 +26,15 @@ const initialState: Create = {
 export const postNewThreadAsync = createAsyncThunk(
   'create/postNewThread',
   async (createThread: RequestThread, { dispatch }) => {
-    dispatch(unSetResponse());
+    dispatch(setResponse('loading'));
     dispatch(setToast({ isOpen: false, status: '', message: '' }));
     try {
       const response = await POST_THREAD(createThread);
       if (response.status === 'success') {
         dispatch(getAllThreadsStateAsync());
-        dispatch(setResponse());
+        dispatch(setResponse('success'));
         dispatch(setToast({ isOpen: true, status: 'info', message: response.message }));
       }
-      return response;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       dispatch(unSetResponse());
@@ -48,17 +47,19 @@ export const postNewThreadAsync = createAsyncThunk(
 export const postNewCommentAsync = createAsyncThunk(
   'create/postNewComment',
   async (createComment: RequestComment, { dispatch }) => {
+    dispatch(setResponse('loading'));
     dispatch(setToast({ isOpen: false, status: '', message: '' }));
-    const { threadId } = createComment
+    const { threadId } = createComment;
     try {
       const response = await POST_COMMENT(createComment);
       if (response.status === 'success') {
         dispatch(getDetailThreadAsync(threadId));
+        dispatch(setResponse('success'));
         dispatch(setToast({ isOpen: true, status: 'info', message: response.message }));
       }
-      return response;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
+      dispatch(unSetResponse());
       dispatch(setToast({ isOpen: true, status: 'error', message: error.data.message }));
       return error.data;
     }
@@ -69,32 +70,15 @@ const createCommentSlice = createSlice({
   name: 'create',
   initialState,
   reducers: {
-    setResponse(state) {
-      state.status = 'success'
-      // state.message = action.payload.message;
+    setResponse(state, action) {
+      state.status = action.payload;
     },
     unSetResponse(state) {
       state.status = '';
-      // state.message = '';
     },
   },
-  // extraReducers: (builder) => {
-  //   builder
-  //     .addCase(postNewThreadAsync.pending, (state) => {
-  //       state.status = '';
-  //     })
-  //     .addCase(postNewThreadAsync.fulfilled, (state) => {
-  //       state.status = 'success';
-  //     })
-  //     .addCase(postNewCommentAsync.pending, (state) => {
-  //       state.status = '';
-  //     })
-  //     .addCase(postNewCommentAsync.fulfilled, (state) => {
-  //       state.status = 'success'
-  //     });
-  // },
 });
 
-export const { setResponse, unSetResponse } = createCommentSlice.actions
+export const { setResponse, unSetResponse } = createCommentSlice.actions;
 
 export default createCommentSlice.reducer;

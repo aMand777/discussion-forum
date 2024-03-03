@@ -2,14 +2,15 @@ import React from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import useUser from '../../hook/useUser';
-import { postNewCommentAsync } from '../../states/slice/create-slice'
-import { useAppDispatch } from '../../states/store'
+import { postNewCommentAsync } from '../../states/slice/create-slice';
+import { useAppDispatch, useAppSelector } from '../../states/store';
+import { unSetResponse } from '../../states/slice/create-slice';
 
 type EditorProps = {
-  threadId: string
-}
-const Editor: React.FC<EditorProps> = ({threadId}) => {
-  const dispatch = useAppDispatch()
+  threadId: string;
+};
+const Editor: React.FC<EditorProps> = ({ threadId }) => {
+  const dispatch = useAppDispatch();
   const { authUser } = useUser();
   const [content, setContent] = React.useState<string>('');
 
@@ -31,13 +32,16 @@ const Editor: React.FC<EditorProps> = ({threadId}) => {
     toolbar: toolbarOptions,
   };
 
+  const { status } = useAppSelector((state) => state.create);
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    dispatch(postNewCommentAsync({content, threadId}))
-    if (content.length > 0) {
-      setContent('')
+    event.preventDefault();
+    dispatch(postNewCommentAsync({ content, threadId }));
+    if (status === 'success') {
+      setContent('');
+      dispatch(unSetResponse());
     }
-  }
+  };
 
   return (
     <form onSubmit={handleSubmit}>
@@ -56,8 +60,9 @@ const Editor: React.FC<EditorProps> = ({threadId}) => {
         onChange={setContent}
       />
       <div className='flex justify-end w-full mt-3'>
-        <button type='submit' className='btn btn-sm btn-outline btn-accent'>
-          Comment
+        <button disabled={status === 'loading'} className='btn btn-sm btn-outline btn-accent'>
+          {status === 'loading' && <span className='loading loading-spinner'></span>}
+          {status === 'loading' ? 'loading' : 'Comment'}
         </button>
       </div>
     </form>
