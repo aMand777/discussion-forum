@@ -1,0 +1,13 @@
+import PostsProfile from '../components/profile/PostsProfile';
+import UpVotesWithProfile from '../components/profile/UpVotesProfile';
+
+const Profile = () => {
+  return (
+    <div>
+      <PostsProfile />
+      <UpVotesWithProfile />
+    </div>
+  );
+};
+
+export default Profile;

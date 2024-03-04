@@ -6,6 +6,7 @@ import parser from 'html-react-parser';
 import useVotes from '../../hook/useVotes';
 import UpVotes from '../votes/UpVotes';
 import DownVotes from '../votes/DownVotes';
+import useUser from '../../hook/useUser';
 
 type CardThreadProps = {
   threadId: string;
@@ -18,7 +19,6 @@ type CardThreadProps = {
   totalComments: number;
   upVotesBy: string[];
   downVotesBy: string[];
-  authUser: string;
 };
 
 const CardThread: React.FC<CardThreadProps> = ({
@@ -30,13 +30,13 @@ const CardThread: React.FC<CardThreadProps> = ({
   title,
   body,
   totalComments,
-  authUser,
   upVotesBy,
   downVotesBy,
 }) => {
   const { upVoteThread, downVoteThread, isUpVoteByAuthUser, isDownVoteByAuthUser } = useVotes();
-  const isThreadUpVote = isUpVoteByAuthUser(upVotesBy, authUser);
-  const isThreadDownVote = isDownVoteByAuthUser(downVotesBy, authUser);
+  const { authUser } = useUser()
+  const isThreadUpVote = isUpVoteByAuthUser(upVotesBy, authUser.id);
+  const isThreadDownVote = isDownVoteByAuthUser(downVotesBy, authUser.id);
 
   const handleButtonUpVote = (event: React.MouseEvent) => {
     event.stopPropagation();
@@ -53,7 +53,11 @@ const CardThread: React.FC<CardThreadProps> = ({
       <div>
         <div className='items-center gap-5 avatar'>
           <div className='rounded-full w-7 ring ring-primary ring-offset-base-100 ring-offset-2'>
-            <img src={avatar} />
+            {avatar ? (
+              <img src={avatar} alt={`/avatar/${name}`} />
+            ) : (
+              <div className='skeleton w-24 h-24 rounded-full shrink-0'></div>
+            )}
           </div>
           <span>{name}</span>
           <span className=''>•</span>

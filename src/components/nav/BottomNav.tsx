@@ -49,12 +49,12 @@ const BottomNav = () => {
             className='-mt-44 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-300 rounded-box w-52'>
             <li>
               <a className='justify-between'>
-                Profile
-                <span className='badge'>New</span>
+                Theme
+                {/* <span className='badge'>New</span> */}
               </a>
             </li>
             <li>
-              <a>Settings</a>
+              <NavLink to={`/${authUser.name}/${authUser.id}/posts`}>Profile</NavLink>
             </li>
             <li>
               <button onClick={() => onLogout()}>Logout</button>
