@@ -34,7 +34,7 @@ const CardThread: React.FC<CardThreadProps> = ({
   downVotesBy,
 }) => {
   const { upVoteThread, downVoteThread, isUpVoteByAuthUser, isDownVoteByAuthUser } = useVotes();
-  const { authUser } = useUser()
+  const { authUser } = useUser();
   const isThreadUpVote = isUpVoteByAuthUser(upVotesBy, authUser.id);
   const isThreadDownVote = isDownVoteByAuthUser(downVotesBy, authUser.id);
 
