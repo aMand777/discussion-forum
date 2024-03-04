@@ -12,8 +12,8 @@ const HeaderProfile: React.FC<HeaderProfileProps> = ({ id, name, email, avatar }
   return (
     <div className='relative w-full h-56 border border-base-300'>
       <div className='w-full bg-primary h-1/2'></div>
-      <div className='flex flex-col ml-10 -mt-12 avatar'>
-        <div className='w-24 rounded-full ring ring-base-100 ring-offset-base-100 ring-offset-2'>
+      <div className='flex flex-col -mt-12 avatar'>
+        <div className='w-24 rounded-full ring ring-base-100 ring-offset-base-100 ring-offset-2 ml-16'>
           {avatar ? (
             <img src={avatar} alt={`/avatar/${name}`} />
           ) : (
@@ -21,14 +21,18 @@ const HeaderProfile: React.FC<HeaderProfileProps> = ({ id, name, email, avatar }
           )}
         </div>
         {name ? (
-          <span className='text-xl font-bold w-24 text-center'>{name}</span>
+          <span className='text-xl font-bold w-56 text-center line-clamp-1'>{name}</span>
         ) : (
-          <div className='skeleton h-4 w-24 my-2'></div>
+          <div className='my-2 w-56 h-4'>
+            <div className='skeleton h-4 w-40 mx-auto'></div>
+          </div>
         )}
         {email ? (
-          <span className='text-xs w-24 text-center'>{email}</span>
+          <span className='text-xs w-56 text-center line-clamp-1'>{email}</span>
         ) : (
-          <div className='skeleton h-3 w-24'></div>
+          <div className='w-56 h-3'>
+            <div className='skeleton h-3 w-40 mx-auto'></div>
+          </div>
         )}
       </div>
       <div className='sticky mt-5 border-b border-base-300 border-x btm-nav'>

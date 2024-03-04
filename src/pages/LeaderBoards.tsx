@@ -8,7 +8,7 @@ const LeaderBoards = () => {
       {leaderBoards.map((leaderboard) => (
         <CardLeaderBoard
           key={leaderboard.user.id}
-          // id={leaderboard.user.id}
+          id={leaderboard.user.id}
           name={leaderboard.user.name}
           email={leaderboard.user.email}
           avatar={leaderboard.user.avatar}

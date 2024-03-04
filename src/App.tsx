@@ -15,9 +15,9 @@ import DetailThread from './pages/DetailThread';
 import Create from './pages/Create';
 import Toast from './components/toast/Toast';
 import LeaderBoards from './pages/LeaderBoards';
-import PostsProfile from './components/profile/PostsProfile';
-import UpVotesProfile from './components/profile/UpVotesProfile';
-import DownVotesProfile from './components/profile/DownVotesProfile';
+import PostsProfile from './pages/PostsProfile';
+import UpVotesProfile from './pages/UpVotesProfile';
+import DownVotesProfile from './pages/DownVotesProfile';
 
 function App() {
   const dispatch = useAppDispatch();
