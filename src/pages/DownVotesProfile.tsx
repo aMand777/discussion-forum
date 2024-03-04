@@ -1,16 +1,16 @@
 import React from 'react';
-import useListThreads from '../../hook/useListThreads';
-import useUser from '../../hook/useUser';
-import CardThread from '../threads/CardThread';
-import EmptyPosts from './EmptyPosts';
-import HeaderProfile from './HeaderProfile';
+import useListThreads from '../hook/useListThreads';
+import useUser from '../hook/useUser';
+import CardThread from '../components/threads/CardThread';
+import EmptyPosts from '../components/profile/EmptyPosts';
+import HeaderProfile from '../components/profile/HeaderProfile';
 import { useParams } from 'react-router-dom';
-import { useAppDispatch } from '../../states/store';
-import { getAllThreadsStateAsync } from '../../states/slice/threads-slice';
-import { getAllUsersAsync } from '../../states/slice/users-slice';
-import SkeletonList from '../threads/SkeletonList';
+import { useAppDispatch } from '../states/store';
+import { getAllThreadsStateAsync } from '../states/slice/threads-slice';
+import { getAllUsersAsync } from '../states/slice/users-slice';
+import SkeletonList from '../components/threads/SkeletonList';
 
-const UpVotesProfile = () => {
+const DownVotesProfile = () => {
   const dispatch = useAppDispatch();
   const { userId } = useParams();
   const { threads, status } = useListThreads();
@@ -18,8 +18,10 @@ const UpVotesProfile = () => {
 
   const user = users.find((user) => user.id === userId);
 
-  const threadsWithUpVotes = threads.filter((thread) => thread.upVotesBy.includes(user?.id || ''));
-  const filteredThreads = threadsWithUpVotes.map((thread) => ({
+  const threadsWithDownVotes = threads.filter((thread) =>
+    thread.downVotesBy.includes(user?.id || ''),
+  );
+  const filteredThreads = threadsWithDownVotes.map((thread) => ({
     ...thread,
     user: users.find((user) => user.id === thread.ownerId),
   }));
@@ -56,4 +58,4 @@ const UpVotesProfile = () => {
   );
 };
 
-export default UpVotesProfile;
+export default DownVotesProfile;
