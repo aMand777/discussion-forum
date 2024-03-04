@@ -16,16 +16,19 @@ interface Thread {
 }
 
 interface ThreadsState {
+  status: string
   value: Thread[];
 }
 
 const initialState: ThreadsState = {
+  status: '',
   value: []
 };
 
 export const getAllThreadsStateAsync = createAsyncThunk(
   'threads/getAllThreads',
   async (_, { dispatch }) => {
+    dispatch(setStatus('loading'))
     dispatch(showLoading())
     try {
       const response = await GET_ALL_THREADS();
@@ -36,6 +39,7 @@ export const getAllThreadsStateAsync = createAsyncThunk(
       return response.status;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
+      dispatch(setStatus('error'))
       dispatch(setToast({ status: 'error', message: error.data.message }));
       dispatch(hideLoading());
     }
@@ -47,11 +51,15 @@ const threadsSlice = createSlice({
   initialState,
   reducers: {
     setThreads(state, action: PayloadAction<Thread[]>) {
+      state.status = 'success'
       state.value = action.payload;
+    },
+    setStatus(state, action) {
+      state.status = action.payload
     },
   },
 });
 
-export const { setThreads } = threadsSlice.actions;
+export const { setThreads, setStatus } = threadsSlice.actions;
 
 export default threadsSlice.reducer;

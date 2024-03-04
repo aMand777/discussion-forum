@@ -1,9 +1,9 @@
 import { useAppSelector } from '../states/store';
 
 const useDetailThread = () => {
-  const { value: detailThread } = useAppSelector((state) => state.detailThread)
+  const { value: detailThread, status } = useAppSelector((state) => state.detailThread)
 
-  return { ...detailThread }
+  return { ...detailThread, status }
 }
 
 export default useDetailThread

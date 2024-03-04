@@ -10,6 +10,7 @@ import Editor from '../comment/Editor';
 import useDetailThread from '../../hook/useDetailThread';
 import useUser from '../../hook/useUser';
 import SkeletonDetail from './SkeletonDetail';
+import NotFoundThread from './NotFoundThread';
 
 const CardDetailThread = () => {
   const { authUser } = useUser();
@@ -23,6 +24,7 @@ const CardDetailThread = () => {
     upVotesBy,
     downVotesBy,
     owner,
+    status,
   } = useDetailThread();
 
   const { upVoteThread, downVoteThread, isUpVoteByAuthUser, isDownVoteByAuthUser } = useVotes();
@@ -90,6 +92,7 @@ const CardDetailThread = () => {
       ) : (
         <SkeletonDetail />
       )}
+      {title.length < 1 && status !== 'loading' && <NotFoundThread />}
     </>
   );
 };

@@ -20,8 +20,16 @@ const HeaderProfile: React.FC<HeaderProfileProps> = ({ id, name, email, avatar }
             <div className='skeleton w-24 h-24 rounded-full shrink-0'></div>
           )}
         </div>
-        <span className='text-xl font-bold w-24 text-center'>{name}</span>
-        <span className='text-xs w-24 text-center'>{email}</span>
+        {name ? (
+          <span className='text-xl font-bold w-24 text-center'>{name}</span>
+        ) : (
+          <div className='skeleton h-4 w-24 my-2'></div>
+        )}
+        {email ? (
+          <span className='text-xs w-24 text-center'>{email}</span>
+        ) : (
+          <div className='skeleton h-3 w-24'></div>
+        )}
       </div>
       <div className='sticky mt-5 border-b border-base-300 border-x btm-nav'>
         <NavLink

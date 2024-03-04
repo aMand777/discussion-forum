@@ -6,10 +6,11 @@ import CardThread from '../components/threads/CardThread';
 import useListThreads from '../hook/useListThreads'
 import useUser from '../hook/useUser'
 import SkeletonList from '../components/threads/SkeletonList';
+import EmptyPosts from '../components/profile/EmptyPosts';
 
 const Threads = () => {
   const dispatch = useAppDispatch()
-  const { threads } = useListThreads()
+  const { threads, status } = useListThreads()
   const { users } = useUser()
   
   React.useEffect(() => {
@@ -41,9 +42,8 @@ const Threads = () => {
               downVotesBy={thread.downVotesBy}
             />
           ))
-        ) : (
-          <SkeletonList loop={5} />
-        )}
+        ) : status === 'loading' && <SkeletonList loop={3} />}
+        {threadsList.length < 1 && status !== 'loading' && <EmptyPosts />}
       </div>
     </>
   );
