@@ -1,5 +1,5 @@
 import React from 'react';
-import CardDetailThread from '../components/detailThread/CardDetailThread';
+import CardDetailThread from '../components/detail/CardDetailThread';
 import { useAppDispatch } from '../states/store';
 import { getDetailThreadAsync } from '../states/slice/detail-thread-slice';
 import { useParams } from 'react-router-dom';

@@ -9,7 +9,7 @@ import useUser from '../hook/useUser'
 const Threads = () => {
   const dispatch = useAppDispatch()
   const { threads } = useListThreads()
-  const { authUser, users } = useUser()
+  const { users } = useUser()
   
   React.useEffect(() => {
     dispatch(getAllThreadsStateAsync())
@@ -19,9 +19,7 @@ const Threads = () => {
   const threadsList = threads.map((thread) => ({
     ...thread,
     user: users.find((user) => user.id === thread.ownerId),
-    authUser: authUser.id,
   }))
-
   
   return (
     <>
@@ -39,7 +37,6 @@ const Threads = () => {
             createdAt={thread.createdAt}
             upVotesBy={thread.upVotesBy}
             downVotesBy={thread.downVotesBy}
-            authUser={thread.authUser}
           />
         ))}
       </div>

@@ -15,6 +15,9 @@ import DetailThread from './pages/DetailThread';
 import Create from './pages/Create';
 import Toast from './components/toast/Toast';
 import LeaderBoards from './pages/LeaderBoards';
+import PostsProfile from './components/profile/PostsProfile';
+import UpVotesProfile from './components/profile/UpVotesProfile';
+import DownVotesProfile from './components/profile/DownVotesProfile';
 
 function App() {
   const dispatch = useAppDispatch();
@@ -38,6 +41,9 @@ function App() {
             <Route path='/' element={<Threads />} />
             <Route path='/threads/create' element={<Create />} />
             <Route path='/leaderboards' element={<LeaderBoards />} />
+            <Route path='/:user/:userId/posts' element={<PostsProfile />} />
+            <Route path='/:user/:userId/upvotes' element={<UpVotesProfile />} />
+            <Route path='/:user/:userId/downvotes' element={<DownVotesProfile />} />
             <Route path='/threads/:user/:threadId' element={<DetailThread />} />
           </Route>
           {/* not found route page */}
