@@ -1,13 +1,19 @@
+import React from 'react';
 import useListThreads from '../../hook/useListThreads';
 import useUser from '../../hook/useUser';
 import CardThread from '../threads/CardThread';
 import EmptyPosts from './EmptyPosts';
 import HeaderProfile from './HeaderProfile';
 import { useParams } from 'react-router-dom';
+import { useAppDispatch } from '../../states/store';
+import { getAllThreadsStateAsync } from '../../states/slice/threads-slice';
+import { getAllUsersAsync } from '../../states/slice/users-slice';
+import SkeletonList from '../threads/SkeletonList';
 
 const UpVotesProfile = () => {
+  const dispatch = useAppDispatch();
   const { userId } = useParams();
-  const { threads } = useListThreads();
+  const { threads, status } = useListThreads();
   const { users } = useUser();
 
   const user = users.find((user) => user.id === userId);
@@ -18,29 +24,33 @@ const UpVotesProfile = () => {
     user: users.find((user) => user.id === thread.ownerId),
   }));
 
+  React.useEffect(() => {
+    dispatch(getAllThreadsStateAsync());
+    dispatch(getAllUsersAsync());
+  }, [dispatch]);
+
   return (
     <>
       <HeaderProfile id={user?.id} name={user?.name} email={user?.email} avatar={user?.avatar} />
       <div className='p-5 mt-16'>
-        {filteredThreads.length > 0 ? (
-          filteredThreads.map((thread) => (
-            <CardThread
-              key={thread.id}
-              threadId={thread.id}
-              title={thread.title}
-              body={thread.body}
-              category={thread.category}
-              upVotesBy={thread.upVotesBy}
-              downVotesBy={thread.downVotesBy}
-              totalComments={thread.totalComments}
-              createdAt={thread.createdAt}
-              avatar={user?.avatar}
-              name={user?.name}
-            />
-          ))
-        ) : (
-          <EmptyPosts />
-        )}
+        {filteredThreads.length > 0
+          ? filteredThreads.map((thread) => (
+              <CardThread
+                key={thread.id}
+                threadId={thread.id}
+                title={thread.title}
+                body={thread.body}
+                category={thread.category}
+                upVotesBy={thread.upVotesBy}
+                downVotesBy={thread.downVotesBy}
+                totalComments={thread.totalComments}
+                createdAt={thread.createdAt}
+                avatar={user?.avatar}
+                name={user?.name}
+              />
+            ))
+          : status === 'loading' && <SkeletonList loop={3} />}
+        {filteredThreads.length < 1 && status !== 'loading' && <EmptyPosts />}
       </div>
     </>
   );

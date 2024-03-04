@@ -32,7 +32,7 @@ interface DetailThread {
 
 interface DetailThreadState {
   value: DetailThread;
-  statusVoteComment: string;
+  status: string;
 }
 
 const initialState: DetailThreadState = {
@@ -64,12 +64,13 @@ const initialState: DetailThreadState = {
       },
     ],
   },
-  statusVoteComment: '',
+  status: '',
 };
 
 export const getDetailThreadAsync = createAsyncThunk(
   'detailThreads/getDetailThread',
   async (threadId: string, { dispatch }) => {
+    dispatch(setStatus('loading'));
     dispatch(unSetToast())
     dispatch(showLoading())
     try {
@@ -81,6 +82,7 @@ export const getDetailThreadAsync = createAsyncThunk(
       return response.status
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
+      dispatch(setStatus('error'));
       dispatch(setToast({ status: 'error', message: error.data.message }));
       dispatch(hideLoading())
     }
@@ -92,12 +94,16 @@ const detailThreadSlice = createSlice({
   initialState,
   reducers: {
     setDetailThread: (state, action: PayloadAction<DetailThread>) => {
+      state.status = 'success'
       state.value = action.payload;
-    }
+    },
+    setStatus(state, action) {
+      state.status = action.payload
+    },
   },
 });
 
 
-export const { setDetailThread } = detailThreadSlice.actions
+export const { setDetailThread, setStatus } = detailThreadSlice.actions;
 
 export default detailThreadSlice.reducer;
