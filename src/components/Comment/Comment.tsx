@@ -4,6 +4,7 @@ import { postedAt } from '../../utils';
 import UpVotes from '../votes/UpVotes';
 import DownVotes from '../votes/DownVotes';
 import useVotes from '../../hook/useVotes';
+import { Link } from 'react-router-dom';
 
 interface Owner {
   id: string;
@@ -53,7 +54,7 @@ const Comment: React.FC<CommentProps> = ({
           <div className='w-8 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2'>
             <img src={owner.avatar} />
           </div>
-          <span>{owner.name}</span>
+          <Link to={`/${owner.name}/${owner.id}/profile`}>{owner.name}</Link>
           <span className=''>•</span>
           <span className='text-xs'>{postedAt(createdAt)}</span>
         </div>

@@ -10,7 +10,8 @@ import Editor from '../comment/Editor';
 import useDetailThread from '../../hook/useDetailThread';
 import useUser from '../../hook/useUser';
 import SkeletonDetail from './SkeletonDetail';
-import NotFoundThread from './NotFoundThread';
+import NotFound from '../notFound/NotFound';
+import { Link } from 'react-router-dom';
 
 const CardDetailThread = () => {
   const { authUser } = useUser();
@@ -49,15 +50,15 @@ const CardDetailThread = () => {
             <div className='w-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2'>
               <img src={owner.avatar} alt={`/avatar/${owner.name}`} />
             </div>
-            <span>{owner.name}</span>
+            <Link to={`/${owner.name}/${owner.id}/profile`}>{owner.name}</Link>
             <span className=''>•</span>
             <span className='text-xs'>{postedAt(createdAt)}</span>
           </div>
           <div className='my-2 font-semibold'>{parse(title)}</div>
           <div className='font-thin'>{parse(body)}</div>
-          <div className='px-2 my-3 rounded-md cursor-pointer bg-base-300 w-fit hover:bg-base-200'>
+          <Link to={`/threads/categories/${category}`} className='px-2 my-3 rounded-md cursor-pointer bg-base-300 w-fit hover:bg-base-200'>
             #{category}
-          </div>
+          </Link>
           <div className='flex items-center gap-3'>
             <UpVotes
               isAuthUserVotes={isCommentUpVote}
@@ -92,7 +93,7 @@ const CardDetailThread = () => {
       ) : (
         <SkeletonDetail />
       )}
-      {title.length < 1 && status !== 'loading' && <NotFoundThread />}
+      {title.length < 1 && status !== 'loading' && <NotFound title='Thread not found' />}
     </>
   );
 };

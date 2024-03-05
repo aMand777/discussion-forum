@@ -1,20 +1,23 @@
 import useLeaderBoards from '../hook/useLeaderboards';
 import CardLeaderBoard from '../components/leaderboards/CardLeaderBoard';
+import CardLeaderBoardSkeleton from '../components/leaderboards/CardLeaderBoardSkeleton';
 
 const LeaderBoards = () => {
-  const { leaderBoards } = useLeaderBoards();
+  const { leaderBoards, status } = useLeaderBoards();
   return (
     <div className='grid grid-cols-1 gap-5 p-5'>
-      {leaderBoards.map((leaderboard) => (
-        <CardLeaderBoard
-          key={leaderboard.user.id}
-          id={leaderboard.user.id}
-          name={leaderboard.user.name}
-          email={leaderboard.user.email}
-          avatar={leaderboard.user.avatar}
-          score={leaderboard.score}
-        />
-      ))}
+      {leaderBoards.length > 0
+        ? leaderBoards.map((leaderboard) => (
+            <CardLeaderBoard
+              key={leaderboard.user.id}
+              id={leaderboard.user.id}
+              name={leaderboard.user.name}
+              email={leaderboard.user.email}
+              avatar={leaderboard.user.avatar}
+              score={leaderboard.score}
+            />
+          ))
+        : status === 'loading' && <CardLeaderBoardSkeleton loop={10} />}
     </div>
   );
 };

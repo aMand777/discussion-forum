@@ -5,6 +5,7 @@ import useUser from '../../hook/useUser';
 import { postNewCommentAsync } from '../../states/slice/create-slice';
 import { useAppDispatch, useAppSelector } from '../../states/store';
 import { unSetResponse } from '../../states/slice/create-slice';
+import { Link } from 'react-router-dom'
 
 type EditorProps = {
   threadId: string;
@@ -49,7 +50,7 @@ const Editor: React.FC<EditorProps> = ({ threadId }) => {
         <div className='w-8 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2'>
           <img src={authUser.avatar} alt={`avatar/${authUser.avatar}`} />
         </div>
-        <span>{authUser.name}</span>
+        <Link to={`/${authUser.name}/${authUser.id}/profile`}>{authUser.name}</Link>
       </div>
       <ReactQuill
         className='text-black bg-slate-200'

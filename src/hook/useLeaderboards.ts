@@ -1,9 +1,9 @@
 import { useAppSelector } from '../states/store';
 
 const useLeaderBoards = () => {
-  const { value: leaderBoards} = useAppSelector((state) => state.leaderBoards)
+  const { value: leaderBoards, status} = useAppSelector((state) => state.leaderBoards)
 
-  return { leaderBoards }
+  return { leaderBoards, status }
 }
 
 export default useLeaderBoards

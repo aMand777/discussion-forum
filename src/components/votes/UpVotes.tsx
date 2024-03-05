@@ -1,5 +1,7 @@
 import React from 'react';
 import { IoHeart, IoHeartOutline } from 'react-icons/io5';
+import { openModal } from '../../utils';
+import ModalVotes from './ModalVotes';
 
 type UpVotesProps = {
   isAuthUserVotes: boolean;
@@ -8,6 +10,11 @@ type UpVotesProps = {
 };
 
 const UpVotes: React.FC<UpVotesProps> = ({ isAuthUserVotes, totalVotes, onVotes }) => {
+
+  const handleButtonClick = () => {
+    openModal('my_modal_2');
+  };
+
   return (
     <>
       <div className='flex items-center gap-2'>
@@ -18,8 +25,10 @@ const UpVotes: React.FC<UpVotesProps> = ({ isAuthUserVotes, totalVotes, onVotes 
             <IoHeartOutline className='w-7 h-7' />
           )}
         </button>
-        <span>{totalVotes}</span>
+        <button onClick={handleButtonClick}>{totalVotes}</button>
+        {/* <Link to={`/thread/${threadId}`}>{totalVotes}</Link> */}
       </div>
+      <ModalVotes />
     </>
   );
 };
