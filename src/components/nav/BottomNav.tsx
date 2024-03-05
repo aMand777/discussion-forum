@@ -4,11 +4,12 @@ import { IoCreateOutline } from 'react-icons/io5';
 import { MdLeaderboard } from 'react-icons/md';
 import { NavLink } from 'react-router-dom';
 import useUser from '../../hook/useUser';
-import useLogout from '../../hook/useLogout'
+import useLogout from '../../hook/useLogout';
+import { openModal } from '../../utils';
 
 const BottomNav = () => {
   const { authUser } = useUser();
-  const { onLogout } = useLogout()
+  const { onLogout } = useLogout();
 
   return (
     <>
@@ -19,12 +20,10 @@ const BottomNav = () => {
           <IoMdChatbubbles size={35} />
           <span className='btm-nav-label'>Threads</span>
         </NavLink>
-        <NavLink
-          to='/search'
-          className={({ isActive }) => (isActive ? 'active text-accent' : 'text-base-content')}>
+        <button onClick={() => openModal('modal_search')}>
           <FiSearch size={35} />
           <span className='btm-nav-label'>Search</span>
-        </NavLink>
+        </button>
         <NavLink
           to='/threads/create'
           className={({ isActive }) => (isActive ? 'active text-accent' : 'text-base-content')}>

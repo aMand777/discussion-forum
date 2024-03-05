@@ -3,12 +3,13 @@ import BottomNav from '../components/nav/BottomNav';
 import SideNav from '../components/nav/SideNav';
 import TableLeaderBoards from '../components/leaderboards/TableLeaderBoards';
 import LoadingBar from 'react-redux-loading-bar';
+import ModalSearch from '../components/search/ModalSearch';
 
 const Layout = () => {
-
   return (
     <>
       <header className='sticky top-0 z-50'>
+        <ModalSearch />
         <LoadingBar />
       </header>
       <div className='grid grid-cols-12'>
