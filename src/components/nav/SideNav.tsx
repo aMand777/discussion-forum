@@ -5,6 +5,7 @@ import { MdLeaderboard } from 'react-icons/md';
 import { NavLink } from 'react-router-dom';
 import useUser from '../../hook/useUser';
 import useLogout from '../../hook/useLogout';
+import { openModal } from '../../utils';
 
 const SideNav = () => {
   const { authUser } = useUser();
@@ -24,16 +25,12 @@ const SideNav = () => {
           <IoMdChatbubbles size={35} />
           <span className='hidden text-lg font-semibold lg:block'>Threads</span>
         </NavLink>
-        <NavLink
-          to='/search'
-          className={({ isActive }) =>
-            isActive
-              ? 'active text-accent __navlink_sidenav'
-              : 'text-base-content __navlink_sidenav'
-          }>
+        <button
+          onClick={() => openModal('modal_search')}
+          className='btn btn-ghost btn-accent flex justify-start gap-7'>
           <FiSearch size={35} />
           <span className='hidden text-lg font-semibold lg:block'>Search</span>
-        </NavLink>
+        </button>
         <NavLink
           to='/threads/create'
           className={({ isActive }) =>

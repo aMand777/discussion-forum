@@ -1,7 +1,7 @@
 function postedAt(date: string): string {
   const now = new Date();
   const posted = new Date(date);
-  const diff = now.getTime() - posted.getTime(); // Mengambil milidetik
+  const diff = now.getTime() - posted.getTime();
 
   const diffDays = Math.floor(diff / (1000 * 60 * 60 * 24));
   const diffHours = Math.floor(diff / (1000 * 60 * 60));
@@ -22,10 +22,15 @@ function postedAt(date: string): string {
 }
 
 const openModal = (id: string) => {
-  const alertConfirm = document.getElementById(id) as HTMLDialogElement | null
-  if (alertConfirm) {
-    alertConfirm.showModal()
+  const modal = document.getElementById(id) as HTMLDialogElement | null;
+  if (modal) {
+    modal.showModal();
   }
-}
+};
 
-export { postedAt, openModal };
+const closeModal = (id: string) => {
+  const modal = document.getElementById(id) as HTMLDialogElement | null;
+  modal?.close()
+};
+
+export { postedAt, openModal, closeModal };
