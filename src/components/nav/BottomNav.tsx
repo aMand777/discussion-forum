@@ -20,7 +20,9 @@ const BottomNav = () => {
           <IoMdChatbubbles size={35} />
           <span className='btm-nav-label'>Threads</span>
         </NavLink>
-        <button onClick={() => openModal('modal_search')}>
+        <button
+          onClick={() => openModal('modal_search')}
+          className='focus:text-accent focus:outline-0'>
           <FiSearch size={35} />
           <span className='btm-nav-label'>Search</span>
         </button>

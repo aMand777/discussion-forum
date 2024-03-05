@@ -13,7 +13,9 @@ type CardLeaderBoardProps = {
 const CardLeaderBoard: React.FC<CardLeaderBoardProps> = ({ id, name, email, avatar, score }) => {
   return (
     <>
-      <Link to={`/${name}/${id}/posts`} className='mb-16 shadow-xl lg:mb-5 card card-side bg-base-100'>
+      <Link
+        to={`/${name}/${id}/profile`}
+        className='mb-16 shadow-xl lg:mb-5 card card-side bg-base-100'>
         <div className='flex flex-col items-center card-body md:flex-row'>
           <div className='avatar'>
             <div className='w-32 lg:w-40 mask mask-hexagon'>
@@ -21,8 +23,8 @@ const CardLeaderBoard: React.FC<CardLeaderBoardProps> = ({ id, name, email, avat
             </div>
           </div>
           <div className='flex flex-col items-center w-full'>
-          <h2 className='card-title line-clamp-1'>{name}</h2>
-          <p className='line-clamp-1'>{email}</p>
+            <h2 className='card-title line-clamp-1'>{name}</h2>
+            <p className='line-clamp-1'>{email}</p>
           </div>
         </div>
         <div className='justify-end card-actions'>
