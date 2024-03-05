@@ -27,7 +27,7 @@ const SideNav = () => {
         </NavLink>
         <button
           onClick={() => openModal('modal_search')}
-          className='btn btn-ghost btn-accent flex justify-start gap-7'>
+          className='btn btn-ghost btn-accent flex justify-start gap-7 focus:text-accent focus:outline-0'>
           <FiSearch size={35} />
           <span className='hidden text-lg font-semibold lg:block'>Search</span>
         </button>
