@@ -9,8 +9,3 @@
 .scroll-none::-webkit-scrollbar {
   display: none;
 }
-
-[data-placeholder]:empty::before {
-  content: attr(data-placeholder);
-  color: var(--on-background-grey);
-}

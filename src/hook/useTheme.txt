@@ -1,0 +1,9 @@
+import { useAppSelector } from '../states/store';
+
+const useTheme = () => {
+  const { theme } = useAppSelector((state) => state.theme);
+
+  return { theme };
+};
+
+export default useTheme;

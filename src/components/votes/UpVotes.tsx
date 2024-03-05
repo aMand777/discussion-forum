@@ -20,7 +20,7 @@ const UpVotes: React.FC<UpVotesProps> = ({ isAuthUserVotes, totalVotes, onVotes 
       <div className='flex items-center gap-2'>
         <button onClick={onVotes} className='p-0 rounded-full btn btn-ghost hover:bg-base-100'>
           {isAuthUserVotes ? (
-            <IoHeart className='p-0 text-red-500 w-7 h-7' />
+            <IoHeart className='p-0 text-error w-7 h-7' />
           ) : (
             <IoHeartOutline className='w-7 h-7' />
           )}

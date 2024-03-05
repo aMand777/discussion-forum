@@ -6,6 +6,9 @@ import { NavLink } from 'react-router-dom';
 import useUser from '../../hook/useUser';
 import useLogout from '../../hook/useLogout';
 import { openModal } from '../../utils';
+import Swap from './Swap';
+import { AiOutlineLogout } from 'react-icons/ai';
+import { FaUserTie } from 'react-icons/fa';
 
 const BottomNav = () => {
   const { authUser } = useUser();
@@ -47,18 +50,24 @@ const BottomNav = () => {
           </div>
           <ul
             tabIndex={0}
-            className='-mt-44 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-300 rounded-box w-52'>
+            className='-mt-52 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-300 rounded-box w-52'>
             <li>
               <a className='justify-between'>
                 Theme
-                {/* <span className='badge'>New</span> */}
+                <Swap />
               </a>
             </li>
             <li>
-              <NavLink to={`/${authUser.name}/${authUser.id}/profile`}>Profile</NavLink>
+              <NavLink to={`/${authUser.name}/${authUser.id}/profile`} className='mt-2 justify-between'>
+                Profile
+              <FaUserTie className='w-6 h-6' />
+              </NavLink>
             </li>
             <li>
-              <button onClick={() => onLogout()}>Logout</button>
+              <button onClick={() => onLogout()} className='mt-2 justify-between'>
+                Logout
+                <AiOutlineLogout className='w-7 h-7 text-error' />
+              </button>
             </li>
           </ul>
         </div>
