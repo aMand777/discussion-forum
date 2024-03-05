@@ -72,7 +72,7 @@ const FormLogin: React.FC<FormLoginProps> = ({ register, errors, onSubmit, handl
               className='checkbox checkbox-accent'
             />
           </label>
-          <button disabled={isLoading} type='submit' className='w-full mt-5 btn btn-primary'>
+          <button disabled={isLoading} type='submit' className='w-full mt-5 btn btn-accent'>
             {isLoading && <span className='loading loading-spinner'></span>}
             {isLoading ? 'loading...' : 'Login'}
           </button>

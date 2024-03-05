@@ -105,7 +105,7 @@ const FormRegister: React.FC<FormRegisterProps> = ({
               className='checkbox checkbox-accent'
             />
           </label>
-          <button disabled={isLoading} type='submit' className='btn btn-primary w-full mt-5'>
+          <button disabled={isLoading} type='submit' className='btn btn-accent w-full mt-5'>
             {isLoading && <span className='loading loading-spinner'></span>}
             {isLoading ? 'loading...' : 'Register'}
           </button>

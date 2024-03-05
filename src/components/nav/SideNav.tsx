@@ -6,6 +6,9 @@ import { NavLink } from 'react-router-dom';
 import useUser from '../../hook/useUser';
 import useLogout from '../../hook/useLogout';
 import { openModal } from '../../utils';
+import Swap from './Swap';
+import { AiOutlineLogout } from 'react-icons/ai';
+import { FaUserTie } from "react-icons/fa";
 
 const SideNav = () => {
   const { authUser } = useUser();
@@ -66,14 +69,20 @@ const SideNav = () => {
             <li>
               <a className='justify-between'>
                 Theme
-                {/* <span className='badge'>New</span> */}
+                <Swap />
               </a>
             </li>
             <li>
-              <NavLink to={`/${authUser.name}/${authUser.id}/profile`}>Profile</NavLink>
+              <NavLink to={`/${authUser.name}/${authUser.id}/profile`} className='mt-2 justify-between'>
+                Profile
+                <FaUserTie className='w-6 h-6' />
+              </NavLink>
             </li>
             <li>
-              <button onClick={() => onLogout()}>Logout</button>
+              <button onClick={() => onLogout()} className='mt-2 justify-between'>
+                Logout
+                <AiOutlineLogout className='w-7 h-7 text-error' />
+              </button>
             </li>
           </ul>
         </div>
