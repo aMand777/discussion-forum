@@ -8,7 +8,6 @@ import Threads from './pages/Threads';
 import Register from './pages/Register';
 import { useAppDispatch } from './states/store';
 import { getUserLoginAsync } from './states/slice/preload-slice';
-import { getAllThreadsStateAsync } from './states/slice/threads-slice';
 import { getLeaderBoardsAsync } from './states/slice/leaderboards-slice';
 import NotFoundPage from './components/notFound/NotFoundPage';
 import DetailThread from './pages/DetailThread';
@@ -18,13 +17,14 @@ import LeaderBoards from './pages/LeaderBoards';
 import PostsProfile from './pages/PostsProfile';
 import UpVotesProfile from './pages/UpVotesProfile';
 import DownVotesProfile from './pages/DownVotesProfile';
+import Categories from './pages/Categories';
+import Votes from './pages/Votes';
 
 function App() {
   const dispatch = useAppDispatch();
 
   React.useEffect(() => {
     dispatch(getUserLoginAsync());
-    dispatch(getAllThreadsStateAsync());
     dispatch(getLeaderBoardsAsync());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -40,8 +40,10 @@ function App() {
           <Route element={<Layout />}>
             <Route path='/' element={<Threads />} />
             <Route path='/threads/create' element={<Create />} />
+            <Route path='/thread/:threadId' element={<Votes />} />
             <Route path='/leaderboards' element={<LeaderBoards />} />
-            <Route path='/:user/:userId/posts' element={<PostsProfile />} />
+            <Route path='/threads/categories/:category' element={<Categories />} />
+            <Route path='/:user/:userId/profile' element={<PostsProfile />} />
             <Route path='/:user/:userId/upvotes' element={<UpVotesProfile />} />
             <Route path='/:user/:userId/downvotes' element={<DownVotesProfile />} />
             <Route path='/threads/:user/:threadId' element={<DetailThread />} />

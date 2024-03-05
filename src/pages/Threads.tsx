@@ -13,15 +13,15 @@ const Threads = () => {
   const { threads, status } = useListThreads()
   const { users } = useUser()
   
-  React.useEffect(() => {
-    dispatch(getAllThreadsStateAsync())
-    dispatch(getAllUsersAsync());
-  }, [dispatch])
-
   const threadsList = threads.map((thread) => ({
     ...thread,
     user: users.find((user) => user.id === thread.ownerId),
   }))
+  
+  React.useEffect(() => {
+    dispatch(getAllThreadsStateAsync())
+    dispatch(getAllUsersAsync());
+  }, [dispatch])
   
   return (
     <>
@@ -31,6 +31,7 @@ const Threads = () => {
             <CardThread
               key={thread.id}
               threadId={thread.id}
+              userId={thread.user?.id}
               avatar={thread.user?.avatar}
               name={thread.user?.name}
               title={thread.title}
@@ -41,8 +42,8 @@ const Threads = () => {
               upVotesBy={thread.upVotesBy}
               downVotesBy={thread.downVotesBy}
             />
-          ))
-        ) : status === 'loading' && <SkeletonList loop={3} />}
+            ))
+            ) : status === 'loading' && <SkeletonList loop={3} />}
         {threadsList.length < 1 && status !== 'loading' && <EmptyPosts />}
       </div>
     </>

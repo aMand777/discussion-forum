@@ -1,6 +1,6 @@
 // import React from 'react'
 
-const Category = () => {
+const CategoryThreads = () => {
   return (
     <>
       <div>
@@ -17,4 +17,4 @@ const Category = () => {
   );
 }
 
-export default Category
+export default CategoryThreads

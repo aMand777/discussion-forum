@@ -21,4 +21,11 @@ function postedAt(date: string): string {
   return 'just now';
 }
 
-export { postedAt };
+const openModal = (id: string) => {
+  const alertConfirm = document.getElementById(id) as HTMLDialogElement | null
+  if (alertConfirm) {
+    alertConfirm.showModal()
+  }
+}
+
+export { postedAt, openModal };

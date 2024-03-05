@@ -37,7 +37,7 @@ const HeaderProfile: React.FC<HeaderProfileProps> = ({ id, name, email, avatar }
       </div>
       <div className='sticky mt-5 border-b border-base-300 border-x btm-nav'>
         <NavLink
-          to={`/${name}/${id}/posts`}
+          to={`/${name}/${id}/profile`}
           className={({ isActive }) => (isActive ? 'active text-accent' : '')}>
           <span className='btm-nav-label'>Posts</span>
         </NavLink>

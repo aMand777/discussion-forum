@@ -54,7 +54,7 @@ const BottomNav = () => {
               </a>
             </li>
             <li>
-              <NavLink to={`/${authUser.name}/${authUser.id}/posts`}>Profile</NavLink>
+              <NavLink to={`/${authUser.name}/${authUser.id}/profile`}>Profile</NavLink>
             </li>
             <li>
               <button onClick={() => onLogout()}>Logout</button>
