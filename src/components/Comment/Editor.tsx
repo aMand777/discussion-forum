@@ -5,7 +5,7 @@ import useUser from '../../hook/useUser';
 import { postNewCommentAsync } from '../../states/slice/create-slice';
 import { useAppDispatch, useAppSelector } from '../../states/store';
 import { unSetResponse } from '../../states/slice/create-slice';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
 type EditorProps = {
   threadId: string;
@@ -53,10 +53,9 @@ const Editor: React.FC<EditorProps> = ({ threadId }) => {
         <Link to={`/${authUser.name}/${authUser.id}/profile`}>{authUser.name}</Link>
       </div>
       <ReactQuill
-        className='text-black bg-slate-200'
+        className='text-base-content bg-base-200'
         modules={module}
         theme='snow'
-        placeholder='Type here ..'
         value={content}
         onChange={setContent}
       />

@@ -45,7 +45,7 @@ const CardDetailThread = () => {
   return (
     <>
       {title ? (
-        <div>
+        <div className='mb-12 lg:mb-1'>
           <div className='items-center gap-5 avatar'>
             <div className='w-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2'>
               <img src={owner.avatar} alt={`/avatar/${owner.name}`} />
