@@ -18,7 +18,10 @@ import PostsProfile from './pages/PostsProfile';
 import UpVotesProfile from './pages/UpVotesProfile';
 import DownVotesProfile from './pages/DownVotesProfile';
 import Categories from './pages/Categories';
-import Votes from './pages/Votes';
+import UpVotesThreadBy from './pages/UpVotesThreadBy';
+import UpVotesCommentBy from './pages/UpVotesCommentBy';
+import DownVotesCommentBy from './pages/DownVotesCommentBy';
+import DownVotesThreadBy from './pages/DownVotesThreadBy';
 
 function App() {
   const dispatch = useAppDispatch();
@@ -40,7 +43,10 @@ function App() {
           <Route element={<Layout />}>
             <Route path='/' element={<Threads />} />
             <Route path='/threads/create' element={<Create />} />
-            <Route path='/thread/:threadId' element={<Votes />} />
+            <Route path='/:threadId/upvotes_by' element={<UpVotesThreadBy />} />
+            <Route path='/:threadId/downvotes_by' element={<DownVotesThreadBy />} />
+            <Route path='/:threadId/:commentId/upvotes_by' element={<UpVotesCommentBy />} />
+            <Route path='/:threadId/:commentId/downvotes_by' element={<DownVotesCommentBy />} />
             <Route path='/leaderboards' element={<LeaderBoards />} />
             <Route path='/threads/categories/:category' element={<Categories />} />
             <Route path='/:user/:userId/profile' element={<PostsProfile />} />

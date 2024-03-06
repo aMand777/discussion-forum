@@ -2,8 +2,8 @@ import React from 'react';
 import { AiOutlineComment } from 'react-icons/ai';
 import { postedAt } from '../../utils';
 import parse from 'html-react-parser';
-import UpVotes from '../votes/UpVotes';
-import DownVotes from '../votes/DownVotes';
+import UpVotesThread from '../votes/UpVotesThread';
+import DownVotesThread from '../votes/DownVotesThread';
 import useVotes from '../../hook/useVotes';
 import Comments from '../comment/Comment';
 import Editor from '../comment/Editor';
@@ -56,22 +56,28 @@ const CardDetailThread = () => {
           </div>
           <div className='my-2 font-semibold'>{parse(title)}</div>
           <div className='font-thin'>{parse(body)}</div>
-          <Link to={`/threads/categories/${category}`} className='px-2 my-3 rounded-md cursor-pointer bg-base-300 w-fit hover:bg-base-200'>
+          <Link
+            to={`/threads/categories/${category}`}
+            className='px-2 my-3 rounded-md cursor-pointer bg-base-300 w-fit hover:bg-base-200'>
             #{category}
           </Link>
           <div className='flex items-center gap-3'>
-            <UpVotes
+            <UpVotesThread
+              threadId={threadId}
               isAuthUserVotes={isCommentUpVote}
               totalVotes={upVotesBy.length}
               onVotes={handleButtonUpVote}
             />
-            <DownVotes
+            <DownVotesThread
+              threadId={threadId}
               isAuthUserVotes={isCommentDownVote}
               totalVotes={downVotesBy.length}
               onVotes={handleButtonDownVote}
             />
-            <AiOutlineComment className='w-7 h-7' />
-            <span>{comments.length}</span>
+            <Link to={`/threads/${owner.name}/${threadId}`} className='flex items-center gap-2'>
+              <AiOutlineComment className='w-7 h-7' />
+              <span>{comments.length}</span>
+            </Link>
           </div>
           <div className='divider'></div>
           <Editor threadId={threadId} />

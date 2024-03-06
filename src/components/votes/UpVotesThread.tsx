@@ -1,19 +1,15 @@
 import React from 'react';
 import { IoHeart, IoHeartOutline } from 'react-icons/io5';
-import { openModal } from '../../utils';
-import ModalVotes from './ModalVotes';
+import { Link } from 'react-router-dom';
 
-type UpVotesProps = {
+type UpVotesThreadProps = {
+  threadId: string;
   isAuthUserVotes: boolean;
   totalVotes: number | undefined;
   onVotes: (event: React.MouseEvent) => void;
 };
 
-const UpVotes: React.FC<UpVotesProps> = ({ isAuthUserVotes, totalVotes, onVotes }) => {
-
-  const handleButtonClick = () => {
-    openModal('my_modal_2');
-  };
+const UpVotesThread: React.FC<UpVotesThreadProps> = ({ threadId, isAuthUserVotes, totalVotes, onVotes }) => {
 
   return (
     <>
@@ -25,12 +21,14 @@ const UpVotes: React.FC<UpVotesProps> = ({ isAuthUserVotes, totalVotes, onVotes 
             <IoHeartOutline className='w-7 h-7' />
           )}
         </button>
-        <button onClick={handleButtonClick}>{totalVotes}</button>
-        {/* <Link to={`/thread/${threadId}`}>{totalVotes}</Link> */}
+        {totalVotes && totalVotes > 0 ? (
+          <Link to={`/${threadId}/upvotes_by`}>{totalVotes}</Link>
+        ) : (
+          <span>{totalVotes}</span>
+        )}
       </div>
-      <ModalVotes />
     </>
   );
 };
 
-export default UpVotes;
+export default UpVotesThread;

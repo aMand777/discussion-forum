@@ -8,7 +8,6 @@ const TableLeaderBoards = () => {
     <>
       <div className='overflow-x-auto'>
         <table className='table'>
-          {/* head */}
           <thead>
             <tr className='bg-base-200'>
               <th>No</th>
@@ -19,7 +18,6 @@ const TableLeaderBoards = () => {
           {leaderBoards.length > 0
             ? leaderBoards.map((leaderboard, index) => (
                 <tbody key={leaderboard.user.id}>
-                  {/* row 1 */}
                   <tr>
                     <th>{index + 1}</th>
                     <td className='flex items-center gap-3'>
