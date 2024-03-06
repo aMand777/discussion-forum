@@ -2,7 +2,6 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
 import { setToast, unSetToast } from './toast-slice';
 import { getUserLoginAsync } from './preload-slice';
-import { setAccessToken } from '../../utils/storage';
 import { POST_REGISTER_USER } from '../../services/register.services';
 
 interface RegisterUser {
@@ -32,8 +31,6 @@ export const registerUserAsync = createAsyncThunk(
     try {
       const response = await POST_REGISTER_USER(user);
       if (response.status === 'success') {
-        const { token } = response.data;
-        setAccessToken('accessToken', token);
         dispatch(getUserLoginAsync());
         dispatch(hideLoading());
         dispatch(setRegisterSuccess());

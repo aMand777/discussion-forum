@@ -45,6 +45,7 @@ const UpVotesProfile = () => {
                 downVotesBy={thread.downVotesBy}
                 totalComments={thread.totalComments}
                 createdAt={thread.createdAt}
+                userId={user?.id}
                 avatar={user?.avatar}
                 name={user?.name}
               />

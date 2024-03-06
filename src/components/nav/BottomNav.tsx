@@ -60,13 +60,13 @@ const BottomNav = () => {
             <li>
               <NavLink to={`/${authUser.name}/${authUser.id}/profile`} className='mt-2 justify-between'>
                 Profile
-              <FaUserTie className='w-6 h-6' />
+              <FaUserTie className='w-5 h-5' />
               </NavLink>
             </li>
             <li>
               <button onClick={() => onLogout()} className='mt-2 justify-between'>
                 Logout
-                <AiOutlineLogout className='w-7 h-7 text-error' />
+                <AiOutlineLogout className='w-5 h-5 text-error' />
               </button>
             </li>
           </ul>

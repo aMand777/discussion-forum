@@ -1,13 +1,15 @@
 import React from 'react';
 import { IoHeartDislikeOutline, IoHeartDislikeSharp } from 'react-icons/io5';
+import { Link } from 'react-router-dom';
 
-type DownVotesProps = {
+type DownVotesThreadProps = {
+  threadId: string
   isAuthUserVotes: boolean;
   totalVotes: number | undefined;
   onVotes: (event: React.MouseEvent) => void;
 };
 
-const DownVotes: React.FC<DownVotesProps> = ({ isAuthUserVotes, totalVotes, onVotes }) => {
+const DownVotesThread: React.FC<DownVotesThreadProps> = ({threadId, isAuthUserVotes, totalVotes, onVotes }) => {
   return (
     <>
       <div className='flex items-center gap-2'>
@@ -18,10 +20,14 @@ const DownVotes: React.FC<DownVotesProps> = ({ isAuthUserVotes, totalVotes, onVo
             <IoHeartDislikeOutline className='w-7 h-7' />
           )}
         </button>
-        <span>{totalVotes}</span>
+        {totalVotes && totalVotes > 0 ? (
+          <Link to={`/${threadId}/downvotes_by`}>{totalVotes}</Link>
+        ) : (
+          <span>{totalVotes}</span>
+        )}
       </div>
     </>
   );
 };
 
-export default DownVotes;
+export default DownVotesThread;

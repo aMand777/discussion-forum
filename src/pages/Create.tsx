@@ -97,9 +97,6 @@ const Create = () => {
               onChange={setBody}
             />
             <div className='label'></div>
-            {/* <button type='submit' className='px-10 mt-10 ml-auto mr-0 btn btn-outline btn-accent'>
-              Post
-            </button> */}
             <button
               disabled={status === 'loading'}
               className='mt-10 ml-auto mr-0 btn btn-outline btn-accent'>

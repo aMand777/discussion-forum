@@ -1,8 +1,8 @@
 import React from 'react';
 import parse from 'html-react-parser';
 import { postedAt } from '../../utils';
-import UpVotes from '../votes/UpVotes';
-import DownVotes from '../votes/DownVotes';
+import UpVotesComment from '../votes/UpVotesComment';
+import DownVotesComment from '../votes/DownVotesComment';
 import useVotes from '../../hook/useVotes';
 import { Link } from 'react-router-dom';
 
@@ -60,12 +60,16 @@ const Comment: React.FC<CommentProps> = ({
         </div>
         <div className='my-3 font-thin'>{parse(content)}</div>
         <div className='flex items-center gap-3'>
-          <UpVotes
+          <UpVotesComment
+            commentId={commentId}
+            threadId={threadId}
             isAuthUserVotes={upVoteCommentByAuthUser}
             totalVotes={upVotesBy.length}
             onVotes={handleButtonUpVote}
           />
-          <DownVotes
+          <DownVotesComment
+            commentId={commentId}
+            threadId={threadId}
             isAuthUserVotes={downVoteCommentByAuthUser}
             totalVotes={downVotesBy.length}
             onVotes={handleButtonDownVote}
