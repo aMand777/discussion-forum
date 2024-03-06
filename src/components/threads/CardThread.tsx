@@ -52,7 +52,7 @@ const CardThread: React.FC<CardThreadProps> = ({
 
   return (
     <>
-      <div>
+      <div className='mb-12 lg:mb-1'>
         <div className='items-center gap-5 avatar'>
           <div className='rounded-full w-7 ring ring-primary ring-offset-base-100 ring-offset-2'>
             {avatar ? (
