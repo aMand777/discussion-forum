@@ -15,7 +15,7 @@ const CardLeaderBoard: React.FC<CardLeaderBoardProps> = ({ id, name, email, avat
     <>
       <Link
         to={`/${name}/${id}/profile`}
-        className='mb-16 shadow-xl lg:mb-5 card card-side bg-base-100'>
+        className='mb-16 shadow-xl bg-base-100 lg:mb-5 card card-side'>
         <div className='flex flex-col items-center card-body md:flex-row'>
           <div className='avatar'>
             <div className='w-32 lg:w-40 mask mask-hexagon'>
@@ -27,7 +27,7 @@ const CardLeaderBoard: React.FC<CardLeaderBoardProps> = ({ id, name, email, avat
             <p className='line-clamp-1'>{email}</p>
           </div>
         </div>
-        <div className='justify-end card-actions'>
+        <div className='absolute right-0 card-actions'>
           <Score score={score} />
         </div>
       </Link>

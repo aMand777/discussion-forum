@@ -10,9 +10,9 @@ import useUser from '../../hook/useUser';
 
 type CardThreadProps = {
   threadId: string;
-  userId?: string;
-  avatar?: string;
-  name?: string;
+  userId: string;
+  avatar: string;
+  name: string;
   createdAt: string;
   category: string;
   title: string;
@@ -58,7 +58,7 @@ const CardThread: React.FC<CardThreadProps> = ({
             {avatar ? (
               <img src={avatar} alt={`/avatar/${name}`} />
             ) : (
-              <div className='skeleton w-24 h-24 rounded-full shrink-0'></div>
+              <div className='w-24 h-24 rounded-full skeleton shrink-0'></div>
             )}
           </div>
           <Link to={`/${name}/${userId}/profile`}>{name}</Link>

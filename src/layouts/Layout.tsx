@@ -10,7 +10,7 @@ const Layout = () => {
     <>
       <header className='sticky top-0 z-50'>
         <ModalSearch />
-        <LoadingBar className='bg-accent h-1' />
+        <LoadingBar className='h-1 bg-accent' />
       </header>
       <div className='grid grid-cols-12'>
         <nav className='hidden col-span-2 sm:block'>
