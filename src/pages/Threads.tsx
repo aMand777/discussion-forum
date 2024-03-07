@@ -31,9 +31,9 @@ const Threads = () => {
             <CardThread
               key={thread.id}
               threadId={thread.id}
-              userId={thread.user?.id}
-              avatar={thread.user?.avatar}
-              name={thread.user?.name}
+              userId={thread.user?.id || ''}
+              avatar={thread.user?.avatar || ''}
+              name={thread.user?.name || ''}
               title={thread.title}
               body={thread.body}
               category={thread.category}

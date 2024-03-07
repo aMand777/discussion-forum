@@ -41,9 +41,9 @@ const PostsProfile = () => {
                 downVotesBy={post.downVotesBy}
                 totalComments={post.totalComments}
                 createdAt={post.createdAt}
-                userId={user?.id}
-                avatar={user?.avatar}
-                name={user?.name}
+                userId={user?.id || ''}
+                avatar={user?.avatar || ''}
+                name={user?.name || ''}
               />
             ))
           : status === 'loading' && <SkeletonList loop={3} />}
