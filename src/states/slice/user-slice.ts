@@ -25,10 +25,10 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     setAuthUser(state, action) {
-      state.authUser = action.payload;
+      return { ...state, authUser: action.payload };
     },
     unSetAuthUser(state) {
-      state.authUser = initialState.authUser;
+      return { ...state, authUser: initialState.authUser };
     },
   },
 });

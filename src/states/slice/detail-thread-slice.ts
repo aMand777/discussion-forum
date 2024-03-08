@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
-import { GET_DETAIL_THREAD } from '../../services/threads.services';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
-import { setToast, unSetToast } from '../../states/slice/toast-slice';
+import { GET_DETAIL_THREAD } from '../../services/threads.services.ts';
+import { setToast, unSetToast } from './toast-slice.ts';
 
 interface Owner {
   id: string;
@@ -67,43 +67,42 @@ const initialState: DetailThreadState = {
   status: '',
 };
 
-export const getDetailThreadAsync = createAsyncThunk(
-  'detailThreads/getDetailThread',
-  async (threadId: string, { dispatch }) => {
-    dispatch(setStatus('loading'));
-    dispatch(unSetToast())
-    dispatch(showLoading())
-    try {
-      const response = await GET_DETAIL_THREAD(threadId);
-      if (response.status === 'success') {
-        dispatch(setDetailThread(response.data.detailThread))
-        dispatch(hideLoading());
-      }
-      return response.status
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: any) {
-      dispatch(setStatus('error'));
-      dispatch(setToast({ status: 'error', message: error.data.message }));
-      dispatch(hideLoading())
-    }
-  },
-);
-
 const detailThreadSlice = createSlice({
   name: 'detailThreads',
   initialState,
   reducers: {
-    setDetailThread: (state, action: PayloadAction<DetailThread>) => {
-      state.status = 'success'
-      state.value = action.payload;
+    setDetailThread(state, action: PayloadAction<DetailThread>) {
+      return { ...state, status: 'success', value: action.payload };
     },
     setStatus(state, action) {
-      state.status = action.payload
+      return { ...state, status: action.payload };
     },
   },
 });
 
-
 export const { setDetailThread, setStatus } = detailThreadSlice.actions;
+
+export const getDetailThreadAsync = createAsyncThunk(
+  'detailThreads/getDetailThread',
+  async (threadId: string, { dispatch }) => {
+    dispatch(setStatus('loading'));
+    dispatch(unSetToast());
+    dispatch(showLoading());
+    try {
+      const response = await GET_DETAIL_THREAD(threadId);
+      if (response.status === 'success') {
+        dispatch(setDetailThread(response.data.detailThread));
+        dispatch(hideLoading());
+      }
+      return response.status;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      dispatch(setStatus('error'));
+      dispatch(setToast({ status: 'error', message: error.data.message }));
+      dispatch(hideLoading());
+      return error.data.message;
+    }
+  },
+);
 
 export default detailThreadSlice.reducer;

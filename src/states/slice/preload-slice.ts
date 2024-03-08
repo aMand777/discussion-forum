@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
-import { GET_USER_LOGGED_IN } from '../../services/users.services';
-import { setAuthUser, unSetAuthUser } from '../../states/slice/user-slice'
+import { GET_USER_LOGGED_IN } from '../../services/users.services.ts';
+import { setAuthUser, unSetAuthUser } from './user-slice.ts';
 
 interface PreloadState {
   isPreload?: boolean;
@@ -12,6 +12,24 @@ const initialState: PreloadState = {
   isPreload: true,
   isAuthenticated: false,
 };
+
+const preloadSlice = createSlice({
+  name: 'preload',
+  initialState,
+  reducers: {
+    setPreload(state) {
+      return { ...state, isPreload: true, isAuthenticated: false };
+    },
+    setPreloadSuccess(state) {
+      return { ...state, isPreload: false, isAuthenticated: true };
+    },
+    setPreloadFailed(state) {
+      return { ...state, isPreload: false, isAuthenticated: false };
+    },
+  },
+});
+
+export const { setPreload, setPreloadSuccess, setPreloadFailed } = preloadSlice.actions;
 
 export const getUserLoginAsync = createAsyncThunk(
   'authUser/getUserLogin',
@@ -33,26 +51,5 @@ export const getUserLoginAsync = createAsyncThunk(
     }
   },
 );
-
-const preloadSlice = createSlice({
-  name: 'preload',
-  initialState,
-  reducers: {
-    setPreload(state) {
-      state.isPreload = true;
-      state.isAuthenticated = false;
-    },
-    setPreloadSuccess(state) {
-      state.isPreload = false;
-      state.isAuthenticated = true;
-    },
-    setPreloadFailed(state) {
-      state.isPreload = false;
-      state.isAuthenticated = false;
-    },
-  },
-});
-
-export const { setPreload, setPreloadSuccess, setPreloadFailed } = preloadSlice.actions;
 
 export default preloadSlice.reducer;

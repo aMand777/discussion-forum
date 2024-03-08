@@ -8,25 +8,23 @@ type AlertToastProps = {
   onClickButtonClose: () => void;
 };
 
-const AlertToast: React.FC<AlertToastProps> = ({
+function AlertToast({
   children,
   message,
   alert,
   onClickButtonClose,
-}) => {
+}: AlertToastProps) {
   return (
-    <>
-      <div role='alert' className={`alert ${alert} relative py-3 sm:px-10 flex`}>
-        {children}
-        <span>{message}</span>
-        <IoMdClose
-          onClick={onClickButtonClose}
-          size={20}
-          className='absolute top-0 right-0 cursor-pointer'
-        />
-      </div>
-    </>
+    <div role="alert" className={`alert ${alert} relative py-3 sm:px-10 flex`}>
+      {children}
+      <span>{message}</span>
+      <IoMdClose
+        onClick={onClickButtonClose}
+        size={20}
+        className="absolute top-0 right-0 cursor-pointer"
+      />
+    </div>
   );
-};
+}
 
 export default AlertToast;

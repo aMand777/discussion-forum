@@ -1,10 +1,10 @@
 import React from 'react';
-import CardDetailThread from '../components/detail/CardDetailThread';
-import { useAppDispatch } from '../states/store';
-import { getDetailThreadAsync } from '../states/slice/detail-thread-slice';
 import { useParams } from 'react-router-dom';
+import CardDetailThread from '../components/detail/CardDetailThread.tsx';
+import { useAppDispatch } from '../states/store.ts';
+import { getDetailThreadAsync } from '../states/slice/detail-thread-slice.ts';
 
-const DetailThread = () => {
+function DetailThread() {
   const { threadId } = useParams();
   const dispatch = useAppDispatch();
 
@@ -12,12 +12,10 @@ const DetailThread = () => {
     dispatch(getDetailThreadAsync(threadId || ''));
   }, [dispatch, threadId]);
   return (
-    <>
-      <div className='w-11/12 py-5 mx-auto lg:w-10/12'>
+    <div className="w-11/12 py-5 mx-auto lg:w-10/12">
       <CardDetailThread />
-      </div>
-    </>
+    </div>
   );
-};
+}
 
 export default DetailThread;

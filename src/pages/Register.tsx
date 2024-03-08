@@ -2,9 +2,9 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Navigate } from 'react-router-dom';
-import FormRegister from '../components/auth/register/FormRegister';
-import { useAppDispatch, useAppSelector } from '../states/store';
-import { registerUserAsync } from '../states/slice/register-slice'
+import FormRegister from '../components/auth/register/FormRegister.tsx';
+import { useAppDispatch, useAppSelector } from '../states/store.ts';
+import { registerUserAsync } from '../states/slice/register-slice.ts';
 
 const FormSchema = z
   .object({
@@ -12,12 +12,17 @@ const FormSchema = z
       .string()
       .min(1, { message: 'Name is required' })
       .min(3, { message: 'Name must be at least 3 characters' }),
-    email: z.string().min(1, { message: 'Email is required' }).email({ message: 'Invalid email' }),
+    email: z
+      .string()
+      .min(1, { message: 'Email is required' })
+      .email({ message: 'Invalid email' }),
     password: z
       .string()
       .min(1, { message: 'Password is required' })
       .min(6, { message: 'Password must be at least 6 characters' }),
-    confirmPassword: z.string().min(1, { message: 'Confirm Password is required' }),
+    confirmPassword: z
+      .string()
+      .min(1, { message: 'Confirm Password is required' }),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: 'Passwords do not match',
@@ -31,8 +36,8 @@ type Inputs = {
   confirmPassword: string;
 };
 
-const Register = () => {
-  const dispatch = useAppDispatch()
+function Register() {
+  const dispatch = useAppDispatch();
 
   const {
     register,
@@ -54,27 +59,27 @@ const Register = () => {
       email: data.email,
       password: data.password,
     };
-    dispatch(registerUserAsync(user))
+    dispatch(registerUserAsync(user));
   };
 
-    const { isLoading, message, status } = useAppSelector((state) => state.register)
+  const { isLoading, message, status } = useAppSelector(
+    (state) => state.register,
+  );
 
   if (status === 'success') {
-    return <Navigate to='/auth/login' />
+    return <Navigate to="/auth/login" />;
   }
 
   return (
-    <>
-      <FormRegister
-        isLoading={isLoading}
-        register={register}
-        errors={errors}
-        onSubmit={onSubmit}
-        handleSubmit={handleSubmit}
-        message={message}
-      />
-    </>
+    <FormRegister
+      isLoading={isLoading}
+      register={register}
+      errors={errors}
+      onSubmit={onSubmit}
+      handleSubmit={handleSubmit}
+      message={message}
+    />
   );
-};
+}
 
 export default Register;

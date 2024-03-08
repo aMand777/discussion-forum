@@ -1,24 +1,29 @@
 import React from 'react';
-import useListThreads from '../hook/useListThreads';
-import useUser from '../hook/useUser';
-import CardThread from '../components/threads/CardThread';
-import EmptyPosts from '../components/profile/EmptyPosts';
-import HeaderProfile from '../components/profile/HeaderProfile';
 import { useParams } from 'react-router-dom';
-import { useAppDispatch } from '../states/store';
-import { getAllThreadsStateAsync } from '../states/slice/threads-slice';
-import { getAllUsersAsync } from '../states/slice/users-slice';
-import SkeletonList from '../components/threads/SkeletonList';
+import useListThreads from '../hook/useListThreads.ts';
+import useUser from '../hook/useUser.ts';
+import CardThread from '../components/threads/CardThread.tsx';
+import EmptyPosts from '../components/profile/EmptyPosts.tsx';
+import HeaderProfile from '../components/profile/HeaderProfile.tsx';
+import { useAppDispatch } from '../states/store.ts';
+import { getAllThreadsStateAsync } from '../states/slice/threads-slice.ts';
+import { getAllUsersAsync } from '../states/slice/users-slice.ts';
+import SkeletonList from '../components/threads/SkeletonList.tsx';
 
-const PostsProfile = () => {
+function PostsProfile() {
   const dispatch = useAppDispatch();
   const { userId } = useParams();
   const { threads, status } = useListThreads();
   const { users } = useUser();
 
-  const user = users.find((user) => user.id === userId);
+  const userProfile = users.find((user) => user.id === userId);
 
+  // const postsList = threads.filter((thread) => thread.ownerId === userId);
   const posts = threads.filter((thread) => thread.ownerId === userId);
+  const postsList = posts.map((post) => ({
+    ...post,
+    owner: users.find((owner) => owner.id === post.ownerId),
+  }));
 
   React.useEffect(() => {
     dispatch(getAllThreadsStateAsync());
@@ -27,30 +32,35 @@ const PostsProfile = () => {
 
   return (
     <>
-      <HeaderProfile id={user?.id} name={user?.name} email={user?.email} avatar={user?.avatar} />
-      <div className='p-5 mt-16'>
-        {posts.length > 0
-          ? posts.map((post) => (
-              <CardThread
-                key={post.id}
-                threadId={post.id}
-                title={post.title}
-                body={post.body}
-                category={post.category}
-                upVotesBy={post.upVotesBy}
-                downVotesBy={post.downVotesBy}
-                totalComments={post.totalComments}
-                createdAt={post.createdAt}
-                userId={user?.id || ''}
-                avatar={user?.avatar || ''}
-                name={user?.name || ''}
-              />
-            ))
+      <HeaderProfile
+        id={userProfile?.id}
+        name={userProfile?.name}
+        email={userProfile?.email}
+        avatar={userProfile?.avatar}
+      />
+      <div className="p-5 mt-16">
+        {postsList.length > 0
+          ? postsList.map((post) => (
+            <CardThread
+              key={post.id}
+              threadId={post.id}
+              title={post.title}
+              body={post.body}
+              category={post.category}
+              upVotesBy={post.upVotesBy}
+              downVotesBy={post.downVotesBy}
+              totalComments={post.totalComments}
+              createdAt={post.createdAt}
+              userId={post.owner?.id || ''}
+              avatar={post.owner?.avatar || ''}
+              name={post.owner?.name || ''}
+            />
+          ))
           : status === 'loading' && <SkeletonList loop={3} />}
         {posts.length < 1 && status !== 'loading' && <EmptyPosts />}
       </div>
     </>
   );
-};
+}
 
 export default PostsProfile;

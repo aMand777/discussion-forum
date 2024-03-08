@@ -1,18 +1,18 @@
 import { configureStore } from '@reduxjs/toolkit';
-import authReducer from './slice/auth-slice';
-import registerReducer from './slice/register-slice';
-import toastReducer from './slice/toast-slice';
-import threadsReducer from './slice/threads-slice';
-import usersReducer from './slice/users-slice';
-import userReducer from './slice/user-slice';
-import createReducer from './slice/create-slice';
-import leaderBoardReducer from './slice/leaderboards-slice';
-import detailThreadsReducer from './slice/detail-thread-slice';
-import voteThreadReducer from './slice/vote-thread-slice';
-import voteCommentReducer from './slice/vote-comment-slice';
-import preloadReducer from './slice/preload-slice';
-import { loadingBarReducer } from 'react-redux-loading-bar';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
+import { loadingBarReducer } from 'react-redux-loading-bar';
+import authReducer from './slice/auth-slice.ts';
+import registerReducer from './slice/register-slice.ts';
+import toastReducer from './slice/toast-slice.ts';
+import threadsReducer from './slice/threads-slice.ts';
+import usersReducer from './slice/users-slice.ts';
+import userReducer from './slice/user-slice.ts';
+import createReducer from './slice/create-slice.ts';
+import leaderBoardReducer from './slice/leaderboards-slice.ts';
+import detailThreadsReducer from './slice/detail-thread-slice.ts';
+import voteThreadReducer from './slice/vote-thread-slice.ts';
+import voteCommentReducer from './slice/vote-comment-slice.ts';
+import preloadReducer from './slice/preload-slice.ts';
 
 const store = configureStore({
   reducer: {

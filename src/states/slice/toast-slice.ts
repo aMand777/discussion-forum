@@ -17,12 +17,15 @@ const toastSlice = createSlice({
   initialState,
   reducers: {
     setToast(state, action: PayloadAction<Toast>) {
-      state.isOpen = true;
-      state.message = action.payload.message;
-      state.status = action.payload.status;
+      return {
+        ...state,
+        isOpen: true,
+        message: action.payload.message,
+        status: action.payload.status,
+      };
     },
     unSetToast(state) {
-      state.isOpen = false;
+      return { ...state, isOpen: false };
     },
   },
 });

@@ -1,8 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
-import { setToast, unSetToast } from './toast-slice';
-import { getUserLoginAsync } from './preload-slice';
-import { POST_REGISTER_USER } from '../../services/register.services';
+import { setToast, unSetToast } from './toast-slice.ts';
+import { getUserLoginAsync } from './preload-slice.ts';
+import { POST_REGISTER_USER } from '../../services/register.services.ts';
 
 interface RegisterUser {
   name: string;
@@ -22,6 +22,24 @@ const initialState: RegisterState = {
   status: '',
 };
 
+const registerSlice = createSlice({
+  name: 'authUser',
+  initialState,
+  reducers: {
+    setRegister(state) {
+      return { ...state, isLoading: true };
+    },
+    setRegisterSuccess(state) {
+      return { ...state, isLoading: false, status: 'success' };
+    },
+    setRegisterFailed(state, action) {
+      return { ...state, isLoading: false, message: action.payload.message };
+    },
+  },
+});
+
+export const { setRegister, setRegisterSuccess, setRegisterFailed } = registerSlice.actions;
+
 export const registerUserAsync = createAsyncThunk(
   'register/registerUserLogin',
   async (user: RegisterUser, { dispatch }) => {
@@ -36,33 +54,15 @@ export const registerUserAsync = createAsyncThunk(
         dispatch(setRegisterSuccess());
         dispatch(setToast({ status: 'success', message: response.message }));
       }
+      return response.message;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       dispatch(setRegisterFailed({ message: error.data.message }));
       dispatch(setToast({ status: 'warning', message: error.data.message }));
       dispatch(hideLoading());
+      return error.data.message;
     }
   },
 );
-
-const registerSlice = createSlice({
-  name: 'authUser',
-  initialState,
-  reducers: {
-    setRegister(state) {
-      state.isLoading = true;
-    },
-    setRegisterSuccess(state) {
-      state.isLoading = false;
-      state.status = 'success'
-    },
-    setRegisterFailed(state, action) {
-      state.isLoading = false;
-      state.message = action.payload.message;
-    },
-  },
-});
-
-export const { setRegister, setRegisterSuccess, setRegisterFailed } = registerSlice.actions;
 
 export default registerSlice.reducer;

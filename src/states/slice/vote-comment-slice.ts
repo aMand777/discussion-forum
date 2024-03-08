@@ -1,23 +1,29 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { hideLoading, showLoading } from 'react-redux-loading-bar';
 import {
   DOWN_VOTE_COMMENT,
   NEUTRALIZE_VOTE_COMMENT,
   UP_VOTE_COMMENT,
-} from '../../services/threads.services';
-import { getDetailThreadAsync } from '../../states/slice/detail-thread-slice';
-import { hideLoading, showLoading } from 'react-redux-loading-bar';
-import { setToast, unSetToast } from '../../states/slice/toast-slice'
+} from '../../services/threads.services.ts';
+import { getDetailThreadAsync } from './detail-thread-slice.ts';
+import { setToast, unSetToast } from './toast-slice.ts';
 
 interface VoteCommentParams {
   threadId: string;
   commentId: string;
 }
 
+const voteCommentSlice = createSlice({
+  name: 'voteComment',
+  initialState: {},
+  reducers: {},
+});
+
 export const upVoteCommentAsync = createAsyncThunk(
   'comments/upVoteCommentAsync',
   async ({ threadId, commentId }: VoteCommentParams, { dispatch }) => {
-    dispatch(unSetToast())
+    dispatch(unSetToast());
     dispatch(showLoading());
     try {
       const response = await UP_VOTE_COMMENT(threadId, commentId);
@@ -29,6 +35,7 @@ export const upVoteCommentAsync = createAsyncThunk(
     } catch (error: any) {
       dispatch(setToast({ status: 'error', message: error.data.message }));
       dispatch(hideLoading());
+      return error.data.message;
     }
   },
 );
@@ -36,7 +43,7 @@ export const upVoteCommentAsync = createAsyncThunk(
 export const downVoteCommentAsync = createAsyncThunk(
   'comments/downVoteCommentAsync',
   async ({ threadId, commentId }: VoteCommentParams, { dispatch }) => {
-    dispatch(unSetToast())
+    dispatch(unSetToast());
     dispatch(showLoading());
     try {
       const response = await DOWN_VOTE_COMMENT(threadId, commentId);
@@ -48,6 +55,7 @@ export const downVoteCommentAsync = createAsyncThunk(
     } catch (error: any) {
       dispatch(setToast({ status: 'error', message: error.data.message }));
       dispatch(hideLoading());
+      return error.data.message;
     }
   },
 );
@@ -67,14 +75,9 @@ export const neutralizeVoteCommentAsync = createAsyncThunk(
     } catch (error: any) {
       dispatch(setToast({ status: 'error', message: error.data.message }));
       dispatch(hideLoading());
+      return error.data.message;
     }
   },
 );
 
-const voteCommentSlice = createSlice({
-  name: 'voteComment',
-  initialState: {},
-  reducers: {},
-})
-
-export default voteCommentSlice.reducer
+export default voteCommentSlice.reducer;
