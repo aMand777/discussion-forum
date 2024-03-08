@@ -7,6 +7,7 @@ import { IoCreateOutline } from 'react-icons/io5';
 import { MdLeaderboard } from 'react-icons/md';
 import { AiOutlineLogout } from 'react-icons/ai';
 import { FaUserTie } from 'react-icons/fa';
+import { CiUser, CiHashtag } from 'react-icons/ci';
 import { NavLink } from 'react-router-dom';
 import useUser from '../../hook/useUser.ts';
 import useLogout from '../../hook/useLogout.ts';
@@ -27,14 +28,42 @@ function BottomNav() {
         <IoMdChatbubbles size={35} />
         <span className="btm-nav-label">Threads</span>
       </NavLink>
-      <button
-        type="button"
-        onClick={() => openModal('modal_search')}
-        className="focus:text-accent focus:outline-0"
-      >
-        <FiSearch size={35} />
-        <span className="btm-nav-label">Search</span>
-      </button>
+      <div className="dropdown dropdown-start">
+        <div
+          tabIndex={0}
+          role="button"
+          className="btn btn-ghost hover:bg-base-100"
+        >
+          <FiSearch size={35} />
+          <span className="btm-nav-label">Search</span>
+        </div>
+        <ul
+          tabIndex={0}
+          className="-mt-40 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-300 rounded-box w-52"
+        >
+          <li>
+            <button
+              type="button"
+              onClick={() => openModal('modal_search_user')}
+              className="justify-between text-lg"
+            >
+              User
+              <CiUser size={20} />
+            </button>
+          </li>
+          <li>
+            <button
+              type="button"
+              onClick={() => openModal('modal_search_category')}
+              className="mt-2 justify-between text-lg"
+            >
+              Category
+              <CiHashtag size={20} />
+            </button>
+          </li>
+        </ul>
+      </div>
+      {/* ========= */}
       <NavLink
         to="/threads/create"
         className={({ isActive }) =>

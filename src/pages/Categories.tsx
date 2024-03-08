@@ -29,6 +29,11 @@ function Categories() {
 
   return (
     <div className="w-full p-5 mx-auto md:w-10/12">
+      <h1 className="text-xl font-semibold text-center text-info mb-5">
+        Sort by
+        #
+        { category }
+      </h1>
       {threadsList.length > 0
         ? threadsList.map((thread) => (
           <CardThread

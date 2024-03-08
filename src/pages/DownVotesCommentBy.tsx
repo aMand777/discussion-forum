@@ -12,7 +12,7 @@ function UpVotesCommentBy() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { threadId, commentId } = useParams();
-  const { users } = useUser();
+  const { users, authUser } = useUser();
   const { comments } = useDetailThread();
   const votesByUser = comments
     .filter((comment) => comment.id === commentId)
@@ -52,7 +52,10 @@ function UpVotesCommentBy() {
           <div className="w-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
             <img src={user.avatar} alt={`avatar-${user.name}`} />
           </div>
-          <span>{user.name}</span>
+          <span className="w-full text-center">
+            {user.name}
+            {user.id === authUser.id && <span className="ml-1">(You)</span>}
+          </span>
           <Link
             to={`/${user.name}/${user.id}/profile`}
             className="btn btn-outline btn-accent"

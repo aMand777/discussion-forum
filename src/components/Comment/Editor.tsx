@@ -40,8 +40,9 @@ function Editor({ threadId }: EditorProps) {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     dispatch(postNewCommentAsync({ content, threadId }));
-    if (status === 'success') {
+    if (content.length > 0) {
       setContent('');
+    } else if (status === 'success') {
       dispatch(unSetResponse());
     }
   };

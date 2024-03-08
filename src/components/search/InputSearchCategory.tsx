@@ -3,7 +3,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { closeModal } from '../../utils/index.ts';
 
-function InputSearch() {
+function InputSearchCategory() {
   const navigate = useNavigate();
   const [valueSearch, setValueSearch] = React.useState<string | undefined>('');
   const searchRef = React.useRef<HTMLInputElement>(null);
@@ -16,8 +16,8 @@ function InputSearch() {
     if (event.key === 'Enter' && valueSearch?.trim() !== '') {
       setValueSearch('');
       event.preventDefault();
-      closeModal('modal_search');
-      navigate(`/threads/categories/${valueSearch?.toLocaleLowerCase()}`);
+      closeModal('modal_search_category');
+      navigate(`/threads/categories/${valueSearch?.toLowerCase()}`);
     }
   };
 
@@ -27,7 +27,7 @@ function InputSearch() {
         ref={searchRef}
         type="text"
         className="grow"
-        placeholder="Search by category"
+        placeholder="Search category"
         value={valueSearch}
         onChange={handleChange}
         onKeyDown={handleKeyDown}
@@ -48,4 +48,4 @@ function InputSearch() {
   );
 }
 
-export default InputSearch;
+export default InputSearchCategory;

@@ -1,8 +1,10 @@
 import useLeaderBoards from '../../hook/useLeaderboards.ts';
+import useUser from '../../hook/useUser.ts';
 import TableLeaderBoardsSkeleton from './TableLeaderboardsSkeleton.tsx';
 
 function TableLeaderBoards() {
   const { leaderBoards, status } = useLeaderBoards();
+  const { authUser } = useUser();
 
   return (
     <div className="overflow-x-auto">
@@ -30,6 +32,9 @@ function TableLeaderBoards() {
                   </div>
                   <span className="text-base font-semibold line-clamp-1">
                     {leaderboard.user.name}
+                    {leaderboard.user.id === authUser.id && (
+                      <span className="ml-1">(You)</span>
+                    )}
                   </span>
                 </td>
                 <th>{leaderboard.score}</th>

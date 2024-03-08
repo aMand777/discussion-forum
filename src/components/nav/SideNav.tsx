@@ -7,6 +7,7 @@ import { IoCreateOutline } from 'react-icons/io5';
 import { MdLeaderboard } from 'react-icons/md';
 import { AiOutlineLogout } from 'react-icons/ai';
 import { FaUserTie } from 'react-icons/fa';
+import { CiUser, CiHashtag } from 'react-icons/ci';
 import { NavLink } from 'react-router-dom';
 import { openModal } from '../../utils/index.ts';
 import useUser from '../../hook/useUser.ts';
@@ -32,14 +33,39 @@ function SideNav() {
         <IoMdChatbubbles size={35} />
         <span className="hidden text-lg font-semibold lg:block">Threads</span>
       </NavLink>
-      <button
-        type="button"
-        onClick={() => openModal('modal_search')}
-        className="btn btn-ghost btn-accent flex justify-start gap-7 focus:text-accent focus:outline-0"
-      >
-        <FiSearch size={35} />
-        <span className="hidden text-lg font-semibold lg:block">Search</span>
-      </button>
+      <div className="mx-1 dropdown dropdown-end btn py-3 h-16 btn-ghost hover:bg-base-200">
+        <div tabIndex={0} role="button" className="flex items-center gap-6 rounded-lg">
+          <FiSearch size={35} />
+          <span className="font-semibold text-lg hidden lg:block line-clamp-1">
+            Search
+          </span>
+        </div>
+        <ul
+          tabIndex={0}
+          className="mt-7 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-300 rounded-box w-28 md:w-32 lg:w-40"
+        >
+          <li>
+            <button
+              onClick={() => openModal('modal_search_user')}
+              type="button"
+              className="justify-between"
+            >
+              User
+              <CiUser size={20} />
+            </button>
+          </li>
+          <li>
+            <button
+              type="button"
+              onClick={() => openModal('modal_search_category')}
+              className="mt-2 justify-between"
+            >
+              Category
+              <CiHashtag size={20} />
+            </button>
+          </li>
+        </ul>
+      </div>
       <NavLink
         to="/threads/create"
         className={({ isActive }) =>
@@ -93,7 +119,11 @@ function SideNav() {
             </NavLink>
           </li>
           <li>
-            <button type="button" onClick={() => onLogout()} className="mt-2 justify-between">
+            <button
+              type="button"
+              onClick={() => onLogout()}
+              className="mt-2 justify-between"
+            >
               Logout
               <AiOutlineLogout className="w-5 h-5 text-error" />
             </button>

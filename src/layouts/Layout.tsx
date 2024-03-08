@@ -3,13 +3,15 @@ import LoadingBar from 'react-redux-loading-bar';
 import BottomNav from '../components/nav/BottomNav.tsx';
 import SideNav from '../components/nav/SideNav.tsx';
 import TableLeaderBoards from '../components/leaderboards/TableLeaderBoards.tsx';
-import ModalSearch from '../components/search/ModalSearch.tsx';
+import ModalSearchCategory from '../components/search/ModalSearchCategory.tsx';
+import ModalSearchUser from '../components/search/ModalSearchUser.tsx';
 
 function Layout() {
   return (
     <>
       <header className="sticky top-0 z-50">
-        <ModalSearch />
+        <ModalSearchCategory />
+        <ModalSearchUser />
         <LoadingBar className="h-1 bg-accent" />
       </header>
       <div className="grid grid-cols-12">

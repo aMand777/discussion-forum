@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import Score from './Score.tsx';
+import useUser from '../../hook/useUser.ts';
 
 type CardLeaderBoardProps = {
   id: string;
@@ -16,6 +17,7 @@ function CardLeaderBoard({
   avatar,
   score,
 }: CardLeaderBoardProps) {
+  const { authUser } = useUser();
   return (
     <Link
       to={`/${name}/${id}/profile`}
@@ -28,7 +30,11 @@ function CardLeaderBoard({
           </div>
         </div>
         <div className="flex flex-col items-center w-full">
-          <h2 className="card-title line-clamp-1">{name}</h2>
+          {/* <h2 className="card-title line-clamp-1">{name}</h2> */}
+          <span className="card-title line-clamp-1">
+            {name}
+            {id === authUser.id && <span className="ml-1">(You)</span>}
+          </span>
           <p className="line-clamp-1">{email}</p>
         </div>
       </div>

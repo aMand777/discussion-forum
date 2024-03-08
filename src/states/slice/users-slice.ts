@@ -11,10 +11,12 @@ interface User {
 }
 
 interface UsersState {
+  status: string;
   users: User[];
 }
 
 const initialState: UsersState = {
+  status: '',
   users: [],
 };
 
@@ -23,16 +25,20 @@ const usersSlice = createSlice({
   initialState,
   reducers: {
     setUsers(state, action: PayloadAction<User[]>) {
-      return { ...state, users: action.payload };
+      return { ...state, status: 'success', users: action.payload };
+    },
+    setStatus(state, action) {
+      return { ...state, status: action.payload };
     },
   },
 });
 
-export const { setUsers } = usersSlice.actions;
+export const { setUsers, setStatus } = usersSlice.actions;
 
 export const getAllUsersAsync = createAsyncThunk(
   'users/getAllUsers',
   async (_, { dispatch }) => {
+    dispatch(setStatus('loading'));
     dispatch(showLoading());
     try {
       const response = await GET_ALL_USERS();
@@ -43,6 +49,7 @@ export const getAllUsersAsync = createAsyncThunk(
       return response.status;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
+      dispatch(setStatus('error'));
       dispatch(setToast({ status: 'error', message: error.data.message }));
       dispatch(hideLoading());
       return error.data.message;
