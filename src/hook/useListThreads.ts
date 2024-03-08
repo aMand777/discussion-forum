@@ -1,9 +1,9 @@
-import { useAppSelector } from '../states/store'
+import { useAppSelector } from '../states/store.ts';
 
 const useListThreads = () => {
-  const { value, status } = useAppSelector((state) => state.threads)
+  const { value, status } = useAppSelector((state) => state.threads);
 
-  return {threads: value, status}
-}
+  return { threads: value, status };
+};
 
 export default useListThreads;

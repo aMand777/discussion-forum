@@ -1,3 +1,4 @@
+/* eslint-disable no-else-return */
 function postedAt(date: string): string {
   const now = new Date();
   const posted = new Date(date);
@@ -30,7 +31,7 @@ const openModal = (id: string) => {
 
 const closeModal = (id: string) => {
   const modal = document.getElementById(id) as HTMLDialogElement | null;
-  modal?.close()
+  modal?.close();
 };
 
 export { postedAt, openModal, closeModal };

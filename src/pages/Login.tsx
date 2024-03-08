@@ -3,13 +3,16 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import FormLogin from '../components/auth/login/FormLogin.tsx';
-import { useAppSelector, useAppDispatch } from '../states/store';
+import { useAppSelector, useAppDispatch } from '../states/store.ts';
 import { postUserLoginAsync } from '../states/slice/auth-slice.ts';
 import LoadingPage from '../components/loading/LoadingPage.tsx';
 import { setToast } from '../states/slice/toast-slice.ts';
 
 const FormSchema = z.object({
-  email: z.string().min(1, { message: 'Email is required' }).email({ message: 'Invalid email' }),
+  email: z
+    .string()
+    .min(1, { message: 'Email is required' })
+    .email({ message: 'Invalid email' }),
   password: z
     .string()
     .min(1, { message: 'Password is required' })
@@ -21,9 +24,11 @@ type Inputs = {
   password: string;
 };
 
-const Login = () => {
+function Login() {
   const dispatch = useAppDispatch();
-  const { isAuthenticated, isPreload } = useAppSelector((state) => state.preload);
+  const { isAuthenticated, isPreload } = useAppSelector(
+    (state) => state.preload,
+  );
   const { authUser } = useAppSelector((state) => state.user);
 
   const {
@@ -43,22 +48,26 @@ const Login = () => {
   };
 
   if (isPreload) {
-    return <LoadingPage loading='loading-ring loading-lg' />;
+    return <LoadingPage loading="loading-ring loading-lg" />;
+    // eslint-disable-next-line no-else-return
   } else if (isAuthenticated) {
-    dispatch(setToast({ status: 'success', message: `Welcome back, ${authUser.name}`}));
-    return <Navigate to='/' replace />;
+    dispatch(
+      setToast({
+        status: 'success',
+        message: `Welcome back, ${authUser.name}`,
+      }),
+    );
+    return <Navigate to="/" replace />;
   }
 
   return (
-    <>
-      <FormLogin
-        register={register}
-        errors={errors}
-        onSubmit={onSubmit}
-        handleSubmit={handleSubmit}
-      />
-    </>
+    <FormLogin
+      register={register}
+      errors={errors}
+      onSubmit={onSubmit}
+      handleSubmit={handleSubmit}
+    />
   );
-};
+}
 
 export default Login;

@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { GET_ALL_THREADS } from '../../services/threads.services';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
-import { setToast } from '../../states/slice/toast-slice'
+import { GET_ALL_THREADS } from '../../services/threads.services.ts';
+import { setToast } from './toast-slice.ts';
 
 interface Thread {
   id: string;
@@ -22,14 +22,29 @@ interface ThreadsState {
 
 const initialState: ThreadsState = {
   status: '',
-  value: []
+  value: [],
 };
+
+const threadsSlice = createSlice({
+  name: 'threads',
+  initialState,
+  reducers: {
+    setThreads(state, action: PayloadAction<Thread[]>) {
+      return { ...state, status: 'success', value: action.payload };
+    },
+    setStatus(state, action) {
+      return { ...state, status: action.payload };
+    },
+  },
+});
+
+export const { setThreads, setStatus } = threadsSlice.actions;
 
 export const getAllThreadsStateAsync = createAsyncThunk(
   'threads/getAllThreads',
   async (_, { dispatch }) => {
-    dispatch(setStatus('loading'))
-    dispatch(showLoading())
+    dispatch(setStatus('loading'));
+    dispatch(showLoading());
     try {
       const response = await GET_ALL_THREADS();
       if (response.status === 'success') {
@@ -37,29 +52,14 @@ export const getAllThreadsStateAsync = createAsyncThunk(
         dispatch(hideLoading());
       }
       return response.status;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
-      dispatch(setStatus('error'))
+      dispatch(setStatus('error'));
       dispatch(setToast({ status: 'error', message: error.data.message }));
       dispatch(hideLoading());
+      return error.data.message;
     }
   },
 );
-
-const threadsSlice = createSlice({
-  name: 'threads',
-  initialState,
-  reducers: {
-    setThreads(state, action: PayloadAction<Thread[]>) {
-      state.status = 'success'
-      state.value = action.payload;
-    },
-    setStatus(state, action) {
-      state.status = action.payload
-    },
-  },
-});
-
-export const { setThreads, setStatus } = threadsSlice.actions;
 
 export default threadsSlice.reducer;

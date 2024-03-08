@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { GET_LEADERBOARDS } from '../../services/leaderboards.services';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
-import { setToast, unSetToast } from '../../states/slice/toast-slice';
+import { GET_LEADERBOARDS } from '../../services/leaderboards.services.ts';
+import { setToast, unSetToast } from './toast-slice.ts';
 
 interface LeaderBoardUser {
   id: string;
@@ -25,42 +25,42 @@ const initialState: LeaderBoardState = {
   value: [],
 };
 
-export const getLeaderBoardsAsync = createAsyncThunk(
-  'leaderboards/getLeaderBoardsThreads',
-  async (_, {dispatch}) => {
-    dispatch(setStatus('loading'))
-    dispatch(unSetToast());
-  dispatch(showLoading());
-  try {
-    const response = await GET_LEADERBOARDS();
-    if (response.status === 'success') {
-      dispatch(setLeaderBoards(response.data.leaderboards));
-      dispatch(hideLoading());
-    }
-    return response.status;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (error: any) {
-    dispatch(setStatus('error'))
-    dispatch(setToast({ status: 'error', message: error.data.message }));
-    dispatch(hideLoading());
-  }
-  },
-);
-
 const leaderBoardsSlice = createSlice({
   name: 'leaderboards',
   initialState,
   reducers: {
     setLeaderBoards(state, action: PayloadAction<LeaderBoardEntry[]>) {
-      state.status = 'success';
-      state.value = action.payload;
+      return { ...state, status: 'success', value: action.payload };
     },
-        setStatus(state, action) {
-      state.status = action.payload
+    setStatus(state, action) {
+      return { ...state, status: action.payload };
     },
   },
 });
 
 export const { setLeaderBoards, setStatus } = leaderBoardsSlice.actions;
+
+export const getLeaderBoardsAsync = createAsyncThunk(
+  'leaderboards/getLeaderBoardsThreads',
+  async (_, { dispatch }) => {
+    dispatch(setStatus('loading'));
+    dispatch(unSetToast());
+    dispatch(showLoading());
+    try {
+      const response = await GET_LEADERBOARDS();
+      if (response.status === 'success') {
+        dispatch(setLeaderBoards(response.data.leaderboards));
+        dispatch(hideLoading());
+      }
+      return response.status;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      dispatch(setStatus('error'));
+      dispatch(setToast({ status: 'error', message: error.data.message }));
+      dispatch(hideLoading());
+      return error.data.message;
+    }
+  },
+);
 
 export default leaderBoardsSlice.reducer;
