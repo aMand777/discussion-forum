@@ -17,8 +17,10 @@
   },
   "plugins": ["@typescript-eslint", "react"],
   "rules": {
-    // "linebreak-style": ["off", "unix"],
     "react/react-in-jsx-scope": "off",
-    "react/jsx-filename-extension": ["error", { "extensions": [".jsx", ".tsx"] }]
+    "react/jsx-filename-extension": [
+      "error",
+      { "extensions": [".jsx", ".tsx"] }
+    ]
   }
 }
