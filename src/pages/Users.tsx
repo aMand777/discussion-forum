@@ -19,8 +19,13 @@ function Users() {
 
   return (
     <div className="p-10">
-      <h1 className="text-xl font-semibold text-center text-info">
-        Search Results
+      <h1 className="text-xl font-semibold text-center">
+        { searchUsers.length }
+        &nbsp; Result for
+          &nbsp;
+        <q className="text-info">
+          { username }
+        </q>
       </h1>
       {searchUsers.length > 0
         ? searchUsers.map((user) => (

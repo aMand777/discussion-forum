@@ -14,9 +14,7 @@ function Categories() {
   const { category } = useParams();
   const { threads, status } = useListThreads();
   const { users } = useUser();
-  const threadsByCategories = threads.filter(
-    (thread) => thread.category === category,
-  );
+  const threadsByCategories = threads.filter((thread) => thread.category === category);
   const threadsList = threadsByCategories.map((thread) => ({
     ...thread,
     user: users.find((user) => user.id === thread.ownerId),
@@ -29,10 +27,12 @@ function Categories() {
 
   return (
     <div className="w-full p-5 mx-auto md:w-10/12">
-      <h1 className="text-xl font-semibold text-center text-info mb-5">
+      <h1 className="text-xl font-semibold text-center mb-5">
         Sort by
-        #
-        { category }
+        <span className="text-info ml-1">
+          #
+          { category }
+        </span>
       </h1>
       {threadsList.length > 0
         ? threadsList.map((thread) => (
@@ -52,9 +52,7 @@ function Categories() {
           />
         ))
         : status === 'loading' && <SkeletonList loop={3} />}
-      {threadsList.length < 1 && status !== 'loading' && (
-        <NotFound title="Categories not found" />
-      )}
+      {threadsList.length < 1 && status !== 'loading' && <NotFound title="Categories not found" />}
     </div>
   );
 }
