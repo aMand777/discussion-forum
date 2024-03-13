@@ -36,23 +36,6 @@ const authSlice = createSlice({
   },
 });
 
-// const authSlice = createSlice({
-//   name: 'authUser',
-//   initialState,
-//   reducers: {
-//     setAuth(state) {
-//       state.isLoading = true;
-//     },
-//     setAuthSuccess(state) {
-//       state.isLoading = false;
-//     },
-//     setAuthFailed(state, action) {
-//       state.isLoading = false;
-//       state.message = action.payload.message;
-//     },
-//   },
-// });
-
 export const { setAuth, setAuthSuccess, setAuthFailed } = authSlice.actions;
 
 export const postUserLoginAsync = createAsyncThunk(
