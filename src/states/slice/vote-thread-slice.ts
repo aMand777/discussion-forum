@@ -1,11 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
-import {
-  DOWN_VOTE_THREADS,
-  NEUTRALIZE_VOTE_THREADS,
-  UP_VOTE_THREADS,
-} from '../../services/threads.services.ts';
+import threads from '../../services/threads.services.ts';
 import { getAllThreadsStateAsync } from './threads-slice.ts';
 import { setToast, unSetToast } from './toast-slice.ts';
 
@@ -21,7 +17,8 @@ export const upVoteThreadAsync = createAsyncThunk(
     dispatch(unSetToast());
     dispatch(showLoading());
     try {
-      const response = await UP_VOTE_THREADS(threadId);
+      // const response = await UP_VOTE_THREADS(threadId);
+      const response = await threads.upVote(threadId);
       if (response.status === 'success') {
         dispatch(getAllThreadsStateAsync());
         dispatch(hideLoading());
@@ -41,7 +38,7 @@ export const downVoteThreadAsync = createAsyncThunk(
     dispatch(unSetToast());
     dispatch(showLoading());
     try {
-      const response = await DOWN_VOTE_THREADS(threadId);
+      const response = await threads.downVote(threadId);
       if (response.status === 'success') {
         dispatch(getAllThreadsStateAsync());
         dispatch(hideLoading());
@@ -61,7 +58,7 @@ export const neutralizeVoteThreadAsync = createAsyncThunk(
     dispatch(unSetToast());
     dispatch(showLoading());
     try {
-      const response = await NEUTRALIZE_VOTE_THREADS(threadId);
+      const response = await threads.neutralizeVote(threadId);
       if (response.status === 'success') {
         dispatch(getAllThreadsStateAsync());
         dispatch(hideLoading());

@@ -1,9 +1,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
-import { GET_USER_LOGGED_IN } from '../../services/users.services.ts';
+import users from '../../services/users.services.ts';
 import { setAuthUser, unSetAuthUser } from './user-slice.ts';
 
-interface PreloadState {
+export interface PreloadState {
   isPreload?: boolean;
   isAuthenticated?: boolean;
 }
@@ -37,7 +37,7 @@ export const getUserLoginAsync = createAsyncThunk(
     dispatch(setPreload());
     dispatch(showLoading());
     try {
-      const response = await GET_USER_LOGGED_IN();
+      const response = await users.getOwnProfile();
       if (response.status === 'success') {
         dispatch(setAuthUser(response.data.user));
         dispatch(setPreloadSuccess());

@@ -6,12 +6,17 @@ interface Authentication {
   password: string;
 }
 
-// eslint-disable-next-line import/prefer-default-export
-export const POST_LOGIN = async (auth: Authentication) => {
-  try {
-    const { data } = await instanceApi.post('/login', auth);
-    return data;
-  } catch (error: any) {
-    throw error.response;
+const auth = (() => {
+  async function postLogin(user: Authentication) {
+    try {
+      const { data } = await instanceApi.post('/login', user);
+      return data;
+    } catch (error: any) {
+      throw error.response;
+    }
   }
-};
+
+  return { postLogin };
+})();
+
+export default auth;

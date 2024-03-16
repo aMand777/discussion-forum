@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
 import { setToast, unSetToast } from './toast-slice.ts';
 import { getUserLoginAsync } from './preload-slice.ts';
-import { POST_REGISTER_USER } from '../../services/register.services.ts';
+import register from '../../services/register.services.ts';
 
 interface RegisterUser {
   name: string;
@@ -47,7 +47,7 @@ export const registerUserAsync = createAsyncThunk(
     dispatch(unSetToast());
     dispatch(showLoading());
     try {
-      const response = await POST_REGISTER_USER(user);
+      const response = await register.addNewUser(user);
       if (response.status === 'success') {
         dispatch(getUserLoginAsync());
         dispatch(hideLoading());

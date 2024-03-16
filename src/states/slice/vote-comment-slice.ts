@@ -1,11 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
-import {
-  DOWN_VOTE_COMMENT,
-  NEUTRALIZE_VOTE_COMMENT,
-  UP_VOTE_COMMENT,
-} from '../../services/threads.services.ts';
+import comment from '../../services/comment.services.ts';
 import { getDetailThreadAsync } from './detail-thread-slice.ts';
 import { setToast, unSetToast } from './toast-slice.ts';
 
@@ -26,7 +22,7 @@ export const upVoteCommentAsync = createAsyncThunk(
     dispatch(unSetToast());
     dispatch(showLoading());
     try {
-      const response = await UP_VOTE_COMMENT(threadId, commentId);
+      const response = await comment.upVote(threadId, commentId);
       if (response.status === 'success') {
         dispatch(getDetailThreadAsync(threadId));
         dispatch(hideLoading());
@@ -46,7 +42,7 @@ export const downVoteCommentAsync = createAsyncThunk(
     dispatch(unSetToast());
     dispatch(showLoading());
     try {
-      const response = await DOWN_VOTE_COMMENT(threadId, commentId);
+      const response = await comment.downVote(threadId, commentId);
       if (response.status === 'success') {
         dispatch(getDetailThreadAsync(threadId));
         dispatch(hideLoading());
@@ -66,7 +62,7 @@ export const neutralizeVoteCommentAsync = createAsyncThunk(
     dispatch(unSetToast());
     dispatch(showLoading());
     try {
-      const response = await NEUTRALIZE_VOTE_COMMENT(threadId, commentId);
+      const response = await comment.neutralizeVote(threadId, commentId);
       if (response.status === 'success') {
         dispatch(getDetailThreadAsync(threadId));
         dispatch(hideLoading());

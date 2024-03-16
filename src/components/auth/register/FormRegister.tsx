@@ -47,6 +47,7 @@ function FormRegister({
         </div>
         <p className="text-2xl font-semibold">Register</p>
         <form
+          data-testid="register-form"
           onSubmit={handleSubmit(onSubmit)}
           className="w-11/12 md:max-w-md"
           noValidate

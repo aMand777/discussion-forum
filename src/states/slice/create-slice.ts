@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { POST_THREAD, POST_COMMENT } from '../../services/threads.services.ts';
+import threads from '../../services/threads.services.ts';
+import comment from '../../services/comment.services.ts';
 import { setToast } from './toast-slice.ts';
 import { getAllThreadsStateAsync } from './threads-slice.ts';
 import { getDetailThreadAsync } from './detail-thread-slice.ts';
@@ -44,7 +45,7 @@ export const postNewThreadAsync = createAsyncThunk(
     dispatch(setResponse('loading'));
     dispatch(setToast({ isOpen: false, status: '', message: '' }));
     try {
-      const response = await POST_THREAD(createThread);
+      const response = await threads.create(createThread);
       if (response.status === 'success') {
         dispatch(getAllThreadsStateAsync());
         dispatch(setResponse('success'));
@@ -75,7 +76,7 @@ export const postNewCommentAsync = createAsyncThunk(
     dispatch(setToast({ isOpen: false, status: '', message: '' }));
     const { threadId } = createComment;
     try {
-      const response = await POST_COMMENT(createComment);
+      const response = await comment.create(createComment);
       if (response.status === 'success') {
         dispatch(getDetailThreadAsync(threadId));
         dispatch(setResponse('success'));

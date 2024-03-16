@@ -43,6 +43,7 @@ function FormLogin({
         </div>
         <p className="text-2xl font-semibold">Login</p>
         <form
+          data-testid="login-form"
           onSubmit={handleSubmit(onSubmit)}
           className="w-11/12 md:max-w-md"
           noValidate
@@ -50,10 +51,7 @@ function FormLogin({
           <div className="label">
             <span className="label-text">Email</span>
           </div>
-          <label
-            htmlFor="email"
-            className="flex items-center gap-2 input input-bordered"
-          >
+          <label htmlFor="email" className="flex items-center gap-2 input input-bordered">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 16 16"
@@ -73,17 +71,12 @@ function FormLogin({
           {errors.email ? (
             <AlertMessage message={errors.email?.message} />
           ) : (
-            message?.toLowerCase().includes('email') && (
-              <AlertMessage message={message} />
-            )
+            message?.toLowerCase().includes('email') && <AlertMessage message={message} />
           )}
           <div className="label">
             <span className="label-text">Password</span>
           </div>
-          <label
-            htmlFor="password"
-            className="flex items-center gap-2 input input-bordered"
-          >
+          <label htmlFor="password" className="flex items-center gap-2 input input-bordered">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 16 16"
@@ -106,9 +99,7 @@ function FormLogin({
           {errors.password ? (
             <AlertMessage message={errors.password?.message} />
           ) : (
-            message?.toLowerCase().includes('password') && (
-              <AlertMessage message={message} />
-            )
+            message?.toLowerCase().includes('password') && <AlertMessage message={message} />
           )}
           <label htmlFor="show-password" className="cursor-pointer label">
             <span className="label-text">Show Password</span>
@@ -118,11 +109,7 @@ function FormLogin({
               className="checkbox checkbox-accent"
             />
           </label>
-          <button
-            disabled={isLoading}
-            type="submit"
-            className="w-full mt-5 btn btn-accent"
-          >
+          <button disabled={isLoading} type="submit" className="w-full mt-5 btn btn-accent">
             {isLoading && <span className="loading loading-spinner" />}
             {isLoading ? 'loading...' : 'Login'}
           </button>
