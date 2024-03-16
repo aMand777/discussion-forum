@@ -18,7 +18,7 @@ function Users() {
   }, [dispatch]);
 
   return (
-    <div className="p-10">
+    <div className="p-10 mb-7 lg:mb-0">
       <h1 className="text-xl font-semibold text-center">
         { searchUsers.length }
         &nbsp; Result for
