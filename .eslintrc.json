@@ -17,10 +17,9 @@
   },
   "plugins": ["@typescript-eslint", "react"],
   "rules": {
+    "object-curly-newline": "off",
     "react/react-in-jsx-scope": "off",
-    "react/jsx-filename-extension": [
-      "error",
-      { "extensions": [".jsx", ".tsx"] }
-    ]
+    "import/no-extraneous-dependencies": "off",
+    "react/jsx-filename-extension": ["error", { "extensions": [".jsx", ".tsx"] }]
   }
 }

@@ -1,9 +1,9 @@
 import { PayloadAction, createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
-import { GET_ALL_THREADS } from '../../services/threads.services.ts';
+import threads from '../../services/threads.services.ts';
 import { setToast } from './toast-slice.ts';
 
-interface Thread {
+export interface Thread {
   id: string;
   title: string;
   body: string;
@@ -15,7 +15,7 @@ interface Thread {
   downVotesBy: string[];
 }
 
-interface ThreadsState {
+export interface ThreadsState {
   status: string
   value: Thread[];
 }
@@ -46,7 +46,7 @@ export const getAllThreadsStateAsync = createAsyncThunk(
     dispatch(setStatus('loading'));
     dispatch(showLoading());
     try {
-      const response = await GET_ALL_THREADS();
+      const response = await threads.getAll();
       if (response.status === 'success') {
         dispatch(setThreads(response.data.threads));
         dispatch(hideLoading());

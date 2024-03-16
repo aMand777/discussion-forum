@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
-import { POST_LOGIN } from '../../services/auth.services.ts';
+import auth from '../../services/auth.services.ts';
 import { setToast, unSetToast } from './toast-slice.ts';
 import { getUserLoginAsync } from './preload-slice.ts';
 import { setAccessToken } from '../../utils/storage.ts';
@@ -21,10 +21,10 @@ interface PostUserLogin {
 }
 
 const authSlice = createSlice({
-  name: 'authUser',
+  name: 'auth',
   initialState,
   reducers: {
-    setAuth(state) {
+    setAuthLoading(state) {
       return { ...state, isLoading: true };
     },
     setAuthSuccess(state) {
@@ -36,16 +36,16 @@ const authSlice = createSlice({
   },
 });
 
-export const { setAuth, setAuthSuccess, setAuthFailed } = authSlice.actions;
+export const { setAuthLoading, setAuthSuccess, setAuthFailed } = authSlice.actions;
 
 export const postUserLoginAsync = createAsyncThunk(
   'auth/postUserLogin',
   async (user: PostUserLogin, { dispatch }) => {
-    dispatch(setAuth());
+    dispatch(setAuthLoading());
     dispatch(unSetToast());
     dispatch(showLoading());
     try {
-      const response = await POST_LOGIN(user);
+      const response = await auth.postLogin(user);
       if (response.status === 'success') {
         const { token } = response.data;
         setAccessToken('accessToken', token);

@@ -7,12 +7,17 @@ interface User {
   password: string;
 }
 
-// eslint-disable-next-line import/prefer-default-export
-export const POST_REGISTER_USER = async (user: User) => {
-  try {
-    const { data } = await instanceApi.post('/register', user);
-    return data;
-  } catch (error: any) {
-    throw error.response;
+const register = (() => {
+  async function addNewUser(user: User) {
+    try {
+      const { data } = await instanceApi.post('/register', user);
+      return data;
+    } catch (error: any) {
+      throw error.response;
+    }
   }
-};
+
+  return { addNewUser };
+})();
+
+export default register;

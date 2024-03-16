@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
-import { IoHeart, IoHeartOutline } from 'react-icons/io5';
+import { IoHeartDislikeOutline, IoHeartDislikeSharp } from 'react-icons/io5';
 import { Link } from 'react-router-dom';
 
 type DownVotesCommentProps = {
@@ -26,9 +26,9 @@ function DownVotesComment({
         className="p-0 rounded-full btn btn-ghost hover:bg-base-100"
       >
         {isAuthUserVotes ? (
-          <IoHeart className="p-0 text-error w-7 h-7" />
+          <IoHeartDislikeSharp className="text-error w-7 h-7" />
         ) : (
-          <IoHeartOutline className="w-7 h-7" />
+          <IoHeartDislikeOutline className="w-7 h-7" />
         )}
       </button>
       {totalVotes && totalVotes > 0 ? (

@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
-import { GET_DETAIL_THREAD } from '../../services/threads.services.ts';
+import threads from '../../services/threads.services.ts';
 import { setToast, unSetToast } from './toast-slice.ts';
 
 interface Owner {
@@ -89,7 +89,7 @@ export const getDetailThreadAsync = createAsyncThunk(
     dispatch(unSetToast());
     dispatch(showLoading());
     try {
-      const response = await GET_DETAIL_THREAD(threadId);
+      const response = await threads.getDetail(threadId);
       if (response.status === 'success') {
         dispatch(setDetailThread(response.data.detailThread));
         dispatch(hideLoading());
