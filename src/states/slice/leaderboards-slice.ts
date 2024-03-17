@@ -1,6 +1,5 @@
 import { PayloadAction, createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
-// import { GET_LEADERBOARDS } from '../../services/leaderboards.services.ts';
 import leaderboards from '../../services/leaderboards.services.ts';
 import { setToast, unSetToast } from './toast-slice.ts';
 
@@ -16,7 +15,7 @@ interface LeaderBoardEntry {
   score: number;
 }
 
-interface LeaderBoardState {
+export interface LeaderBoardState {
   status: string;
   value: LeaderBoardEntry[];
 }
@@ -48,7 +47,6 @@ export const getLeaderBoardsAsync = createAsyncThunk(
     dispatch(unSetToast());
     dispatch(showLoading());
     try {
-      // const response = await GET_LEADERBOARDS();
       const response = await leaderboards.getAll();
       if (response.status === 'success') {
         dispatch(setLeaderBoards(response.data.leaderboards));
