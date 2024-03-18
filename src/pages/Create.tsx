@@ -2,11 +2,9 @@ import React from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { useNavigate } from 'react-router-dom';
-import {
-  postNewThreadAsync,
-  unSetResponse,
-} from '../states/slice/create-slice.ts';
+import { postNewThreadAsync, unSetResponse } from '../states/slice/create-slice.ts';
 import { useAppDispatch, useAppSelector } from '../states/store.ts';
+import Button from '../components/button/Button.tsx';
 
 function Create() {
   const navigate = useNavigate();
@@ -100,16 +98,9 @@ function Create() {
             onChange={setBody}
           />
           <div className="label" />
-          <button
-            type="submit"
-            disabled={status === 'loading'}
-            className="mt-10 ml-auto mr-0 btn btn-outline btn-accent"
-          >
-            {status === 'loading' && (
-              <span className="loading loading-spinner" />
-            )}
-            {status === 'loading' ? 'loading' : 'Post Thread'}
-          </button>
+          <Button outline status={status} color="btn-accent">
+            Post Thread
+          </Button>
         </div>
       </div>
     </form>

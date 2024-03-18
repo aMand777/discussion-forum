@@ -48,7 +48,7 @@ function Login() {
   };
 
   if (isPreload) {
-    return <LoadingPage loading="loading-ring loading-lg" />;
+    return <LoadingPage type="loading-ring" size="loading-lg" />;
     // eslint-disable-next-line no-else-return
   } else if (isAuthenticated) {
     dispatch(

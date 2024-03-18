@@ -9,3 +9,8 @@
 .scroll-none::-webkit-scrollbar {
   display: none;
 }
+
+.my-button {
+  background: red;
+  padding: 10px;
+}

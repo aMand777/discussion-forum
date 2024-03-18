@@ -4,7 +4,8 @@ import { IoMdClose } from 'react-icons/io';
 type AlertToastProps = {
   children: React.ReactNode;
   message: string;
-  alert: string;
+  // alert: string;
+  alert: 'alert-info' | 'alert-success' | 'alert-warning' | 'alert-error';
   onClickButtonClose: () => void;
 };
 
