@@ -9,7 +9,7 @@ function RequireAuth() {
   );
 
   if (isPreload) {
-    return <LoadingPage loading="loading-infinity loading-lg" />;
+    return <LoadingPage type="loading-infinity" size="loading-lg" />;
   } else if (!isAuthenticated) {
     return <Navigate to="/auth/login" replace />;
   } else {

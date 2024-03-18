@@ -20,15 +20,17 @@ expect.extend(matchers);
 describe('LoadingPage component', () => {
   it('should have a message when the component is rendered', async () => {
     // Arrange
-    const className = 'loading-spinner';
-    render(<LoadingPage loading={className} />);
+    const type = 'loading-spinner';
+    const size = 'loading-lg';
+    render(<LoadingPage type={type} size={size} />);
 
     // Action
     const loadingSpan = await screen.findByTestId('loadingPage');
 
     // Assert
     expect(loadingSpan).toBeInTheDocument();
-    expect(loadingSpan).toHaveClass(className);
+    expect(loadingSpan).toHaveClass(type);
+    expect(loadingSpan).toHaveClass(size);
     expect(loadingSpan).toBeVisible();
   });
 });

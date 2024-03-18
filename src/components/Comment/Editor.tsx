@@ -53,9 +53,7 @@ function Editor({ threadId }: EditorProps) {
         <div className="w-8 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
           <img src={authUser.avatar} alt={`avatar/${authUser.avatar}`} />
         </div>
-        <Link to={`/${authUser.name}/${authUser.id}/profile`}>
-          {authUser.name}
-        </Link>
+        <Link to={`/${authUser.name}/${authUser.id}/profile`}>{authUser.name}</Link>
       </div>
       <ReactQuill
         className="text-base-content bg-base-200"
