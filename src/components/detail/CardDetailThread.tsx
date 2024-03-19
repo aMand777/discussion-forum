@@ -3,13 +3,13 @@ import { AiOutlineComment } from 'react-icons/ai';
 import parse from 'html-react-parser';
 import { Link } from 'react-router-dom';
 import { postedAt } from '../../utils/index.ts';
+import useVotes from '../../hook/useVotes.ts';
+import useUser from '../../hook/useUser.ts';
+import useDetailThread from '../../hook/useDetailThread.ts';
 import UpVotesThread from '../votes/UpVotesThread.tsx';
 import DownVotesThread from '../votes/DownVotesThread.tsx';
-import useVotes from '../../hook/useVotes.ts';
-import Comments from '../comment/Comment.tsx';
-import Editor from '../comment/Editor.tsx';
-import useDetailThread from '../../hook/useDetailThread.ts';
-import useUser from '../../hook/useUser.ts';
+import Comments from '../comments/Comment.tsx';
+import Editor from '../comments/Editor.tsx';
 import SkeletonDetail from './SkeletonDetail.tsx';
 import NotFound from '../notFound/NotFound.tsx';
 
