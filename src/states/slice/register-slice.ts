@@ -35,10 +35,18 @@ const registerSlice = createSlice({
     setRegisterFailed(state, action) {
       return { ...state, isLoading: false, message: action.payload.message };
     },
+    setInitialRegisterState() {
+      return initialState;
+    },
   },
 });
 
-export const { setRegister, setRegisterSuccess, setRegisterFailed } = registerSlice.actions;
+export const {
+  setRegister,
+  setRegisterSuccess,
+  setRegisterFailed,
+  setInitialRegisterState,
+} = registerSlice.actions;
 
 export const registerUserAsync = createAsyncThunk(
   'register/registerUserLogin',

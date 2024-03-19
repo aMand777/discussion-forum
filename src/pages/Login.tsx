@@ -1,3 +1,4 @@
+import React from 'react';
 import { Navigate } from 'react-router-dom';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -5,6 +6,7 @@ import { z } from 'zod';
 import FormLogin from '../components/auth/login/FormLogin.tsx';
 import { useAppSelector, useAppDispatch } from '../states/store.ts';
 import { postUserLoginAsync } from '../states/slice/auth-slice.ts';
+import { setInitialRegisterState } from '../states/slice/register-slice.ts';
 import LoadingPage from '../components/loading/LoadingPage.tsx';
 import { setToast } from '../states/slice/toast-slice.ts';
 
@@ -26,6 +28,11 @@ type Inputs = {
 
 function Login() {
   const dispatch = useAppDispatch();
+
+  React.useEffect(() => {
+    dispatch(setInitialRegisterState());
+  }, []);
+
   const { isAuthenticated, isPreload } = useAppSelector(
     (state) => state.preload,
   );
