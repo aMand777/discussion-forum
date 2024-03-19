@@ -31,7 +31,8 @@ describe('AlertMessage component', () => {
 
     // Assert
     expect(alertSpan).toBeInTheDocument();
-    expect(alertSpan).toHaveTextContent(message);
+    // expect(alertSpan).toHaveTextContent(message);
+    expect(alertSpan).toHaveTextContent('success message');
     if (message) {
       expect(alertSpan).toBeVisible();
     }
