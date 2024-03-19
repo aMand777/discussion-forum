@@ -80,7 +80,7 @@ function BottomNav() {
         <MdLeaderboard size={35} />
         <span className="btm-nav-label">Lead</span>
       </NavLink>
-      <div className="mt-1 dropdown dropdown-end">
+      <div className="mt-2 dropdown dropdown-end">
         <div
           tabIndex={0}
           role="button"
@@ -89,7 +89,7 @@ function BottomNav() {
           <div className="w-8 rounded-full ring ring-offset-base-100 ring-offset-2">
             <img alt={`avatar/${authUser.name}`} src={authUser.avatar} />
           </div>
-          <span className="btm-nav-label">{authUser.name}</span>
+          <span className="btm-nav-label">{authUser.name.substring(0, 7)}</span>
         </div>
         <ul
           tabIndex={0}
