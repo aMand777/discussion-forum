@@ -4,8 +4,8 @@ import users from '../../services/users.services.ts';
 import { setAuthUser, unSetAuthUser } from './user-slice.ts';
 
 export interface PreloadState {
-  isPreload?: boolean;
-  isAuthenticated?: boolean;
+  isPreload: boolean;
+  isAuthenticated: boolean;
 }
 
 const initialState: PreloadState = {
