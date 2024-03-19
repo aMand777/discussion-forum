@@ -15,7 +15,7 @@ function Layout() {
         <LoadingBar className="h-1 bg-accent" />
       </header>
       <div className="grid grid-cols-12">
-        <nav className="hidden col-span-2 sm:block">
+        <nav className="hidden col-span-2 sm:block relative">
           <SideNav />
         </nav>
         <main className="h-screen overflow-y-scroll sm:col-span-7 col-span-full sm:border-x border-base-300 scroll-none">

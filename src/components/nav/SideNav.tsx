@@ -96,8 +96,8 @@ function SideNav() {
             <img alt={`avatar/${authUser.name}`} src={authUser.avatar} />
           </div>
         </div>
-        <span className="font-semibold text-lg absolute left-[60px] top-2 hidden lg:block line-clamp-1">
-          {authUser.name}
+        <span className="font-semibold text-lg absolute left-[60px] hidden lg:block top-2 line-clamp-1">
+          {authUser.name.substring(0, 11)}
         </span>
         <ul
           tabIndex={0}
