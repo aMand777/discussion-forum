@@ -16,10 +16,7 @@ import {
 const useVotes = () => {
   const dispatch = useAppDispatch();
 
-  const handleButtonUpVoteThread = (
-    isThreadUpVoteByAuthUser: boolean,
-    threadId: string,
-  ) => {
+  const handleButtonUpVoteThread = (isThreadUpVoteByAuthUser: boolean, threadId: string) => {
     if (isThreadUpVoteByAuthUser) {
       dispatch(neutralizeVoteThreadAsync(threadId));
     } else {
@@ -29,10 +26,7 @@ const useVotes = () => {
     dispatch(getDetailThreadAsync(threadId));
   };
 
-  const handleButtonDownVoteThread = (
-    isThreadDownVoteByAuthUser: boolean,
-    threadId: string,
-  ) => {
+  const handleButtonDownVoteThread = (isThreadDownVoteByAuthUser: boolean, threadId: string) => {
     if (isThreadDownVoteByAuthUser) {
       dispatch(neutralizeVoteThreadAsync(threadId));
     } else {
