@@ -1,4 +1,5 @@
 /* eslint-disable arrow-body-style */
+import { useQueryClient } from '@tanstack/react-query';
 import { useAppDispatch } from '../states/store.ts';
 import { getAllThreadsStateAsync } from '../states/slice/threads-slice.ts';
 import { getDetailThreadAsync } from '../states/slice/detail-thread-slice.ts';
@@ -14,6 +15,8 @@ import {
 } from '../states/slice/vote-comment-slice.ts';
 
 const useVotes = () => {
+  const queryClient = useQueryClient();
+  queryClient.invalidateQueries({ queryKey: ['GET_LEADERBOARDS'] });
   const dispatch = useAppDispatch();
 
   const handleButtonUpVoteThread = (isThreadUpVoteByAuthUser: boolean, threadId: string) => {
