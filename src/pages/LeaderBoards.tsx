@@ -1,9 +1,18 @@
+import React from 'react';
 import useLeaderBoards from '../hook/useLeaderboards.ts';
 import CardLeaderBoard from '../components/leaderboards/CardLeaderBoard.tsx';
 import CardLeaderBoardSkeleton from '../components/leaderboards/CardLeaderBoardSkeleton.tsx';
+import { useAppDispatch } from '../states/store.ts';
+import { getLeaderBoardsAsync } from '../states/slice/leaderboards-slice.ts';
 
 function LeaderBoards() {
+  const dispatch = useAppDispatch();
   const { leaderBoards, status } = useLeaderBoards();
+
+  React.useEffect(() => {
+    dispatch(getLeaderBoardsAsync());
+  }, []);
+
   return (
     <div className="grid grid-cols-1 gap-5 p-5">
       {leaderBoards.length > 0

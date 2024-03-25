@@ -30,6 +30,7 @@ function TableLeaderBoards() {
       }
       return response.status;
     },
+    refetchInterval: 3000,
   });
 
   return (
