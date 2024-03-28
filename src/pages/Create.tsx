@@ -58,7 +58,7 @@ function Create() {
       className="flex flex-col items-center justify-center w-full h-screen"
     >
       <div className="w-11/12 mx-auto -mt-24 lg:w-10/12">
-        <h1 className="text-xl font-semibold text-center">Create New Thread</h1>
+        <h1 className="text-xl font-semibold text-center">Create a New Thread</h1>
         <label htmlFor="title" className="w-full form-control">
           <div className="label">
             <span className="label-text">
