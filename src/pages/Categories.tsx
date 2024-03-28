@@ -27,9 +27,9 @@ function Categories() {
 
   return (
     <div className="w-full p-5 mx-auto md:w-10/12">
-      <h1 className="text-xl font-semibold text-center mb-5">
+      <h1 className="mb-5 text-xl font-semibold text-center">
         Sort by
-        <span className="text-info ml-1">
+        <span className="ml-1 text-info">
           #
           { category }
         </span>

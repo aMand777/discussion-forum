@@ -1,6 +1,7 @@
 import React from 'react';
 import parser from 'html-react-parser';
 import { AiOutlineComment } from 'react-icons/ai';
+import { FaTag } from 'react-icons/fa6';
 import { Link } from 'react-router-dom';
 import { postedAt } from '../../utils/index.ts';
 import useUser from '../../hook/useUser.ts';
@@ -35,12 +36,7 @@ function CardThread({
   upVotesBy,
   downVotesBy,
 }: CardThreadProps) {
-  const {
-    upVoteThread,
-    downVoteThread,
-    isUpVoteByAuthUser,
-    isDownVoteByAuthUser,
-  } = useVotes();
+  const { upVoteThread, downVoteThread, isUpVoteByAuthUser, isDownVoteByAuthUser } = useVotes();
   const { authUser } = useUser();
   const isThreadUpVote = isUpVoteByAuthUser(upVotesBy, authUser.id);
   const isThreadDownVote = isDownVoteByAuthUser(downVotesBy, authUser.id);
@@ -70,17 +66,15 @@ function CardThread({
         <span className="text-xs">{postedAt(createdAt)}</span>
       </div>
       <Link to={`/threads/${name}/${threadId}`}>
-        <div className="mb-2 font-semibold hover:underline">
-          {parser(title)}
-        </div>
+        <div className="mb-2 font-semibold hover:underline">{parser(title)}</div>
       </Link>
       <div className="font-thin line-clamp-5">{parser(body)}</div>
       <Link
         to={`/threads/categories/${category}`}
-        className="px-2 my-3 rounded-md cursor-pointer bg-base-300 w-fit hover:bg-base-200"
+        className="flex items-center gap-1 px-2 my-3 rounded-md cursor-pointer bg-base-300 w-fit hover:bg-base-200"
       >
-        #
-        { category }
+        <FaTag className="text-accent" />
+        {category}
       </Link>
       <div className="flex items-center gap-3">
         <UpVotesThread
@@ -95,10 +89,7 @@ function CardThread({
           totalVotes={downVotesBy.length}
           onVotes={handleButtonDownVote}
         />
-        <Link
-          to={`/threads/${name}/${threadId}`}
-          className="flex items-center gap-2"
-        >
+        <Link to={`/threads/${name}/${threadId}`} className="flex items-center gap-2">
           <AiOutlineComment className="w-7 h-7" />
           <span>{totalComments}</span>
         </Link>
