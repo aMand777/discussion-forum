@@ -62,7 +62,7 @@ describe('FormRegister component', () => {
         ,
       </BrowserRouter>,
     );
-    const usernameInput = await screen.getByPlaceholderText('Username');
+    const usernameInput = await screen.getByPlaceholderText('Username*');
 
     // Action
     await userEvent.type(usernameInput, 'John Doe');
@@ -89,7 +89,7 @@ describe('FormRegister component', () => {
         ,
       </BrowserRouter>,
     );
-    const emailInput = await screen.getByPlaceholderText('Email');
+    const emailInput = await screen.getByPlaceholderText('Email*');
 
     // Action
     await userEvent.type(emailInput, 'example@mail.com');

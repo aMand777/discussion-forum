@@ -38,7 +38,7 @@ function FormLogin({
   return (
     <div className="flex items-center justify-center w-full mt-10">
       <div className="container flex flex-col items-center justify-center">
-        <div className="p-1 mb-2 rounded-full bg-secondary text-secondary-content">
+        <div className="p-1 mb-2 rounded-full bg-base-300 text-secondary-content">
           <img src="/forum.png" alt="forum-icon" className="w-16" />
         </div>
         <p className="text-2xl font-semibold">Login</p>
@@ -49,7 +49,10 @@ function FormLogin({
           noValidate
         >
           <div className="label">
-            <span className="label-text">Email</span>
+            <span className="label-text">
+              Email
+              <span className="text-error">*</span>
+            </span>
           </div>
           <label htmlFor="email" className="flex items-center gap-2 input input-bordered">
             <svg
@@ -74,7 +77,10 @@ function FormLogin({
             message?.toLowerCase().includes('email') && <AlertMessage message={message} />
           )}
           <div className="label">
-            <span className="label-text">Password</span>
+            <span className="label-text">
+              Password
+              <span className="text-error">*</span>
+            </span>
           </div>
           <label htmlFor="password" className="flex items-center gap-2 input input-bordered">
             <svg
