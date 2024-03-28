@@ -42,7 +42,7 @@ function FormRegister({
   return (
     <div className="w-full flex justify-center items-center mt-10">
       <div className="flex flex-col justify-center items-center container">
-        <div className="bg-secondary rounded-full p-1 text-secondary-content mb-2">
+        <div className="bg-base-300 rounded-full p-1 text-secondary-content mb-2">
           <img src="/forum.png" alt="forum-icon" className="w-16" />
         </div>
         <p className="text-2xl font-semibold">Register</p>
@@ -67,7 +67,7 @@ function FormRegister({
             <input
               type="text"
               className="grow"
-              placeholder="Username"
+              placeholder="Username*"
               {...register('name')}
             />
           </label>
@@ -88,7 +88,7 @@ function FormRegister({
             <input
               type="text"
               className="grow"
-              placeholder="Email"
+              placeholder="Email*"
               {...register('email')}
             />
           </label>

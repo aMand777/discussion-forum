@@ -61,11 +61,14 @@ function Create() {
         <h1 className="text-xl font-semibold text-center">Create New Thread</h1>
         <label htmlFor="title" className="w-full form-control">
           <div className="label">
-            <span className="label-text">Title</span>
+            <span className="label-text">
+              Title
+              <span className="text-error">*</span>
+            </span>
           </div>
           <input
             type="text"
-            placeholder="Type something . ."
+            placeholder="What are you thinking about?"
             className="w-full input input-bordered"
             value={title}
             onChange={handleChangeTitle}
@@ -78,7 +81,7 @@ function Create() {
           </div>
           <input
             type="text"
-            placeholder="Type something . ."
+            placeholder="Search easier with category"
             className="w-full input input-bordered"
             value={category}
             onChange={handleChangeCategory}
@@ -88,7 +91,10 @@ function Create() {
         <div className="w-full form-control">
           <div className="label">
             {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-            <label className="label-text">Description</label>
+            <label className="label-text">
+              Content
+              <span className="text-error">*</span>
+            </label>
           </div>
           <ReactQuill
             className="h-24"
