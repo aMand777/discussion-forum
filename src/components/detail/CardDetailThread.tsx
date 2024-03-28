@@ -2,6 +2,7 @@ import React from 'react';
 import { AiOutlineComment } from 'react-icons/ai';
 import parse from 'html-react-parser';
 import { Link } from 'react-router-dom';
+import { FaTag } from 'react-icons/fa';
 import { postedAt } from '../../utils/index.ts';
 import useVotes from '../../hook/useVotes.ts';
 import useUser from '../../hook/useUser.ts';
@@ -63,10 +64,10 @@ function CardDetailThread() {
           <div className="font-thin">{parse(body)}</div>
           <Link
             to={`/threads/categories/${category}`}
-            className="px-2 my-3 rounded-md cursor-pointer bg-base-300 w-fit hover:bg-base-200"
+            className="flex items-center gap-1 px-2 my-3 rounded-md cursor-pointer bg-base-300 w-fit hover:bg-base-200"
           >
-            #
-            { category }
+            <FaTag className="text-accent" />
+            {category}
           </Link>
           <div className="flex items-center gap-3">
             <UpVotesThread
@@ -81,10 +82,7 @@ function CardDetailThread() {
               totalVotes={downVotesBy.length}
               onVotes={handleButtonDownVote}
             />
-            <Link
-              to={`/threads/${owner.name}/${threadId}`}
-              className="flex items-center gap-2"
-            >
+            <Link to={`/threads/${owner.name}/${threadId}`} className="flex items-center gap-2">
               <AiOutlineComment className="w-7 h-7" />
               <span>{comments.length}</span>
             </Link>
@@ -109,9 +107,7 @@ function CardDetailThread() {
       ) : (
         <SkeletonDetail />
       )}
-      {title.length < 1 && status !== 'loading' && (
-        <NotFound title="Thread not found" />
-      )}
+      {title.length < 1 && status !== 'loading' && <NotFound title="Thread not found" />}
     </>
   );
 }
