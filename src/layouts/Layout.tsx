@@ -9,13 +9,13 @@ import ModalSearchUser from '../components/search/ModalSearchUser.tsx';
 function Layout() {
   return (
     <>
-      <header className="sticky top-0 z-50">
+      <header className="absolute top-0 left-0 right-0 z-50">
         <ModalSearchCategory />
         <ModalSearchUser />
-        <LoadingBar className="h-1 bg-accent" />
+        <LoadingBar className="h-[2px] bg-accent" />
       </header>
       <div className="grid grid-cols-12">
-        <nav className="hidden col-span-2 sm:block relative">
+        <nav className="relative hidden col-span-2 sm:block">
           <SideNav />
         </nav>
         <main className="h-screen overflow-y-scroll sm:col-span-7 col-span-full sm:border-x border-base-300 scroll-none">
